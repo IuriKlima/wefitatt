@@ -1,0 +1,192 @@
+
+import { 
+  LayoutDashboard, 
+  Building2, 
+  Users, 
+  Settings, 
+  BarChart3,
+  GraduationCap,
+  Calendar,
+  UserCheck,
+  CreditCard,
+  Dumbbell,
+  ClipboardList,
+  Activity,
+  UserPlus,
+  CalendarCheck,
+  ShoppingCart,
+  User,
+  BookOpen,
+  TrendingUp,
+  Wallet
+} from 'lucide-react';
+import { UserProfile } from '@/contexts/UserContext';
+
+export interface NavigationItem {
+  title: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+  badge?: string;
+}
+
+export interface NavigationSection {
+  title: string;
+  items: NavigationItem[];
+}
+
+export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
+  administrador: [
+    {
+      title: 'Administração',
+      items: [
+        {
+          title: 'Dashboard (Admin)',
+          href: '/admin/dashboard',
+          icon: LayoutDashboard,
+        },
+        {
+          title: 'Gerenciar Unidades',
+          href: '/admin/unidades',
+          icon: Building2,
+        },
+        {
+          title: 'Gerenciar Usuários',
+          href: '/admin/usuarios',
+          icon: Users,
+        },
+        {
+          title: 'Configurações do Sistema',
+          href: '/admin/configuracoes',
+          icon: Settings,
+        },
+        {
+          title: 'Relatórios Globais',
+          href: '/admin/relatorios',
+          icon: BarChart3,
+        },
+      ],
+    },
+  ],
+  
+  gestor: [
+    {
+      title: 'Gestão da Unidade',
+      items: [
+        {
+          title: 'Dashboard (Unidade)',
+          href: '/gestor/dashboard',
+          icon: LayoutDashboard,
+        },
+        {
+          title: 'Alunos da Unidade',
+          href: '/gestor/alunos',
+          icon: GraduationCap,
+        },
+        {
+          title: 'Grade de Aulas',
+          href: '/gestor/grade-aulas',
+          icon: Calendar,
+        },
+        {
+          title: 'Instrutores',
+          href: '/gestor/instrutores',
+          icon: UserCheck,
+        },
+        {
+          title: 'Financeiro',
+          href: '/gestor/financeiro',
+          icon: CreditCard,
+        },
+      ],
+    },
+  ],
+
+  instrutor: [
+    {
+      title: 'Instrução',
+      items: [
+        {
+          title: 'Minhas Aulas',
+          href: '/instrutor/aulas',
+          icon: Calendar,
+        },
+        {
+          title: 'Meus Alunos',
+          href: '/instrutor/alunos',
+          icon: Users,
+        },
+        {
+          title: 'Biblioteca de Exercícios',
+          href: '/instrutor/exercicios',
+          icon: Dumbbell,
+        },
+        {
+          title: 'Avaliações Físicas',
+          href: '/instrutor/avaliacoes',
+          icon: ClipboardList,
+        },
+      ],
+    },
+  ],
+
+  recepcionista: [
+    {
+      title: 'Atendimento',
+      items: [
+        {
+          title: 'Check-in / Check-out',
+          href: '/recepcionista/checkin',
+          icon: Activity,
+        },
+        {
+          title: 'Cadastro Rápido',
+          href: '/recepcionista/cadastro',
+          icon: UserPlus,
+        },
+        {
+          title: 'Agendamentos',
+          href: '/recepcionista/agendamentos',
+          icon: CalendarCheck,
+        },
+        {
+          title: 'Ponto de Venda (POS)',
+          href: '/recepcionista/pos',
+          icon: ShoppingCart,
+        },
+      ],
+    },
+  ],
+
+  aluno: [
+    {
+      title: 'Minha Academia',
+      items: [
+        {
+          title: 'Meu Painel',
+          href: '/aluno/painel',
+          icon: LayoutDashboard,
+        },
+        {
+          title: 'Agendar Aulas',
+          href: '/aluno/agendar',
+          icon: Calendar,
+        },
+        {
+          title: 'Meus Treinos',
+          href: '/aluno/treinos',
+          icon: Dumbbell,
+        },
+        {
+          title: 'Meu Progresso',
+          href: '/aluno/progresso',
+          icon: TrendingUp,
+        },
+        {
+          title: 'Minha Conta',
+          href: '/aluno/conta',
+          icon: Wallet,
+        },
+      ],
+    },
+  ],
+};
