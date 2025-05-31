@@ -2,15 +2,11 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Switch } from '@/components/ui/switch';
-import { Badge } from '@/components/ui/badge';
-import { Plus, Search, Edit, Users, RefreshCw } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import UserTable from '@/components/admin/UserTable';
+import UserFilters from '@/components/admin/UserFilters';
+import UserForm from '@/components/admin/UserForm';
 
 interface Usuario {
   id: number;
@@ -114,253 +110,33 @@ const AdminUsuarios: React.FC = () => {
         </CardHeader>
 
         <CardContent>
-          {/* Filtros */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-6">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input
-                  placeholder="Buscar por nome ou email..."
-                  value={busca}
-                  onChange={(e) => setBusca(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-            </div>
-            <Select value={filtroPerfil} onValueChange={setFiltroPerfil}>
-              <SelectTrigger className="w-[150px]">
-                <SelectValue placeholder="Perfil" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">Todos</SelectItem>
-                <SelectItem value="Administrador">Administrador</SelectItem>
-                <SelectItem value="Gestor">Gestor</SelectItem>
-                <SelectItem value="Instrutor">Instrutor</SelectItem>
-                <SelectItem value="Recepcionista">Recepcionista</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={filtroStatus} onValueChange={setFiltroStatus}>
-              <SelectTrigger className="w-[120px]">
-                <SelectValue placeholder="Status" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">Todos</SelectItem>
-                <SelectItem value="Ativo">Ativo</SelectItem>
-                <SelectItem value="Inativo">Inativo</SelectItem>
-              </SelectContent>
-            </Select>
-            <Select value={filtroUnidade} onValueChange={setFiltroUnidade}>
-              <SelectTrigger className="w-[150px]">
-                <SelectValue placeholder="Unidade" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="">Todas</SelectItem>
-                <SelectItem value="Wefit Centro">Wefit Centro</SelectItem>
-                <SelectItem value="Wefit Paulista">Wefit Paulista</SelectItem>
-                <SelectItem value="Wefit Ipanema">Wefit Ipanema</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <UserFilters
+            busca={busca}
+            filtroPerfil={filtroPerfil}
+            filtroStatus={filtroStatus}
+            filtroUnidade={filtroUnidade}
+            onBuscaChange={setBusca}
+            onPerfilChange={setFiltroPerfil}
+            onStatusChange={setFiltroStatus}
+            onUnidadeChange={setFiltroUnidade}
+          />
 
-          {/* Tabela */}
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nome Completo</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Perfil/Nível</TableHead>
-                <TableHead>Unidade</TableHead>
-                <TableHead>Data Cadastro</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Ações</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {usuariosFiltrados.map((usuario) => (
-                <TableRow key={usuario.id}>
-                  <TableCell className="font-medium">{usuario.nome}</TableCell>
-                  <TableCell>{usuario.email}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline">{usuario.perfil}</Badge>
-                  </TableCell>
-                  <TableCell>{usuario.unidade || '-'}</TableCell>
-                  <TableCell>{usuario.dataCadastro}</TableCell>
-                  <TableCell>
-                    <Badge variant={usuario.status === 'Ativo' ? 'default' : 'secondary'}>
-                      {usuario.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="sm" onClick={() => handleEditarUsuario(usuario)}>
-                        <Edit className="h-4 w-4" />
-                      </Button>
-                      <Switch defaultChecked={usuario.status === 'Ativo'} />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <UserTable
+            usuarios={usuariosFiltrados}
+            onEditUser={handleEditarUsuario}
+          />
         </CardContent>
       </Card>
 
-      {/* Modal de Adicionar/Editar Usuário */}
-      <Dialog open={modalAberto} onOpenChange={setModalAberto}>
-        <DialogContent className="max-w-2xl">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              {modoEdicao ? `Editar Usuário: ${usuarioEditando?.nome}` : 'Adicionar Novo Usuário do Sistema'}
-            </DialogTitle>
-            <DialogDescription>
-              {modoEdicao ? 'Edite as informações do usuário' : 'Preencha as informações do novo usuário'}
-            </DialogDescription>
-          </DialogHeader>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSalvarUsuario)} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="nome"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Nome Completo</FormLabel>
-                      <FormControl>
-                        <Input placeholder="João Silva" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input placeholder="joao.silva@wefit.com" type="email" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              {!modoEdicao && (
-                <div className="grid grid-cols-2 gap-4">
-                  <FormField
-                    control={form.control}
-                    name="senha"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="flex items-center justify-between">
-                          Senha
-                          <Button type="button" variant="ghost" size="sm" onClick={gerarSenhaForte}>
-                            <RefreshCw className="h-3 w-3 mr-1" />
-                            Gerar
-                          </Button>
-                        </FormLabel>
-                        <FormControl>
-                          <Input placeholder="Senha forte" type="password" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="confirmarSenha"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Confirmar Senha</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Confirme a senha" type="password" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-              )}
-
-              {modoEdicao && (
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <p className="text-sm text-blue-700">
-                    Para redefinir a senha deste usuário, um link será enviado para o email cadastrado.
-                  </p>
-                  <Button type="button" variant="outline" size="sm" className="mt-2">
-                    Enviar Link de Redefinição
-                  </Button>
-                </div>
-              )}
-
-              <div className="grid grid-cols-2 gap-4">
-                <FormField
-                  control={form.control}
-                  name="perfil"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Perfil/Nível de Acesso</FormLabel>
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione o perfil" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Administrador">Administrador</SelectItem>
-                          <SelectItem value="Gestor">Gestor</SelectItem>
-                          <SelectItem value="Instrutor">Instrutor</SelectItem>
-                          <SelectItem value="Recepcionista">Recepcionista</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="unidade"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Unidade Associada</FormLabel>
-                      <Select 
-                        onValueChange={field.onChange} 
-                        defaultValue={field.value}
-                        disabled={form.watch('perfil') === 'Administrador'}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecione a unidade" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          <SelectItem value="Wefit Centro">Wefit Centro</SelectItem>
-                          <SelectItem value="Wefit Paulista">Wefit Paulista</SelectItem>
-                          <SelectItem value="Wefit Ipanema">Wefit Ipanema</SelectItem>
-                          <SelectItem value="Wefit Bela Vista">Wefit Bela Vista</SelectItem>
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-
-              <div className="flex justify-end gap-2 pt-4">
-                <Button type="button" variant="outline" onClick={() => setModalAberto(false)}>
-                  Cancelar
-                </Button>
-                <Button type="submit">
-                  {modoEdicao ? 'Atualizar Usuário' : 'Salvar Usuário'}
-                </Button>
-              </div>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
+      <UserForm
+        isOpen={modalAberto}
+        onClose={() => setModalAberto(false)}
+        isEditing={modoEdicao}
+        editingUser={usuarioEditando}
+        form={form}
+        onSubmit={handleSalvarUsuario}
+        onGeneratePassword={gerarSenhaForte}
+      />
     </div>
   );
 };
