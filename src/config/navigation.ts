@@ -21,7 +21,8 @@ import {
   Wallet,
   AlertTriangle,
   HelpCircle,
-  MessageSquare
+  MessageSquare,
+  Target
 } from 'lucide-react';
 import { UserProfile } from '@/contexts/UserContext';
 
