@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -53,7 +52,7 @@ const GestorFinanceiro: React.FC = () => {
   const [modalDespesaAberto, setModalDespesaAberto] = useState(false);
   const [filtroDataInicio, setFiltroDataInicio] = useState('');
   const [filtroDataFim, setFiltroDataFim] = useState('');
-  const [filtroMetodo, setFiltroMetodo] = useState('');
+  const [filtroMetodo, setFiltroMetodo] = useState('todos');
 
   const [recebimentos] = useState<Recebimento[]>([
     {
@@ -171,7 +170,7 @@ const GestorFinanceiro: React.FC = () => {
   };
 
   const recebimentosFiltrados = recebimentos.filter(recebimento => {
-    const matchMetodo = !filtroMetodo || recebimento.metodo === filtroMetodo;
+    const matchMetodo = filtroMetodo === 'todos' || recebimento.metodo === filtroMetodo;
     // Aqui seria feita a filtragem por data também
     return matchMetodo;
   });
@@ -275,7 +274,7 @@ const GestorFinanceiro: React.FC = () => {
                     <SelectValue placeholder="Forma de pagamento" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Todos</SelectItem>
+                    <SelectItem value="todos">Todos</SelectItem>
                     <SelectItem value="Cartão de Crédito">Cartão de Crédito</SelectItem>
                     <SelectItem value="PIX">PIX</SelectItem>
                     <SelectItem value="Boleto">Boleto</SelectItem>
