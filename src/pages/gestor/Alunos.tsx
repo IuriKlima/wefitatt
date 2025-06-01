@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -73,8 +72,8 @@ const GestorAlunos: React.FC = () => {
     },
   ]);
 
-  const [filtroPlano, setFiltroPlano] = useState<string>('');
-  const [filtroStatus, setFiltroStatus] = useState<string>('');
+  const [filtroPlano, setFiltroPlano] = useState<string>('todos');
+  const [filtroStatus, setFiltroStatus] = useState<string>('todos');
   const [busca, setBusca] = useState<string>('');
   const [modalAberto, setModalAberto] = useState(false);
   const [modalPerfilAberto, setModalPerfilAberto] = useState(false);
@@ -98,8 +97,8 @@ const GestorAlunos: React.FC = () => {
   });
 
   const alunosFiltrados = alunos.filter(aluno => {
-    const matchPlano = !filtroPlano || aluno.plano.includes(filtroPlano);
-    const matchStatus = !filtroStatus || aluno.statusPagamento === filtroStatus;
+    const matchPlano = filtroPlano === 'todos' || aluno.plano.includes(filtroPlano);
+    const matchStatus = filtroStatus === 'todos' || aluno.statusPagamento === filtroStatus;
     const matchBusca = !busca || 
       aluno.nome.toLowerCase().includes(busca.toLowerCase()) ||
       aluno.email.toLowerCase().includes(busca.toLowerCase()) ||
@@ -189,7 +188,7 @@ const GestorAlunos: React.FC = () => {
                 <SelectValue placeholder="Filtrar por plano" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todos os planos</SelectItem>
+                <SelectItem value="todos">Todos os planos</SelectItem>
                 <SelectItem value="Mensal">Mensal</SelectItem>
                 <SelectItem value="Trimestral">Trimestral</SelectItem>
                 <SelectItem value="Anual">Anual</SelectItem>
@@ -200,7 +199,7 @@ const GestorAlunos: React.FC = () => {
                 <SelectValue placeholder="Status pagamento" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todos</SelectItem>
+                <SelectItem value="todos">Todos</SelectItem>
                 <SelectItem value="Adimplente">Adimplente</SelectItem>
                 <SelectItem value="Pendente">Pendente</SelectItem>
                 <SelectItem value="Inadimplente">Inadimplente</SelectItem>
