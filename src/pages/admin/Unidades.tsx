@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -36,8 +35,8 @@ const AdminUnidades: React.FC = () => {
     { id: 4, nome: 'Wefit Bela Vista', endereco: 'Rua Augusta, 800', cidade: 'São Paulo', uf: 'SP', alunos: 0, status: 'Inativa' },
   ]);
 
-  const [filtroStatus, setFiltroStatus] = useState<string>('');
-  const [filtroUF, setFiltroUF] = useState<string>('');
+  const [filtroStatus, setFiltroStatus] = useState<string>('todos');
+  const [filtroUF, setFiltroUF] = useState<string>('todos');
   const [busca, setBusca] = useState<string>('');
   const [modalAberto, setModalAberto] = useState(false);
   const [detalhesAberto, setDetalhesAberto] = useState(false);
@@ -61,8 +60,8 @@ const AdminUnidades: React.FC = () => {
   });
 
   const unidadesFiltradas = unidades.filter(unidade => {
-    const matchStatus = !filtroStatus || unidade.status === filtroStatus;
-    const matchUF = !filtroUF || unidade.uf === filtroUF;
+    const matchStatus = filtroStatus === 'todos' || unidade.status === filtroStatus;
+    const matchUF = filtroUF === 'todos' || unidade.uf === filtroUF;
     const matchBusca = !busca || unidade.nome.toLowerCase().includes(busca.toLowerCase());
     return matchStatus && matchUF && matchBusca;
   });
@@ -322,7 +321,7 @@ const AdminUnidades: React.FC = () => {
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todos</SelectItem>
+                <SelectItem value="todos">Todos</SelectItem>
                 <SelectItem value="Ativa">Ativa</SelectItem>
                 <SelectItem value="Inativa">Inativa</SelectItem>
               </SelectContent>
@@ -332,7 +331,7 @@ const AdminUnidades: React.FC = () => {
                 <SelectValue placeholder="UF" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Todos</SelectItem>
+                <SelectItem value="todos">Todos</SelectItem>
                 <SelectItem value="SP">SP</SelectItem>
                 <SelectItem value="RJ">RJ</SelectItem>
                 <SelectItem value="MG">MG</SelectItem>
