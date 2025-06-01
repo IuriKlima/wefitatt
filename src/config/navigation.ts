@@ -22,7 +22,13 @@ import {
   AlertTriangle,
   HelpCircle,
   MessageSquare,
-  Target
+  Target,
+  Package,
+  Wrench,
+  Mail,
+  PartyPopper,
+  Star,
+  PieChart
 } from 'lucide-react';
 import { UserProfile } from '@/contexts/UserContext';
 
@@ -100,6 +106,46 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
           title: 'Financeiro',
           href: '/gestor/financeiro',
           icon: CreditCard,
+        },
+      ],
+    },
+    {
+      title: 'Operações',
+      items: [
+        {
+          title: 'Metas e Performance',
+          href: '/gestor/metas',
+          icon: Target,
+        },
+        {
+          title: 'Estoque',
+          href: '/gestor/estoque',
+          icon: Package,
+        },
+        {
+          title: 'Manutenção',
+          href: '/gestor/manutencao',
+          icon: Wrench,
+        },
+        {
+          title: 'Eventos',
+          href: '/gestor/eventos',
+          icon: PartyPopper,
+        },
+      ],
+    },
+    {
+      title: 'Engajamento',
+      items: [
+        {
+          title: 'Feedback e NPS',
+          href: '/gestor/feedback',
+          icon: Star,
+        },
+        {
+          title: 'Comunicação',
+          href: '/gestor/comunicacao',
+          icon: Mail,
         },
       ],
     },

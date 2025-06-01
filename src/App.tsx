@@ -21,6 +21,9 @@ import GestorAlunos from "@/pages/gestor/Alunos";
 import GestorGradeAulas from "@/pages/gestor/GradeAulas";
 import GestorInstrutores from "@/pages/gestor/Instrutores";
 import GestorFinanceiro from "@/pages/gestor/Financeiro";
+import GestorMetas from "@/pages/gestor/Metas";
+import GestorEstoque from "@/pages/gestor/Estoque";
+import GestorManutencao from "@/pages/gestor/Manutencao";
 
 // Instrutor Pages
 import InstrutorAulas from "@/pages/instrutor/Aulas";
@@ -77,6 +80,9 @@ const App = () => (
             <Route path="/gestor/grade-aulas" element={<Layout><GestorGradeAulas /></Layout>} />
             <Route path="/gestor/instrutores" element={<Layout><GestorInstrutores /></Layout>} />
             <Route path="/gestor/financeiro" element={<Layout><GestorFinanceiro /></Layout>} />
+            <Route path="/gestor/metas" element={<Layout><GestorMetas /></Layout>} />
+            <Route path="/gestor/estoque" element={<Layout><GestorEstoque /></Layout>} />
+            <Route path="/gestor/manutencao" element={<Layout><GestorManutencao /></Layout>} />
 
             {/* Instrutor Routes */}
             <Route path="/instrutor/aulas" element={<Layout><InstrutorAulas /></Layout>} />
