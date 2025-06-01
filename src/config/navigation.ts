@@ -18,7 +18,10 @@ import {
   User,
   BookOpen,
   TrendingUp,
-  Wallet
+  Wallet,
+  AlertTriangle,
+  HelpCircle,
+  MessageSquare
 } from 'lucide-react';
 import { UserProfile } from '@/contexts/UserContext';
 
@@ -134,6 +137,11 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
       title: 'Atendimento',
       items: [
         {
+          title: 'Dashboard/Alertas',
+          href: '/recepcionista/dashboard',
+          icon: LayoutDashboard,
+        },
+        {
           title: 'Check-in / Check-out',
           href: '/recepcionista/checkin',
           icon: Activity,
@@ -152,6 +160,31 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
           title: 'Ponto de Venda (POS)',
           href: '/recepcionista/pos',
           icon: ShoppingCart,
+        },
+        {
+          title: 'Central de Alertas',
+          href: '/recepcionista/alertas',
+          icon: AlertTriangle,
+        },
+      ],
+    },
+    {
+      title: 'Suporte e Gestão',
+      items: [
+        {
+          title: 'Listas de Espera',
+          href: '/recepcionista/lista-espera',
+          icon: Users,
+        },
+        {
+          title: 'Registrar Ocorrência',
+          href: '/recepcionista/ocorrencias',
+          icon: MessageSquare,
+        },
+        {
+          title: 'FAQ Interno',
+          href: '/recepcionista/faq',
+          icon: HelpCircle,
         },
       ],
     },

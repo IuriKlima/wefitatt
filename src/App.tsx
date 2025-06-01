@@ -30,11 +30,15 @@ import InstrutorAvaliacoes from "@/pages/instrutor/Avaliacoes";
 import InstrutorChat from "@/pages/instrutor/Chat";
 
 // Recepcionista Pages
+import RecepcionistaDashboard from "@/pages/recepcionista/Dashboard";
 import RecepcionistaCheckin from "@/pages/recepcionista/Checkin";
 import RecepcionistaCadastro from "@/pages/recepcionista/Cadastro";
 import RecepcionistaAgendamentos from "@/pages/recepcionista/Agendamentos";
 import RecepcionistaPOS from "@/pages/recepcionista/POS";
 import RecepcionistaAlertas from "@/pages/recepcionista/Alertas";
+import RecepcionistaListaEspera from "@/pages/recepcionista/ListaEspera";
+import RecepcionistaOcorrencias from "@/pages/recepcionista/Ocorrencias";
+import RecepcionistaFAQ from "@/pages/recepcionista/FAQ";
 
 // Aluno Pages
 import AlunoPainel from "@/pages/aluno/Painel";
@@ -82,11 +86,15 @@ const App = () => (
             <Route path="/instrutor/chat" element={<Layout><InstrutorChat /></Layout>} />
 
             {/* Recepcionista Routes */}
+            <Route path="/recepcionista/dashboard" element={<Layout><RecepcionistaDashboard /></Layout>} />
             <Route path="/recepcionista/checkin" element={<Layout><RecepcionistaCheckin /></Layout>} />
             <Route path="/recepcionista/cadastro" element={<Layout><RecepcionistaCadastro /></Layout>} />
             <Route path="/recepcionista/agendamentos" element={<Layout><RecepcionistaAgendamentos /></Layout>} />
             <Route path="/recepcionista/pos" element={<Layout><RecepcionistaPOS /></Layout>} />
             <Route path="/recepcionista/alertas" element={<Layout><RecepcionistaAlertas /></Layout>} />
+            <Route path="/recepcionista/lista-espera" element={<Layout><RecepcionistaListaEspera /></Layout>} />
+            <Route path="/recepcionista/ocorrencias" element={<Layout><RecepcionistaOcorrencias /></Layout>} />
+            <Route path="/recepcionista/faq" element={<Layout><RecepcionistaFAQ /></Layout>} />
 
             {/* Aluno Routes */}
             <Route path="/aluno/painel" element={<Layout><AlunoPainel /></Layout>} />
