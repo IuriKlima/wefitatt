@@ -234,15 +234,19 @@ const RecepcionistaPOS: React.FC = () => {
                 <label className="block text-sm font-medium mb-2">
                   Associar à conta do aluno (opcional)
                 </label>
-                <Select value={alunoSelecionado?.id.toString() || ''} onValueChange={(value) => {
-                  const aluno = alunos.find(a => a.id.toString() === value);
-                  setAlunoSelecionado(aluno || null);
+                <Select value={alunoSelecionado?.id.toString() || 'sem-associacao'} onValueChange={(value) => {
+                  if (value === 'sem-associacao') {
+                    setAlunoSelecionado(null);
+                  } else {
+                    const aluno = alunos.find(a => a.id.toString() === value);
+                    setAlunoSelecionado(aluno || null);
+                  }
                 }}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione um aluno" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Venda sem associação</SelectItem>
+                    <SelectItem value="sem-associacao">Venda sem associação</SelectItem>
                     {alunos.map((aluno) => (
                       <SelectItem key={aluno.id} value={aluno.id.toString()}>
                         {aluno.nome} - {aluno.matricula}
