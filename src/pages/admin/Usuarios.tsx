@@ -27,9 +27,9 @@ const AdminUsuarios: React.FC = () => {
     { id: 5, nome: 'Carlos Ferreira', email: 'carlos.ferreira@wefit.com', perfil: 'Recepcionista', unidade: 'Wefit Ipanema', dataCadastro: '12/04/2024', status: 'Inativo' },
   ]);
 
-  const [filtroPerfil, setFiltroPerfil] = useState<string>('');
-  const [filtroStatus, setFiltroStatus] = useState<string>('');
-  const [filtroUnidade, setFiltroUnidade] = useState<string>('');
+  const [filtroPerfil, setFiltroPerfil] = useState<string>('todos');
+  const [filtroStatus, setFiltroStatus] = useState<string>('todos');
+  const [filtroUnidade, setFiltroUnidade] = useState<string>('todas');
   const [busca, setBusca] = useState<string>('');
   const [modalAberto, setModalAberto] = useState(false);
   const [modoEdicao, setModoEdicao] = useState(false);
@@ -47,9 +47,9 @@ const AdminUsuarios: React.FC = () => {
   });
 
   const usuariosFiltrados = usuarios.filter(usuario => {
-    const matchPerfil = !filtroPerfil || usuario.perfil === filtroPerfil;
-    const matchStatus = !filtroStatus || usuario.status === filtroStatus;
-    const matchUnidade = !filtroUnidade || usuario.unidade === filtroUnidade;
+    const matchPerfil = filtroPerfil === 'todos' || usuario.perfil === filtroPerfil;
+    const matchStatus = filtroStatus === 'todos' || usuario.status === filtroStatus;
+    const matchUnidade = filtroUnidade === 'todas' || usuario.unidade === filtroUnidade;
     const matchBusca = !busca || 
       usuario.nome.toLowerCase().includes(busca.toLowerCase()) ||
       usuario.email.toLowerCase().includes(busca.toLowerCase());

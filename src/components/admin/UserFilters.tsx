@@ -43,7 +43,7 @@ const UserFilters: React.FC<UserFiltersProps> = ({
           <SelectValue placeholder="Perfil" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">Todos</SelectItem>
+          <SelectItem value="todos">Todos</SelectItem>
           <SelectItem value="Administrador">Administrador</SelectItem>
           <SelectItem value="Gestor">Gestor</SelectItem>
           <SelectItem value="Instrutor">Instrutor</SelectItem>
@@ -55,7 +55,7 @@ const UserFilters: React.FC<UserFiltersProps> = ({
           <SelectValue placeholder="Status" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">Todos</SelectItem>
+          <SelectItem value="todos">Todos</SelectItem>
           <SelectItem value="Ativo">Ativo</SelectItem>
           <SelectItem value="Inativo">Inativo</SelectItem>
         </SelectContent>
@@ -65,7 +65,7 @@ const UserFilters: React.FC<UserFiltersProps> = ({
           <SelectValue placeholder="Unidade" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">Todas</SelectItem>
+          <SelectItem value="todas">Todas</SelectItem>
           <SelectItem value="Wefit Centro">Wefit Centro</SelectItem>
           <SelectItem value="Wefit Paulista">Wefit Paulista</SelectItem>
           <SelectItem value="Wefit Ipanema">Wefit Ipanema</SelectItem>
