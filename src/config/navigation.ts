@@ -168,6 +168,16 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
 
   instrutor: [
     {
+      title: 'Painel Principal',
+      items: [
+        {
+          title: 'Dashboard',
+          href: '/instrutor/dashboard',
+          icon: LayoutDashboard,
+        },
+      ],
+    },
+    {
       title: 'Instrução',
       items: [
         {
@@ -189,6 +199,11 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
           title: 'Avaliações Físicas',
           href: '/instrutor/avaliacoes',
           icon: ClipboardList,
+        },
+        {
+          title: 'Chat/Mensagens',
+          href: '/instrutor/chat',
+          icon: MessageSquare,
         },
       ],
     },

@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -28,6 +29,7 @@ import GestorFeedback from "@/pages/gestor/Feedback";
 import GestorComunicacao from "@/pages/gestor/Comunicacao";
 
 // Instrutor Pages
+import InstrutorDashboard from "@/pages/instrutor/Dashboard";
 import InstrutorAulas from "@/pages/instrutor/Aulas";
 import InstrutorAlunos from "@/pages/instrutor/Alunos";
 import InstrutorExercicios from "@/pages/instrutor/Exercicios";
@@ -90,6 +92,7 @@ const App = () => (
             <Route path="/gestor/comunicacao" element={<Layout><GestorComunicacao /></Layout>} />
 
             {/* Instrutor Routes */}
+            <Route path="/instrutor/dashboard" element={<Layout><InstrutorDashboard /></Layout>} />
             <Route path="/instrutor/aulas" element={<Layout><InstrutorAulas /></Layout>} />
             <Route path="/instrutor/alunos" element={<Layout><InstrutorAlunos /></Layout>} />
             <Route path="/instrutor/exercicios" element={<Layout><InstrutorExercicios /></Layout>} />
