@@ -1,209 +1,191 @@
 
-import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Send, Phone, Video, MoreVertical, Users, Search } from 'lucide-react';
-
-interface Mensagem {
-  id: number;
-  remetente: string;
-  conteudo: string;
-  timestamp: Date;
-  tipo: 'texto' | 'imagem' | 'arquivo';
-}
-
-interface Conversa {
-  id: number;
-  nome: string;
-  tipo: 'individual' | 'grupo';
-  participantes: string[];
-  ultimaMensagem: string;
-  timestamp: Date;
-  naoLidas: number;
-  avatar?: string;
-  online: boolean;
-}
+import { Badge } from '@/components/ui/badge';
+import { Search, Send, MessageCircle, Clock, Image, Paperclip } from 'lucide-react';
 
 const InstrutorChat: React.FC = () => {
-  const [conversaSelecionada, setConversaSelecionada] = useState<number | null>(1);
-  const [novaMensagem, setNovaMensagem] = useState('');
-  const [busca, setBusca] = useState('');
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [conversaSelecionada, setConversaSelecionada] = useState<any>(null);
+  const [mensagem, setMensagem] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const conversas: Conversa[] = [
+  const conversas = [
     {
       id: 1,
-      nome: 'Equipe Manhã',
-      tipo: 'grupo',
-      participantes: ['João Silva', 'Maria Santos', 'Pedro Costa'],
-      ultimaMensagem: 'Pessoal, vamos alinhar o treino da Turma A?',
-      timestamp: new Date(Date.now() - 300000), // 5 min atrás
-      naoLidas: 2,
+      aluno: {
+        nome: 'Maria Silva',
+        foto: '/placeholder.svg'
+      },
+      ultimaMensagem: 'Obrigada pelas dicas de alimentação!',
+      horario: '14:30',
+      naoLidas: 0,
       online: true
     },
     {
       id: 2,
-      nome: 'Carlos Gestão',
-      tipo: 'individual',
-      participantes: ['Carlos Gestão'],
-      ultimaMensagem: 'Preciso dos relatórios de frequência',
-      timestamp: new Date(Date.now() - 1800000), // 30 min atrás
-      naoLidas: 1,
-      online: true
-    },
-    {
-      id: 3,
-      nome: 'Ana Recepção',
-      tipo: 'individual',
-      participantes: ['Ana Recepção'],
-      ultimaMensagem: 'Cliente perguntou sobre aula de spinning',
-      timestamp: new Date(Date.now() - 3600000), // 1h atrás
-      naoLidas: 0,
+      aluno: {
+        nome: 'João Santos',
+        foto: '/placeholder.svg'
+      },
+      ultimaMensagem: 'Posso trocar o exercício de agachamento?',
+      horario: '12:15',
+      naoLidas: 2,
       online: false
     },
     {
-      id: 4,
-      nome: 'Instrutores Unidade',
-      tipo: 'grupo',
-      participantes: ['Roberto', 'Lucia', 'Fernando', 'Camila'],
-      ultimaMensagem: 'Alguém pode cobrir minha aula das 18h?',
-      timestamp: new Date(Date.now() - 7200000), // 2h atrás
-      naoLidas: 0,
+      id: 3,
+      aluno: {
+        nome: 'Ana Costa',
+        foto: '/placeholder.svg'
+      },
+      ultimaMensagem: 'Estou sentindo dor no joelho, é normal?',
+      horario: '10:45',
+      naoLidas: 1,
       online: true
     }
   ];
 
-  const mensagens: { [key: number]: Mensagem[] } = {
-    1: [
-      {
-        id: 1,
-        remetente: 'João Silva',
-        conteudo: 'Bom dia pessoal! Como vamos organizar os treinos de hoje?',
-        timestamp: new Date(Date.now() - 3600000),
-        tipo: 'texto'
-      },
-      {
-        id: 2,
-        remetente: 'Maria Santos',
-        conteudo: 'Oi João! Estava pensando em focar mais em exercícios funcionais',
-        timestamp: new Date(Date.now() - 3300000),
-        tipo: 'texto'
-      },
-      {
-        id: 3,
-        remetente: 'Você',
-        conteudo: 'Ótima ideia Maria! Posso preparar uma sequência de agachamentos e pranchas',
-        timestamp: new Date(Date.now() - 3000000),
-        tipo: 'texto'
-      },
-      {
-        id: 4,
-        remetente: 'Pedro Costa',
-        conteudo: 'Pessoal, vamos alinhar o treino da Turma A?',
-        timestamp: new Date(Date.now() - 300000),
-        tipo: 'texto'
-      }
-    ],
-    2: [
-      {
-        id: 1,
-        remetente: 'Carlos Gestão',
-        conteudo: 'Oi! Você poderia me enviar os relatórios de frequência da semana?',
-        timestamp: new Date(Date.now() - 3600000),
-        tipo: 'texto'
-      },
-      {
-        id: 2,
-        remetente: 'Carlos Gestão',
-        conteudo: 'Preciso dos relatórios de frequência',
-        timestamp: new Date(Date.now() - 1800000),
-        tipo: 'texto'
-      }
-    ]
-  };
+  const mensagens = [
+    {
+      id: 1,
+      tipo: 'recebida',
+      conteudo: 'Oi professor! Tenho uma dúvida sobre o treino de hoje.',
+      horario: '14:25',
+      status: 'lida'
+    },
+    {
+      id: 2,
+      tipo: 'enviada',
+      conteudo: 'Oi Maria! Claro, pode falar. Em que posso ajudar?',
+      horario: '14:26',
+      status: 'lida'
+    },
+    {
+      id: 3,
+      tipo: 'recebida',
+      conteudo: 'É sobre o agachamento búlgaro. Estou sentindo muito no quadríceps, é normal?',
+      horario: '14:27',
+      status: 'lida'
+    },
+    {
+      id: 4,
+      tipo: 'enviada',
+      conteudo: 'Sim, é normal sentir mais no quadríceps nesse exercício. Mas vamos ajustar a posição do pé para ativar mais o glúteo também. Amanhã te mostro a técnica correta.',
+      horario: '14:28',
+      status: 'entregue'
+    },
+    {
+      id: 5,
+      tipo: 'recebida',
+      conteudo: 'Perfeito! E sobre a alimentação pré-treino que você me falou?',
+      horario: '14:29',
+      status: 'lida'
+    },
+    {
+      id: 6,
+      tipo: 'enviada',
+      conteudo: 'Ah sim! Lembra de comer algo leve cerca de 30-60 minutos antes. Uma banana com aveia é uma ótima opção. Evite alimentos muito pesados ou gordurosos.',
+      horario: '14:30',
+      status: 'entregue'
+    },
+    {
+      id: 7,
+      tipo: 'recebida',
+      conteudo: 'Obrigada pelas dicas de alimentação!',
+      horario: '14:30',
+      status: 'lida'
+    }
+  ];
 
-  const conversasFiltradas = conversas.filter(conversa => 
-    conversa.nome.toLowerCase().includes(busca.toLowerCase())
+  const conversasFiltradas = conversas.filter(conversa =>
+    conversa.aluno.nome.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const conversaAtual = conversas.find(c => c.id === conversaSelecionada);
-  const mensagensAtual = mensagens[conversaSelecionada || 1] || [];
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [mensagensAtual]);
-
   const enviarMensagem = () => {
-    if (!novaMensagem.trim()) return;
-    
-    console.log('Enviando mensagem:', novaMensagem);
-    setNovaMensagem('');
+    if (mensagem.trim()) {
+      // Simular envio de mensagem
+      console.log('Enviando mensagem:', mensagem);
+      setMensagem('');
+    }
   };
 
-  const formatarHora = (date: Date) => {
-    return date.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  const getStatusIcon = (status: string) => {
+    switch (status) {
+      case 'enviada':
+        return <div className="w-2 h-2 bg-gray-400 rounded-full"></div>;
+      case 'entregue':
+        return <div className="w-2 h-2 bg-blue-500 rounded-full"></div>;
+      case 'lida':
+        return <div className="w-2 h-2 bg-green-500 rounded-full"></div>;
+      default:
+        return null;
+    }
   };
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Chat Interno</h1>
-        <p className="text-gray-600 mt-2">Comunicação em tempo real com a equipe</p>
+    <div className="h-[calc(100vh-8rem)]">
+      <div className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-900">Minhas Mensagens Wefit</h1>
+        <p className="text-gray-600 mt-2">Mantenha contato direto com seus alunos</p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px]">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
         {/* Lista de Conversas */}
         <Card className="lg:col-span-1">
           <CardHeader>
-            <CardTitle className="text-lg">Conversas</CardTitle>
+            <CardTitle className="flex items-center">
+              <MessageCircle className="h-5 w-5 mr-2" />
+              Conversas
+            </CardTitle>
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-              <Input
-                placeholder="Buscar conversas..."
-                value={busca}
-                onChange={(e) => setBusca(e.target.value)}
-                className="pl-10"
+              <input
+                type="text"
+                placeholder="Buscar conversa..."
+                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
           </CardHeader>
           <CardContent className="p-0">
-            <div className="space-y-1">
+            <div className="space-y-0">
               {conversasFiltradas.map((conversa) => (
                 <div
                   key={conversa.id}
-                  className={`p-3 cursor-pointer hover:bg-gray-50 border-b ${
-                    conversaSelecionada === conversa.id ? 'bg-purple-50 border-l-4 border-l-purple-600' : ''
+                  className={`p-4 border-b cursor-pointer hover:bg-gray-50 transition-colors ${
+                    conversaSelecionada?.id === conversa.id ? 'bg-blue-50 border-blue-200' : ''
                   }`}
-                  onClick={() => setConversaSelecionada(conversa.id)}
+                  onClick={() => setConversaSelecionada(conversa)}
                 >
-                  <div className="flex items-start gap-3">
+                  <div className="flex items-center gap-3">
                     <div className="relative">
-                      <Avatar className="h-10 w-10">
-                        <AvatarImage src={conversa.avatar} />
-                        <AvatarFallback>
-                          {conversa.tipo === 'grupo' ? <Users className="h-4 w-4" /> : conversa.nome.charAt(0)}
-                        </AvatarFallback>
+                      <Avatar>
+                        <AvatarImage src={conversa.aluno.foto} />
+                        <AvatarFallback>{conversa.aluno.nome.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                       </Avatar>
                       {conversa.online && (
-                        <div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                        <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-center">
-                        <p className="font-medium text-gray-900 truncate">{conversa.nome}</p>
-                        <div className="flex items-center gap-1">
-                          <span className="text-xs text-gray-500">{formatarHora(conversa.timestamp)}</span>
-                          {conversa.naoLidas > 0 && (
-                            <Badge variant="default" className="h-5 w-5 p-0 flex items-center justify-center text-xs">
-                              {conversa.naoLidas}
-                            </Badge>
-                          )}
+                      <div className="flex justify-between items-start">
+                        <div className="font-medium text-sm truncate">{conversa.aluno.nome}</div>
+                        <div className="text-xs text-gray-500 flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          {conversa.horario}
                         </div>
                       </div>
-                      <p className="text-sm text-gray-600 truncate">{conversa.ultimaMensagem}</p>
+                      <div className="flex justify-between items-center mt-1">
+                        <div className="text-sm text-gray-600 truncate">{conversa.ultimaMensagem}</div>
+                        {conversa.naoLidas > 0 && (
+                          <Badge variant="destructive" className="text-xs">
+                            {conversa.naoLidas}
+                          </Badge>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -212,90 +194,91 @@ const InstrutorChat: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* Área de Mensagens */}
+        {/* Área de Conversa */}
         <Card className="lg:col-span-2 flex flex-col">
-          {conversaAtual ? (
+          {conversaSelecionada ? (
             <>
               {/* Header da Conversa */}
               <CardHeader className="border-b">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <Avatar className="h-10 w-10">
-                      <AvatarImage src={conversaAtual.avatar} />
-                      <AvatarFallback>
-                        {conversaAtual.tipo === 'grupo' ? <Users className="h-4 w-4" /> : conversaAtual.nome.charAt(0)}
-                      </AvatarFallback>
+                <div className="flex items-center gap-3">
+                  <div className="relative">
+                    <Avatar>
+                      <AvatarImage src={conversaSelecionada.aluno.foto} />
+                      <AvatarFallback>{conversaSelecionada.aluno.nome.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                     </Avatar>
-                    <div>
-                      <h3 className="font-semibold">{conversaAtual.nome}</h3>
-                      <p className="text-sm text-gray-600">
-                        {conversaAtual.tipo === 'grupo' 
-                          ? `${conversaAtual.participantes.length} participantes`
-                          : conversaAtual.online ? 'Online' : 'Última vez há 2h'
-                        }
-                      </p>
-                    </div>
+                    {conversaSelecionada.online && (
+                      <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></div>
+                    )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant="ghost" size="sm">
-                      <Phone className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      <Video className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      <MoreVertical className="h-4 w-4" />
-                    </Button>
+                  <div>
+                    <CardTitle className="text-lg">{conversaSelecionada.aluno.nome}</CardTitle>
+                    <div className="text-sm text-gray-500">
+                      {conversaSelecionada.online ? 'Online agora' : 'Visto por último às ' + conversaSelecionada.horario}
+                    </div>
                   </div>
                 </div>
               </CardHeader>
 
-              {/* Área de Mensagens */}
-              <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
-                {mensagensAtual.map((mensagem) => (
-                  <div
-                    key={mensagem.id}
-                    className={`flex ${mensagem.remetente === 'Você' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    <div className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                      mensagem.remetente === 'Você'
-                        ? 'bg-purple-600 text-white'
-                        : 'bg-gray-100 text-gray-900'
-                    }`}>
-                      {mensagem.remetente !== 'Você' && (
-                        <p className="text-xs font-medium mb-1 opacity-70">{mensagem.remetente}</p>
-                      )}
-                      <p className="text-sm">{mensagem.conteudo}</p>
-                      <p className={`text-xs mt-1 ${
-                        mensagem.remetente === 'Você' ? 'text-purple-200' : 'text-gray-500'
-                      }`}>
-                        {formatarHora(mensagem.timestamp)}
-                      </p>
+              {/* Mensagens */}
+              <CardContent className="flex-1 p-4 overflow-y-auto">
+                <div className="space-y-4">
+                  {mensagens.map((msg) => (
+                    <div
+                      key={msg.id}
+                      className={`flex ${msg.tipo === 'enviada' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div
+                        className={`max-w-[70%] rounded-lg p-3 ${
+                          msg.tipo === 'enviada'
+                            ? 'bg-blue-500 text-white'
+                            : 'bg-gray-100 text-gray-900'
+                        }`}
+                      >
+                        <div className="text-sm">{msg.conteudo}</div>
+                        <div className={`text-xs mt-1 flex items-center gap-1 ${
+                          msg.tipo === 'enviada' ? 'text-blue-100' : 'text-gray-500'
+                        }`}>
+                          <Clock className="h-3 w-3" />
+                          {msg.horario}
+                          {msg.tipo === 'enviada' && getStatusIcon(msg.status)}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
-                <div ref={messagesEndRef} />
+                  ))}
+                </div>
               </CardContent>
 
-              {/* Input de Nova Mensagem */}
+              {/* Input de Mensagem */}
               <div className="border-t p-4">
-                <div className="flex gap-2">
-                  <Input
+                <div className="flex items-center gap-2">
+                  <Button variant="outline" size="sm">
+                    <Paperclip className="h-4 w-4" />
+                  </Button>
+                  <Button variant="outline" size="sm">
+                    <Image className="h-4 w-4" />
+                  </Button>
+                  <input
+                    type="text"
                     placeholder="Digite sua mensagem..."
-                    value={novaMensagem}
-                    onChange={(e) => setNovaMensagem(e.target.value)}
+                    className="flex-1 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value={mensagem}
+                    onChange={(e) => setMensagem(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && enviarMensagem()}
-                    className="flex-1"
                   />
-                  <Button onClick={enviarMensagem} disabled={!novaMensagem.trim()}>
+                  <Button onClick={enviarMensagem} disabled={!mensagem.trim()}>
                     <Send className="h-4 w-4" />
                   </Button>
                 </div>
               </div>
             </>
           ) : (
+            // Estado vazio
             <CardContent className="flex-1 flex items-center justify-center">
-              <p className="text-gray-500">Selecione uma conversa para começar</p>
+              <div className="text-center text-gray-500">
+                <MessageCircle className="h-12 w-12 mx-auto mb-4 text-gray-300" />
+                <p className="text-lg font-medium">Selecione uma conversa</p>
+                <p className="text-sm">Escolha um aluno da lista para começar a conversar</p>
+              </div>
             </CardContent>
           )}
         </Card>

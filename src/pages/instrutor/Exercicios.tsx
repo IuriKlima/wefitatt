@@ -3,349 +3,311 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Search, Plus, Filter, Play, Eye, Edit, Heart, Timer, Target } from 'lucide-react';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Search, Plus, Play, Heart, Zap, Users, Dumbbell, Filter, BookOpen } from 'lucide-react';
 
 const InstrutorExercicios: React.FC = () => {
+  const [selectedExercicio, setSelectedExercicio] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  const [filterCategory, setFilterCategory] = useState('all');
-  const [filterDifficulty, setFilterDifficulty] = useState('all');
+  const [filtroGrupo, setFiltroGrupo] = useState('todos');
 
-  // Dados placeholder dos exercícios
-  const exercicios = [
+  const exerciciosGlobal = [
     {
       id: 1,
-      nome: 'Burpees',
-      categoria: 'Cardio',
-      dificuldade: 'Intermediário',
-      duracao: '30s',
-      calorias: '12-15',
-      equipamento: 'Peso corporal',
-      musculosTrabalho: ['Corpo todo', 'Core', 'Pernas'],
-      descricao: 'Exercício completo que combina agachamento, prancha e salto',
-      video: 'placeholder-video.mp4',
-      instrucoes: ['Comece em pé', 'Agache e apoie as mãos no chão', 'Estenda as pernas para posição de prancha', 'Retorne à posição de agachamento', 'Pule com os braços para cima']
+      nome: 'Supino Reto com Barra',
+      grupoMuscular: 'Peito',
+      equipamento: 'Barra e Banco',
+      nivel: 'Intermediário',
+      tipo: 'Força',
+      thumbnail: '/placeholder.svg',
+      descricao: 'Exercício clássico para desenvolvimento do peitoral maior',
+      instrucoes: 'Deite-se no banco, pegue a barra com pegada pronada...',
+      biblioteca: 'global'
     },
     {
       id: 2,
-      nome: 'Prancha',
-      categoria: 'Core',
-      dificuldade: 'Iniciante',
-      duracao: '60s',
-      calorias: '3-5',
-      equipamento: 'Peso corporal',
-      musculosTrabalho: ['Core', 'Ombros', 'Braços'],
-      descricao: 'Exercício isométrico para fortalecimento do core',
-      video: 'placeholder-video.mp4',
-      instrucoes: ['Deite de bruços', 'Apoie antebraços e pontas dos pés', 'Mantenha o corpo reto', 'Contraia o abdômen', 'Respire normalmente']
+      nome: 'Agachamento Livre',
+      grupoMuscular: 'Pernas',
+      equipamento: 'Corporal',
+      nivel: 'Iniciante',
+      tipo: 'Força',
+      thumbnail: '/placeholder.svg',
+      descricao: 'Movimento fundamental para fortalecimento das pernas',
+      instrucoes: 'Mantenha os pés paralelos, desça até formar 90 graus...',
+      biblioteca: 'global'
     },
     {
       id: 3,
-      nome: 'Agachamento com Salto',
-      categoria: 'Pernas',
-      dificuldade: 'Intermediário',
-      duracao: '45s',
-      calorias: '8-12',
-      equipamento: 'Peso corporal',
-      musculosTrabalho: ['Quadríceps', 'Glúteos', 'Panturrilhas'],
-      descricao: 'Variação do agachamento tradicional com componente pliométrico',
-      video: 'placeholder-video.mp4',
-      instrucoes: ['Pés na largura dos ombros', 'Agache até 90 graus', 'Salte explosivamente', 'Aterrisse suavemente', 'Repita o movimento']
+      nome: 'Corrida na Esteira',
+      grupoMuscular: 'Cardio',
+      equipamento: 'Esteira',
+      nivel: 'Iniciante',
+      tipo: 'Cardio',
+      thumbnail: '/placeholder.svg',
+      descricao: 'Exercício cardiovascular básico',
+      instrucoes: 'Ajuste a velocidade e inclinação conforme condicionamento...',
+      biblioteca: 'global'
     }
   ];
 
-  const categorias = ['Cardio', 'Core', 'Pernas', 'Braços', 'Peito', 'Costas', 'Ombros', 'Funcional'];
-  const dificuldades = ['Iniciante', 'Intermediário', 'Avançado'];
+  const exerciciosPessoais = [
+    {
+      id: 4,
+      nome: 'Variação Burpee Wefit',
+      grupoMuscular: 'Corpo todo',
+      equipamento: 'Corporal',
+      nivel: 'Avançado',
+      tipo: 'Funcional',
+      thumbnail: '/placeholder.svg',
+      descricao: 'Variação personalizada do burpee tradicional',
+      instrucoes: 'Inicie em pé, desça em prancha, salto e rotação...',
+      biblioteca: 'pessoal'
+    },
+    {
+      id: 5,
+      nome: 'Circuito TRX Personalizado',
+      grupoMuscular: 'Corpo todo',
+      equipamento: 'TRX',
+      nivel: 'Intermediário',
+      tipo: 'Funcional',
+      thumbnail: '/placeholder.svg',
+      descricao: 'Sequência de exercícios no TRX criada por mim',
+      instrucoes: 'Execute cada movimento por 45 segundos...',
+      biblioteca: 'pessoal'
+    }
+  ];
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty.toLowerCase()) {
-      case 'iniciante':
-        return 'bg-green-100 text-green-800';
-      case 'intermediário':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'avançado':
-        return 'bg-red-100 text-red-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
+  const gruposMusculares = ['todos', 'Peito', 'Costas', 'Pernas', 'Ombros', 'Braços', 'Core', 'Cardio', 'Corpo todo'];
+
+  const exerciciosFiltrados = [...exerciciosGlobal, ...exerciciosPessoais].filter(exercicio => {
+    const matchSearch = exercicio.nome.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchGrupo = filtroGrupo === 'todos' || exercicio.grupoMuscular === filtroGrupo;
+    return matchSearch && matchGrupo;
+  });
+
+  const getNivelColor = (nivel: string) => {
+    switch (nivel) {
+      case 'Iniciante': return 'bg-green-500';
+      case 'Intermediário': return 'bg-yellow-500';
+      case 'Avançado': return 'bg-red-500';
+      default: return 'bg-gray-500';
     }
   };
-
-  const getCategoryColor = (category: string) => {
-    const colors = {
-      'cardio': 'bg-pink-100 text-pink-800',
-      'core': 'bg-purple-100 text-purple-800',
-      'pernas': 'bg-blue-100 text-blue-800',
-      'braços': 'bg-orange-100 text-orange-800',
-      'peito': 'bg-green-100 text-green-800',
-      'costas': 'bg-indigo-100 text-indigo-800',
-      'ombros': 'bg-yellow-100 text-yellow-800',
-      'funcional': 'bg-gray-100 text-gray-800'
-    };
-    return colors[category.toLowerCase() as keyof typeof colors] || 'bg-gray-100 text-gray-800';
-  };
-
-  const filteredExercicios = exercicios.filter(exercicio => {
-    const matchesSearch = exercicio.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         exercicio.categoria.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory = filterCategory === 'all' || exercicio.categoria.toLowerCase() === filterCategory;
-    const matchesDifficulty = filterDifficulty === 'all' || exercicio.dificuldade.toLowerCase() === filterDifficulty;
-    return matchesSearch && matchesCategory && matchesDifficulty;
-  });
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Biblioteca de Exercícios</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Biblioteca de Exercícios Wefit</h1>
           <p className="text-gray-600 mt-2">Explore e gerencie exercícios para seus treinos</p>
         </div>
-        
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="h-4 w-4 mr-2" />
-              Novo Exercício
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>Adicionar Novo Exercício</DialogTitle>
-              <DialogDescription>
-                Crie um novo exercício para sua biblioteca
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="nome">Nome do Exercício</Label>
-                <Input id="nome" placeholder="Ex: Flexão de braço" />
-              </div>
-              <div>
-                <Label htmlFor="categoria">Categoria</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione a categoria" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categorias.map(cat => (
-                      <SelectItem key={cat} value={cat.toLowerCase()}>{cat}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="dificuldade">Dificuldade</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione a dificuldade" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {dificuldades.map(dif => (
-                      <SelectItem key={dif} value={dif.toLowerCase()}>{dif}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="duracao">Duração Recomendada</Label>
-                <Input id="duracao" placeholder="Ex: 30s ou 12 repetições" />
-              </div>
-              <div>
-                <Label htmlFor="equipamento">Equipamento Necessário</Label>
-                <Input id="equipamento" placeholder="Ex: Halteres, peso corporal" />
-              </div>
-              <div>
-                <Label htmlFor="calorias">Calorias (estimativa/min)</Label>
-                <Input id="calorias" placeholder="Ex: 8-12" />
-              </div>
-              <div className="col-span-2">
-                <Label htmlFor="descricao">Descrição</Label>
-                <Textarea id="descricao" placeholder="Breve descrição do exercício..." />
-              </div>
-              <div className="col-span-2">
-                <Label htmlFor="instrucoes">Instruções de Execução</Label>
-                <Textarea id="instrucoes" placeholder="Passo a passo da execução..." />
-              </div>
-            </div>
-            <div className="flex justify-end gap-2 mt-4">
-              <Button variant="outline">Cancelar</Button>
-              <Button>Salvar Exercício</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <Button>
+          <Plus className="h-4 w-4 mr-2" />
+          Adicionar Exercício
+        </Button>
       </div>
 
-      {/* Estatísticas */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-2xl font-bold text-purple-600">156</div>
-            <div className="text-sm text-gray-600">Total de Exercícios</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-2xl font-bold text-green-600">24</div>
-            <div className="text-sm text-gray-600">Meus Favoritos</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-2xl font-bold text-blue-600">8</div>
-            <div className="text-sm text-gray-600">Categorias</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-4">
-            <div className="text-2xl font-bold text-orange-600">12</div>
-            <div className="text-sm text-gray-600">Criados por mim</div>
-          </CardContent>
-        </Card>
-      </div>
+      <Tabs defaultValue="todos" className="w-full">
+        <TabsList>
+          <TabsTrigger value="todos">Todos os Exercícios</TabsTrigger>
+          <TabsTrigger value="global">Biblioteca Global</TabsTrigger>
+          <TabsTrigger value="pessoal">Minha Biblioteca</TabsTrigger>
+          <TabsTrigger value="unidade">Biblioteca da Unidade</TabsTrigger>
+        </TabsList>
 
-      {/* Filtros */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Filter className="h-5 w-5" />
-            Filtros
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="flex gap-4">
-            <div className="flex-1">
-              <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
-                <Input
-                  placeholder="Buscar exercícios..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
+        <TabsContent value="todos" className="space-y-4">
+          {/* Filtros e Busca */}
+          <div className="flex flex-col md:flex-row gap-4">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              <input
+                type="text"
+                placeholder="Buscar exercício..."
+                className="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
-            <Select value={filterCategory} onValueChange={setFilterCategory}>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Todas as categorias" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todas as categorias</SelectItem>
-                {categorias.map(cat => (
-                  <SelectItem key={cat} value={cat.toLowerCase()}>{cat}</SelectItem>
+            <div className="flex gap-2">
+              <select
+                className="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={filtroGrupo}
+                onChange={(e) => setFiltroGrupo(e.target.value)}
+              >
+                {gruposMusculares.map(grupo => (
+                  <option key={grupo} value={grupo}>
+                    {grupo === 'todos' ? 'Todos os grupos' : grupo}
+                  </option>
                 ))}
-              </SelectContent>
-            </Select>
-            <Select value={filterDifficulty} onValueChange={setFilterDifficulty}>
-              <SelectTrigger className="w-48">
-                <SelectValue placeholder="Todas as dificuldades" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Todas as dificuldades</SelectItem>
-                {dificuldades.map(dif => (
-                  <SelectItem key={dif} value={dif.toLowerCase()}>{dif}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              </select>
+              <Button variant="outline">
+                <Filter className="h-4 w-4 mr-2" />
+                Mais Filtros
+              </Button>
+            </div>
           </div>
-        </CardContent>
-      </Card>
 
-      {/* Grid de Exercícios */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredExercicios.map((exercicio) => (
-          <Card key={exercicio.id} className="hover:shadow-lg transition-shadow">
+          {/* Grid de Exercícios */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {exerciciosFiltrados.map((exercicio) => (
+              <Card key={exercicio.id} className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => setSelectedExercicio(exercicio)}>
+                <CardHeader className="pb-2">
+                  <div className="relative">
+                    <img 
+                      src={exercicio.thumbnail} 
+                      alt={exercicio.nome}
+                      className="w-full h-32 object-cover rounded-lg bg-gray-200"
+                    />
+                    <div className="absolute top-2 right-2">
+                      <Button size="sm" className="h-8 w-8 p-0 bg-black bg-opacity-50 hover:bg-opacity-70">
+                        <Play className="h-4 w-4 text-white" />
+                      </Button>
+                    </div>
+                    <div className="absolute bottom-2 left-2">
+                      <Badge variant="outline" className="bg-white">
+                        {exercicio.biblioteca === 'global' ? (
+                          <Users className="h-3 w-3 mr-1" />
+                        ) : (
+                          <BookOpen className="h-3 w-3 mr-1" />
+                        )}
+                        {exercicio.biblioteca === 'global' ? 'Global' : 'Pessoal'}
+                      </Badge>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <CardTitle className="text-lg leading-tight">{exercicio.nome}</CardTitle>
+                    <div className="flex items-center gap-2">
+                      <Badge variant="outline" className="text-xs">
+                        {exercicio.grupoMuscular}
+                      </Badge>
+                      <div className={`w-2 h-2 rounded-full ${getNivelColor(exercicio.nivel)}`}></div>
+                      <span className="text-xs text-gray-600">{exercicio.nivel}</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs text-gray-600">
+                      {exercicio.tipo === 'Cardio' ? (
+                        <Heart className="h-3 w-3" />
+                      ) : exercicio.tipo === 'Funcional' ? (
+                        <Zap className="h-3 w-3" />
+                      ) : (
+                        <Dumbbell className="h-3 w-3" />
+                      )}
+                      <span>{exercicio.equipamento}</span>
+                    </div>
+                    <CardDescription className="text-xs line-clamp-2">
+                      {exercicio.descricao}
+                    </CardDescription>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </TabsContent>
+
+        <TabsContent value="global">
+          <div className="text-center py-8">
+            <Users className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+            <p className="text-gray-500">Exercícios da biblioteca global da academia</p>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="pessoal">
+          <div className="text-center py-8">
+            <BookOpen className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+            <p className="text-gray-500">Seus exercícios personalizados</p>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="unidade">
+          <div className="text-center py-8">
+            <Users className="h-12 w-12 mx-auto text-gray-400 mb-4" />
+            <p className="text-gray-500">Exercícios compartilhados pela sua unidade</p>
+          </div>
+        </TabsContent>
+      </Tabs>
+
+      {/* Modal de Detalhes do Exercício */}
+      {selectedExercicio && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <div className="flex justify-between items-start">
                 <div>
-                  <CardTitle className="text-lg">{exercicio.nome}</CardTitle>
-                  <div className="flex gap-2 mt-2">
-                    <Badge className={getCategoryColor(exercicio.categoria)}>
-                      {exercicio.categoria}
-                    </Badge>
-                    <Badge className={getDifficultyColor(exercicio.dificuldade)}>
-                      {exercicio.dificuldade}
-                    </Badge>
-                  </div>
+                  <CardTitle className="text-xl">{selectedExercicio.nome}</CardTitle>
+                  <CardDescription>{selectedExercicio.grupoMuscular} • {selectedExercicio.equipamento}</CardDescription>
                 </div>
-                <Button variant="ghost" size="sm">
-                  <Heart className="h-4 w-4" />
+                <Button variant="outline" onClick={() => setSelectedExercicio(null)}>
+                  Fechar
                 </Button>
               </div>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-gray-600 mb-4">{exercicio.descricao}</p>
-              
-              <div className="space-y-2 mb-4">
-                <div className="flex items-center gap-2 text-sm">
-                  <Timer className="h-4 w-4 text-gray-500" />
-                  <span>{exercicio.duracao}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <Target className="h-4 w-4 text-gray-500" />
-                  <span>{exercicio.calorias} cal/min</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="text-gray-500">Equipamento:</span>
-                  <span>{exercicio.equipamento}</span>
-                </div>
-              </div>
-
-              <div className="mb-4">
-                <p className="text-sm font-medium text-gray-700 mb-2">Músculos trabalhados:</p>
-                <div className="flex flex-wrap gap-1">
-                  {exercicio.musculosTrabalho.map((musculo, index) => (
-                    <Badge key={index} variant="outline" className="text-xs">
-                      {musculo}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline" size="sm" className="flex-1">
-                      <Play className="h-4 w-4 mr-1" />
-                      Ver Vídeo
+              <div className="space-y-6">
+                {/* Imagem/Vídeo */}
+                <div className="relative">
+                  <img 
+                    src={selectedExercicio.thumbnail} 
+                    alt={selectedExercicio.nome}
+                    className="w-full h-64 object-cover rounded-lg bg-gray-200"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Button size="lg" className="bg-black bg-opacity-50 hover:bg-opacity-70">
+                      <Play className="h-6 w-6 mr-2 text-white" />
+                      Assistir Demonstração
                     </Button>
-                  </DialogTrigger>
-                  <DialogContent className="max-w-3xl">
-                    <DialogHeader>
-                      <DialogTitle>{exercicio.nome}</DialogTitle>
-                      <DialogDescription>
-                        Instruções detalhadas de execução
-                      </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <div className="bg-gray-100 rounded-lg p-4 text-center">
-                        <Play className="h-16 w-16 mx-auto text-gray-400 mb-2" />
-                        <p className="text-gray-600">Vídeo demonstrativo</p>
-                      </div>
-                      <div>
-                        <h4 className="font-medium mb-2">Instruções:</h4>
-                        <ol className="list-decimal list-inside space-y-1">
-                          {exercicio.instrucoes.map((instrucao, index) => (
-                            <li key={index} className="text-sm text-gray-700">{instrucao}</li>
-                          ))}
-                        </ol>
-                      </div>
+                  </div>
+                </div>
+
+                {/* Informações */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <div className="font-medium text-gray-700">Nível de Dificuldade</div>
+                    <div className="flex items-center gap-2">
+                      <div className={`w-3 h-3 rounded-full ${getNivelColor(selectedExercicio.nivel)}`}></div>
+                      {selectedExercicio.nivel}
                     </div>
-                  </DialogContent>
-                </Dialog>
-                <Button variant="outline" size="sm">
-                  <Eye className="h-4 w-4" />
-                </Button>
-                <Button variant="outline" size="sm">
-                  <Edit className="h-4 w-4" />
-                </Button>
+                  </div>
+                  <div>
+                    <div className="font-medium text-gray-700">Tipo de Exercício</div>
+                    <div>{selectedExercicio.tipo}</div>
+                  </div>
+                </div>
+
+                {/* Descrição */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Descrição</h3>
+                  <p className="text-gray-700">{selectedExercicio.descricao}</p>
+                </div>
+
+                {/* Instruções */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Instruções de Execução</h3>
+                  <p className="text-gray-700">{selectedExercicio.instrucoes}</p>
+                </div>
+
+                {/* Músculos Trabalhados */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Músculos Trabalhados</h3>
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="outline">{selectedExercicio.grupoMuscular}</Badge>
+                    <Badge variant="outline">Músculos secundários</Badge>
+                  </div>
+                </div>
+
+                {/* Ações */}
+                <div className="flex gap-2">
+                  <Button className="flex-1">Adicionar ao Treino</Button>
+                  <Button variant="outline" className="flex-1">Favoritar</Button>
+                  {selectedExercicio.biblioteca === 'pessoal' && (
+                    <Button variant="outline">Editar</Button>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

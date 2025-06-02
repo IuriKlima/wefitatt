@@ -36,7 +36,7 @@ const AdminDashboard: React.FC = () => {
     { mes: 'Set', mrr: 578000 },
     { mes: 'Out', mrr: 612000 },
     { mes: 'Nov', mrr: 645000 },
-    { mes: 'Dez', mes: 'Dez', mrr: 678000 }
+    { mes: 'Dez', mrr: 678000 }
   ];
 
   const unidadesPerformance = [

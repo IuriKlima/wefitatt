@@ -1,260 +1,237 @@
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Calendar, Clock, Users, MapPin, Plus, Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Calendar, Clock, Users, MapPin, CheckCircle, XCircle, Calendar as CalendarIcon } from 'lucide-react';
 
 const InstrutorAulas: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
+  const [view, setView] = useState<'week' | 'month'>('week');
+  const [selectedAula, setSelectedAula] = useState<any>(null);
 
-  // Dados placeholder das aulas
-  const minhasAulas = [
+  const proximasAulas = [
     {
       id: 1,
-      nome: 'Spinning Avançado',
+      nome: 'Yoga Matinal',
       horario: '07:00 - 08:00',
-      data: '2024-05-31',
+      data: '2024-01-15',
       sala: 'Sala 1',
       capacidade: 20,
       inscritos: 18,
-      status: 'confirmada',
-      observacoes: 'Trazer toalha e garrafa d\'água'
+      status: 'agendada',
+      tipo: 'Yoga'
     },
     {
       id: 2,
-      nome: 'Crossfit Iniciante',
-      horario: '09:00 - 10:00',
-      data: '2024-05-31',
-      sala: 'Área Externa',
+      nome: 'CrossFit Intenso',
+      horario: '18:30 - 19:30',
+      data: '2024-01-15',
+      sala: 'Box CrossFit',
       capacidade: 15,
-      inscritos: 12,
-      status: 'confirmada',
-      observacoes: 'Foco em movimentos básicos'
+      inscritos: 15,
+      status: 'lotada',
+      tipo: 'CrossFit'
     },
     {
       id: 3,
-      nome: 'Yoga Flow',
-      horario: '18:00 - 19:00',
-      data: '2024-05-31',
+      nome: 'Pilates Intermediário',
+      horario: '09:00 - 10:00',
+      data: '2024-01-16',
       sala: 'Sala 2',
-      capacidade: 25,
-      inscritos: 22,
-      status: 'confirmada',
-      observacoes: 'Aula para todos os níveis'
-    },
-    {
-      id: 4,
-      nome: 'HIIT Intenso',
-      horario: '19:30 - 20:30',
-      data: '2024-05-31',
-      sala: 'Sala 1',
       capacidade: 12,
-      inscritos: 10,
-      status: 'confirmada',
-      observacoes: 'Treino de alta intensidade'
+      inscritos: 8,
+      status: 'agendada',
+      tipo: 'Pilates'
     }
+  ];
+
+  const alunosPresentes = [
+    { id: 1, nome: 'Maria Silva', presente: true },
+    { id: 2, nome: 'João Santos', presente: true },
+    { id: 3, nome: 'Ana Costa', presente: false },
+    { id: 4, nome: 'Pedro Lima', presente: true },
+    { id: 5, nome: 'Carla Mendes', presente: true }
   ];
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'confirmada':
-        return 'bg-green-100 text-green-800';
-      case 'cancelada':
-        return 'bg-red-100 text-red-800';
-      case 'reagendada':
-        return 'bg-yellow-100 text-yellow-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
+      case 'agendada': return 'default';
+      case 'lotada': return 'destructive';
+      case 'cancelada': return 'secondary';
+      default: return 'outline';
     }
-  };
-
-  const getOcupacaoColor = (inscritos: number, capacidade: number) => {
-    const percentual = (inscritos / capacidade) * 100;
-    if (percentual >= 90) return 'text-red-600';
-    if (percentual >= 70) return 'text-yellow-600';
-    return 'text-green-600';
   };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Minhas Aulas</h1>
-          <p className="text-gray-600 mt-2">Gerencie suas aulas e horários</p>
+          <h1 className="text-3xl font-bold text-gray-900">Minhas Aulas Agendadas</h1>
+          <p className="text-gray-600 mt-2">Gerencie suas aulas e acompanhe a participação dos alunos</p>
         </div>
-        
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="h-4 w-4 mr-2" />
-              Nova Aula
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>Agendar Nova Aula</DialogTitle>
-              <DialogDescription>
-                Preencha os dados para criar uma nova aula
-              </DialogDescription>
-            </DialogHeader>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="nome">Nome da Aula</Label>
-                <Input id="nome" placeholder="Ex: Spinning Avançado" />
-              </div>
-              <div>
-                <Label htmlFor="data">Data</Label>
-                <Input id="data" type="date" />
-              </div>
-              <div>
-                <Label htmlFor="inicio">Horário de Início</Label>
-                <Input id="inicio" type="time" />
-              </div>
-              <div>
-                <Label htmlFor="fim">Horário de Término</Label>
-                <Input id="fim" type="time" />
-              </div>
-              <div>
-                <Label htmlFor="sala">Sala/Local</Label>
-                <Select>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Selecione a sala" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="sala1">Sala 1</SelectItem>
-                    <SelectItem value="sala2">Sala 2</SelectItem>
-                    <SelectItem value="externa">Área Externa</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div>
-                <Label htmlFor="capacidade">Capacidade Máxima</Label>
-                <Input id="capacidade" type="number" placeholder="20" />
-              </div>
-              <div className="col-span-2">
-                <Label htmlFor="observacoes">Observações</Label>
-                <Textarea id="observacoes" placeholder="Instruções especiais, equipamentos necessários..." />
-              </div>
-            </div>
-            <div className="flex justify-end gap-2 mt-4">
-              <Button variant="outline">Cancelar</Button>
-              <Button>Agendar Aula</Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        <div className="flex gap-2">
+          <Button 
+            variant={view === 'week' ? 'default' : 'outline'}
+            onClick={() => setView('week')}
+          >
+            Semana
+          </Button>
+          <Button 
+            variant={view === 'month' ? 'default' : 'outline'}
+            onClick={() => setView('month')}
+          >
+            Mês
+          </Button>
+        </div>
       </div>
 
-      {/* Filtro por Data */}
+      {/* Próximas Aulas */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg">Filtrar por Data</CardTitle>
+          <CardTitle className="flex items-center">
+            <CalendarIcon className="h-5 w-5 mr-2" />
+            Próximas Aulas (Hoje e Amanhã)
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex gap-4 items-center">
-            <Input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              className="w-auto"
-            />
-            <Button variant="outline">Hoje</Button>
-            <Button variant="outline">Próximos 7 dias</Button>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {proximasAulas.map((aula) => (
+              <Card key={aula.id} className="hover:shadow-md transition-shadow cursor-pointer" onClick={() => setSelectedAula(aula)}>
+                <CardHeader className="pb-2">
+                  <div className="flex justify-between items-start">
+                    <CardTitle className="text-lg">{aula.nome}</CardTitle>
+                    <Badge variant={getStatusColor(aula.status) as any}>
+                      {aula.status === 'agendada' ? 'Agendada' : aula.status === 'lotada' ? 'Lotada' : 'Cancelada'}
+                    </Badge>
+                  </div>
+                  <CardDescription className="text-sm text-blue-600 font-medium">{aula.tipo}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center">
+                      <Calendar className="h-4 w-4 mr-2 text-gray-500" />
+                      {new Date(aula.data).toLocaleDateString('pt-BR')}
+                    </div>
+                    <div className="flex items-center">
+                      <Clock className="h-4 w-4 mr-2 text-gray-500" />
+                      {aula.horario}
+                    </div>
+                    <div className="flex items-center">
+                      <MapPin className="h-4 w-4 mr-2 text-gray-500" />
+                      {aula.sala}
+                    </div>
+                    <div className="flex items-center">
+                      <Users className="h-4 w-4 mr-2 text-gray-500" />
+                      {aula.inscritos}/{aula.capacidade} inscritos
+                    </div>
+                  </div>
+                  <div className="mt-4 bg-gray-100 rounded-lg p-2">
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div 
+                        className="bg-blue-600 h-2 rounded-full" 
+                        style={{ width: `${(aula.inscritos / aula.capacidade) * 100}%` }}
+                      ></div>
+                    </div>
+                    <div className="text-xs text-gray-600 mt-1 text-center">
+                      {Math.round((aula.inscritos / aula.capacidade) * 100)}% ocupação
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </CardContent>
       </Card>
 
-      {/* Lista de Aulas */}
-      <div className="grid gap-4">
-        {minhasAulas.map((aula) => (
-          <Card key={aula.id} className="hover:shadow-md transition-shadow">
+      {/* Modal de Detalhes da Aula */}
+      {selectedAula && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <CardHeader>
               <div className="flex justify-between items-start">
                 <div>
-                  <CardTitle className="text-xl">{aula.nome}</CardTitle>
-                  <CardDescription className="flex items-center gap-4 mt-2">
-                    <span className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
-                      {new Date(aula.data).toLocaleDateString('pt-BR')}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="h-4 w-4" />
-                      {aula.horario}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <MapPin className="h-4 w-4" />
-                      {aula.sala}
-                    </span>
-                  </CardDescription>
+                  <CardTitle className="text-xl">{selectedAula.nome}</CardTitle>
+                  <CardDescription>{selectedAula.tipo} • {selectedAula.sala}</CardDescription>
                 </div>
-                <Badge className={getStatusColor(aula.status)}>
-                  {aula.status}
-                </Badge>
+                <Button variant="outline" onClick={() => setSelectedAula(null)}>
+                  Fechar
+                </Button>
               </div>
             </CardHeader>
             <CardContent>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <Users className="h-4 w-4" />
-                    <span className={`font-medium ${getOcupacaoColor(aula.inscritos, aula.capacidade)}`}>
-                      {aula.inscritos}/{aula.capacidade} alunos
-                    </span>
+              <div className="space-y-6">
+                {/* Informações da Aula */}
+                <div className="grid grid-cols-2 gap-4 p-4 bg-gray-50 rounded-lg">
+                  <div>
+                    <div className="font-medium text-gray-700">Data e Horário</div>
+                    <div>{new Date(selectedAula.data).toLocaleDateString('pt-BR')} • {selectedAula.horario}</div>
                   </div>
-                  {aula.observacoes && (
-                    <span className="text-sm text-gray-600">
-                      {aula.observacoes}
-                    </span>
-                  )}
+                  <div>
+                    <div className="font-medium text-gray-700">Ocupação</div>
+                    <div>{selectedAula.inscritos}/{selectedAula.capacidade} alunos</div>
+                  </div>
                 </div>
+
+                {/* Lista de Presença */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">Registrar Presença</h3>
+                  <div className="space-y-2">
+                    {alunosPresentes.map((aluno) => (
+                      <div key={aluno.id} className="flex items-center justify-between p-3 border rounded-lg">
+                        <div className="font-medium">{aluno.nome}</div>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            size="sm"
+                            variant={aluno.presente ? "default" : "outline"}
+                            className="h-8 w-8 p-0"
+                          >
+                            <CheckCircle className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant={!aluno.presente ? "destructive" : "outline"}
+                            className="h-8 w-8 p-0"
+                          >
+                            <XCircle className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Feedback Pós-Aula */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-4">Notas da Aula</h3>
+                  <textarea 
+                    className="w-full p-3 border rounded-lg resize-none h-24"
+                    placeholder="Adicione suas observações sobre a aula (participação, dificuldades, sucessos, etc.)"
+                  />
+                </div>
+
+                {/* Ações */}
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm">
-                    <Users className="h-4 w-4 mr-1" />
-                    Ver Alunos
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    <Edit className="h-4 w-4 mr-1" />
-                    Editar
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    <Trash2 className="h-4 w-4 mr-1" />
-                    Cancelar
-                  </Button>
+                  <Button className="flex-1">Salvar Lista de Presença</Button>
+                  <Button variant="outline" className="flex-1">Remarcar Aula</Button>
                 </div>
               </div>
             </CardContent>
           </Card>
-        ))}
-      </div>
+        </div>
+      )}
 
-      {/* Resumo Semanal */}
+      {/* Calendário de Aulas (Placeholder) */}
       <Card>
         <CardHeader>
-          <CardTitle>Resumo da Semana</CardTitle>
-          <CardDescription>Estatísticas das suas aulas</CardDescription>
+          <CardTitle>Calendário de Aulas - {view === 'week' ? 'Visão Semanal' : 'Visão Mensal'}</CardTitle>
+          <CardDescription>Visualize todas as suas aulas agendadas</CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-purple-600">24</div>
-              <div className="text-sm text-gray-600">Aulas agendadas</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-green-600">456</div>
-              <div className="text-sm text-gray-600">Total de alunos</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-blue-600">85%</div>
-              <div className="text-sm text-gray-600">Taxa de ocupação</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-yellow-600">4.8</div>
-              <div className="text-sm text-gray-600">Avaliação média</div>
+          <div className="h-96 bg-gray-50 rounded-lg flex items-center justify-center">
+            <div className="text-center text-gray-500">
+              <CalendarIcon className="h-12 w-12 mx-auto mb-4" />
+              <p>Calendário interativo de aulas</p>
+              <p className="text-sm">(Arrastar e soltar para reagendar)</p>
             </div>
           </div>
         </CardContent>
