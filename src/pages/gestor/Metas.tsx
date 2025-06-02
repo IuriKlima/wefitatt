@@ -278,7 +278,7 @@ const GestorMetas: React.FC = () => {
               <div className="text-center p-4 border rounded-lg">
                 <Users className="h-8 w-8 text-blue-500 mx-auto mb-2" />
                 <div className="font-medium">Trabalho em Equipe</div>
-                <div className="text-sm text-gray-500">NPS > 70</div>
+                <div className="text-sm text-gray-500">NPS &gt; 70</div>
               </div>
               <div className="text-center p-4 border rounded-lg">
                 <TrendingUp className="h-8 w-8 text-green-500 mx-auto mb-2" />

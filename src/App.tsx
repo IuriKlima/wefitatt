@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -24,6 +23,9 @@ import GestorFinanceiro from "@/pages/gestor/Financeiro";
 import GestorMetas from "@/pages/gestor/Metas";
 import GestorEstoque from "@/pages/gestor/Estoque";
 import GestorManutencao from "@/pages/gestor/Manutencao";
+import GestorEventos from "@/pages/gestor/Eventos";
+import GestorFeedback from "@/pages/gestor/Feedback";
+import GestorComunicacao from "@/pages/gestor/Comunicacao";
 
 // Instrutor Pages
 import InstrutorAulas from "@/pages/instrutor/Aulas";
@@ -83,6 +85,9 @@ const App = () => (
             <Route path="/gestor/metas" element={<Layout><GestorMetas /></Layout>} />
             <Route path="/gestor/estoque" element={<Layout><GestorEstoque /></Layout>} />
             <Route path="/gestor/manutencao" element={<Layout><GestorManutencao /></Layout>} />
+            <Route path="/gestor/eventos" element={<Layout><GestorEventos /></Layout>} />
+            <Route path="/gestor/feedback" element={<Layout><GestorFeedback /></Layout>} />
+            <Route path="/gestor/comunicacao" element={<Layout><GestorComunicacao /></Layout>} />
 
             {/* Instrutor Routes */}
             <Route path="/instrutor/aulas" element={<Layout><InstrutorAulas /></Layout>} />
