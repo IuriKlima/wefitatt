@@ -47,13 +47,23 @@ export interface NavigationSection {
 export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
   administrador: [
     {
-      title: 'Administração',
+      title: 'Visão Global',
       items: [
         {
-          title: 'Dashboard (Admin)',
+          title: 'Dashboard Global',
           href: '/admin/dashboard',
           icon: LayoutDashboard,
         },
+        {
+          title: 'Analytics Avançado',
+          href: '/admin/analytics',
+          icon: PieChart,
+        },
+      ],
+    },
+    {
+      title: 'Gestão da Plataforma',
+      items: [
         {
           title: 'Gerenciar Unidades',
           href: '/admin/unidades',
@@ -69,6 +79,11 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
           href: '/admin/configuracoes',
           icon: Settings,
         },
+      ],
+    },
+    {
+      title: 'Relatórios e Auditoria',
+      items: [
         {
           title: 'Relatórios Globais',
           href: '/admin/relatorios',
@@ -260,6 +275,11 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
           title: 'Meu Progresso',
           href: '/aluno/progresso',
           icon: TrendingUp,
+        },
+        {
+          title: 'Gamificação',
+          href: '/aluno/gamificacao',
+          icon: Star,
         },
         {
           title: 'Minha Conta',

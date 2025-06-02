@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Switch } from '@/components/ui/switch';
 import { Badge } from '@/components/ui/badge';
-import { Plus, Search, Edit, Eye, Building2 } from 'lucide-react';
+import { Plus, Search, Edit, Eye, Building2, Users, Target, DollarSign, Progress, LayoutDashboard } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
 interface Unidade {
@@ -29,10 +29,66 @@ interface Unidade {
 
 const AdminUnidades: React.FC = () => {
   const [unidades] = useState<Unidade[]>([
-    { id: 1, nome: 'Wefit Centro', endereco: 'Rua das Flores, 123', cidade: 'São Paulo', uf: 'SP', alunos: 450, status: 'Ativa' },
-    { id: 2, nome: 'Wefit Paulista', endereco: 'Av. Paulista, 1000', cidade: 'São Paulo', uf: 'SP', alunos: 380, status: 'Ativa' },
-    { id: 3, nome: 'Wefit Ipanema', endereco: 'Rua Visconde, 500', cidade: 'Rio de Janeiro', uf: 'RJ', alunos: 320, status: 'Ativa' },
-    { id: 4, nome: 'Wefit Bela Vista', endereco: 'Rua Augusta, 800', cidade: 'São Paulo', uf: 'SP', alunos: 0, status: 'Inativa' },
+    { 
+      id: 1, 
+      nome: 'Wefit Centro', 
+      endereco: 'Rua das Flores, 123', 
+      cidade: 'São Paulo', 
+      uf: 'SP', 
+      alunos: 680, 
+      status: 'Ativa',
+      cnpj: '12.345.678/0001-90',
+      cep: '01310-100',
+      telefone: '(11) 99999-9999',
+      email: 'centro@wefit.com',
+      horarioFuncionamento: '06:00 às 22:00',
+      capacidadeMaxima: 800
+    },
+    { 
+      id: 2, 
+      nome: 'Wefit Paulista', 
+      endereco: 'Av. Paulista, 1000', 
+      cidade: 'São Paulo', 
+      uf: 'SP', 
+      alunos: 620, 
+      status: 'Ativa',
+      cnpj: '12.345.678/0001-91',
+      cep: '01310-200',
+      telefone: '(11) 98888-8888',
+      email: 'paulista@wefit.com',
+      horarioFuncionamento: '06:00 às 22:00',
+      capacidadeMaxima: 750
+    },
+    { 
+      id: 3, 
+      nome: 'Wefit Ipanema', 
+      endereco: 'Rua Visconde, 500', 
+      cidade: 'Rio de Janeiro', 
+      uf: 'RJ', 
+      alunos: 580, 
+      status: 'Ativa',
+      cnpj: '12.345.678/0001-92',
+      cep: '22411-030',
+      telefone: '(21) 97777-7777',
+      email: 'ipanema@wefit.com',
+      horarioFuncionamento: '06:00 às 22:00',
+      capacidadeMaxima: 700
+    },
+    { 
+      id: 4, 
+      nome: 'Wefit Bela Vista', 
+      endereco: 'Rua Augusta, 800', 
+      cidade: 'São Paulo', 
+      uf: 'SP', 
+      alunos: 0, 
+      status: 'Inativa',
+      cnpj: '12.345.678/0001-93',
+      cep: '01305-000',
+      telefone: '(11) 96666-6666',
+      email: 'belavista@wefit.com',
+      horarioFuncionamento: '06:00 às 22:00',
+      capacidadeMaxima: 600
+    },
   ]);
 
   const [filtroStatus, setFiltroStatus] = useState<string>('todos');
@@ -77,11 +133,79 @@ const AdminUnidades: React.FC = () => {
     setDetalhesAberto(true);
   };
 
+  const handleVisualizarDashboard = (unidadeId: number) => {
+    console.log('Visualizando dashboard da unidade:', unidadeId);
+    // Simular navegação para dashboard específico da unidade
+  };
+
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Gerenciar Unidades</h1>
-        <p className="text-gray-600 mt-2">Administração de todas as unidades da rede</p>
+      <div className="flex justify-between items-start">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Gerenciar Unidades</h1>
+          <p className="text-gray-600 mt-2">Administração de todas as unidades da rede Wefit</p>
+        </div>
+        <div className="flex gap-2">
+          <Button variant="outline">
+            <Building2 className="h-4 w-4 mr-2" />
+            Metas por Região
+          </Button>
+        </div>
+      </div>
+
+      {/* KPIs das Unidades */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Total de Unidades</CardTitle>
+            <Building2 className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{unidades.length}</div>
+            <p className="text-xs text-muted-foreground">
+              {unidades.filter(u => u.status === 'Ativa').length} ativas
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Alunos Totais</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{unidades.reduce((acc, u) => acc + u.alunos, 0).toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground">
+              Média: {Math.round(unidades.reduce((acc, u) => acc + u.alunos, 0) / unidades.filter(u => u.status === 'Ativa').length)} por unidade
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Capacidade Total</CardTitle>
+            <Target className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">{unidades.reduce((acc, u) => acc + (u.capacidadeMaxima || 0), 0).toLocaleString()}</div>
+            <p className="text-xs text-muted-foreground">
+              Taxa de ocupação: {Math.round((unidades.reduce((acc, u) => acc + u.alunos, 0) / unidades.reduce((acc, u) => acc + (u.capacidadeMaxima || 0), 0)) * 100)}%
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Receita Estimada</CardTitle>
+            <DollarSign className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">R$ 2.1M</div>
+            <p className="text-xs text-muted-foreground">
+              +12.5% vs mês anterior
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
       <Card>
@@ -346,6 +470,7 @@ const AdminUnidades: React.FC = () => {
                 <TableHead>Nome da Unidade</TableHead>
                 <TableHead>Endereço (Cidade/UF)</TableHead>
                 <TableHead>Nº Alunos</TableHead>
+                <TableHead>Taxa de Ocupação</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Ações</TableHead>
               </TableRow>
@@ -357,6 +482,17 @@ const AdminUnidades: React.FC = () => {
                   <TableCell>{unidade.endereco}, {unidade.cidade}/{unidade.uf}</TableCell>
                   <TableCell>{unidade.alunos}</TableCell>
                   <TableCell>
+                    <div className="flex items-center gap-2">
+                      <Progress 
+                        value={unidade.capacidadeMaxima ? (unidade.alunos / unidade.capacidadeMaxima) * 100 : 0} 
+                        className="w-16 h-2" 
+                      />
+                      <span className="text-xs">
+                        {unidade.capacidadeMaxima ? Math.round((unidade.alunos / unidade.capacidadeMaxima) * 100) : 0}%
+                      </span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
                     <Badge variant={unidade.status === 'Ativa' ? 'default' : 'secondary'}>
                       {unidade.status}
                     </Badge>
@@ -365,6 +501,9 @@ const AdminUnidades: React.FC = () => {
                     <div className="flex items-center gap-2">
                       <Button variant="ghost" size="sm" onClick={() => handleVisualizarDetalhes(unidade)}>
                         <Eye className="h-4 w-4" />
+                      </Button>
+                      <Button variant="ghost" size="sm" onClick={() => handleVisualizarDashboard(unidade.id)}>
+                        <LayoutDashboard className="h-4 w-4" />
                       </Button>
                       <Button variant="ghost" size="sm">
                         <Edit className="h-4 w-4" />
@@ -381,7 +520,7 @@ const AdminUnidades: React.FC = () => {
 
       {/* Modal de Detalhes */}
       <Dialog open={detalhesAberto} onOpenChange={setDetalhesAberto}>
-        <DialogContent className="max-w-3xl">
+        <DialogContent className="max-w-4xl">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
               <Building2 className="h-5 w-5" />
@@ -390,24 +529,70 @@ const AdminUnidades: React.FC = () => {
           </DialogHeader>
           {unidadeSelecionada && (
             <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h3 className="font-semibold mb-3">Informações Gerais</h3>
                   <div className="space-y-2 text-sm">
                     <p><span className="font-medium">Nome:</span> {unidadeSelecionada.nome}</p>
+                    <p><span className="font-medium">CNPJ:</span> {unidadeSelecionada.cnpj}</p>
                     <p><span className="font-medium">Endereço:</span> {unidadeSelecionada.endereco}</p>
                     <p><span className="font-medium">Cidade/UF:</span> {unidadeSelecionada.cidade}/{unidadeSelecionada.uf}</p>
+                    <p><span className="font-medium">CEP:</span> {unidadeSelecionada.cep}</p>
+                    <p><span className="font-medium">Telefone:</span> {unidadeSelecionada.telefone}</p>
+                    <p><span className="font-medium">Email:</span> {unidadeSelecionada.email}</p>
+                    <p><span className="font-medium">Horário:</span> {unidadeSelecionada.horarioFuncionamento}</p>
                     <p><span className="font-medium">Status:</span> {unidadeSelecionada.status}</p>
                   </div>
                 </div>
                 <div>
                   <h3 className="font-semibold mb-3">Métricas da Unidade</h3>
-                  <div className="space-y-2 text-sm">
-                    <p><span className="font-medium">Alunos Ativos:</span> {unidadeSelecionada.alunos}</p>
-                    <p><span className="font-medium">Capacidade Máxima:</span> 500 alunos</p>
-                    <p><span className="font-medium">Taxa de Ocupação:</span> {Math.round((unidadeSelecionada.alunos / 500) * 100)}%</p>
-                    <p><span className="font-medium">Receita Mensal:</span> R$ 45.600,00</p>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex justify-between text-sm mb-1">
+                        <span>Alunos Ativos</span>
+                        <span>{unidadeSelecionada.alunos} / {unidadeSelecionada.capacidadeMaxima}</span>
+                      </div>
+                      <Progress 
+                        value={unidadeSelecionada.capacidadeMaxima ? (unidadeSelecionada.alunos / unidadeSelecionada.capacidadeMaxima) * 100 : 0} 
+                        className="h-2"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="font-medium">Taxa de Ocupação:</span>
+                        <div className="text-lg font-bold text-wefit-primary">
+                          {unidadeSelecionada.capacidadeMaxima ? Math.round((unidadeSelecionada.alunos / unidadeSelecionada.capacidadeMaxima) * 100) : 0}%
+                        </div>
+                      </div>
+                      <div>
+                        <span className="font-medium">Receita Mensal:</span>
+                        <div className="text-lg font-bold text-green-600">R$ 168.000</div>
+                      </div>
+                      <div>
+                        <span className="font-medium">NPS:</span>
+                        <div className="text-lg font-bold text-blue-600">78</div>
+                      </div>
+                      <div>
+                        <span className="font-medium">Crescimento MoM:</span>
+                        <div className="text-lg font-bold text-green-600">+12.5%</div>
+                      </div>
+                    </div>
                   </div>
+                </div>
+              </div>
+              
+              <div>
+                <h3 className="font-semibold mb-3">Ações Rápidas</h3>
+                <div className="flex gap-2">
+                  <Button size="sm" onClick={() => handleVisualizarDashboard(unidadeSelecionada.id)}>
+                    Ver Dashboard Completo
+                  </Button>
+                  <Button size="sm" variant="outline">
+                    Configurar Metas
+                  </Button>
+                  <Button size="sm" variant="outline">
+                    Relatórios da Unidade
+                  </Button>
                 </div>
               </div>
             </div>
