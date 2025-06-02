@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -35,6 +34,7 @@ import InstrutorAlunos from "@/pages/instrutor/Alunos";
 import InstrutorExercicios from "@/pages/instrutor/Exercicios";
 import InstrutorAvaliacoes from "@/pages/instrutor/Avaliacoes";
 import InstrutorChat from "@/pages/instrutor/Chat";
+import InstrutorPlanosTreino from "@/pages/instrutor/PlanosTreino";
 
 // Recepcionista Pages
 import RecepcionistaDashboard from "@/pages/recepcionista/Dashboard";
@@ -95,6 +95,7 @@ const App = () => (
             <Route path="/instrutor/dashboard" element={<Layout><InstrutorDashboard /></Layout>} />
             <Route path="/instrutor/aulas" element={<Layout><InstrutorAulas /></Layout>} />
             <Route path="/instrutor/alunos" element={<Layout><InstrutorAlunos /></Layout>} />
+            <Route path="/instrutor/planos-treino" element={<Layout><InstrutorPlanosTreino /></Layout>} />
             <Route path="/instrutor/exercicios" element={<Layout><InstrutorExercicios /></Layout>} />
             <Route path="/instrutor/avaliacoes" element={<Layout><InstrutorAvaliacoes /></Layout>} />
             <Route path="/instrutor/chat" element={<Layout><InstrutorChat /></Layout>} />

@@ -191,6 +191,11 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
           icon: Users,
         },
         {
+          title: 'Planos de Treino',
+          href: '/instrutor/planos-treino',
+          icon: ClipboardList,
+        },
+        {
           title: 'Biblioteca de Exercícios',
           href: '/instrutor/exercicios',
           icon: Dumbbell,
@@ -198,7 +203,7 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
         {
           title: 'Avaliações Físicas',
           href: '/instrutor/avaliacoes',
-          icon: ClipboardList,
+          icon: Activity,
         },
         {
           title: 'Chat/Mensagens',
