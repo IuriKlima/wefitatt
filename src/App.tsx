@@ -16,6 +16,8 @@ import TermosUso from '@/pages/TermosUso';
 import Login from '@/pages/Login';
 import Cadastro from '@/pages/Cadastro';
 import CadastroPasso2 from '@/pages/CadastroPasso2';
+import CadastroFluxo from '@/pages/CadastroFluxo';
+import CadastroFinalizado from '@/pages/CadastroFinalizado';
 import RecuperarSenha from '@/pages/RecuperarSenha';
 import RedefinirSenha from '@/pages/RedefinirSenha';
 import DashboardGenerico from '@/pages/DashboardGenerico';
@@ -112,6 +114,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/cadastro" element={<Cadastro />} />
         <Route path="/cadastro-passo-2" element={<CadastroPasso2 />} />
+        <Route path="/cadastro-fluxo" element={<CadastroFluxo />} />
+        <Route path="/cadastro-finalizado" element={<CadastroFinalizado />} />
         <Route path="/recuperar-senha" element={<RecuperarSenha />} />
         <Route path="/redefinir-senha" element={<RedefinirSenha />} />
         <Route path="/dashboard-generico" element={<DashboardGenerico />} />
