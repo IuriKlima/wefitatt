@@ -1,129 +1,89 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { 
-  Settings, 
-  Smartphone, 
-  TrendingUp, 
-  Megaphone, 
-  MessageCircle, 
-  Shield,
-  Users,
-  Clock,
-  BarChart3,
-  Target,
-  Brain
-} from 'lucide-react';
-
+import { Settings, Smartphone, TrendingUp, Megaphone, MessageCircle, Shield, Users, Clock, BarChart3, Target, Brain } from 'lucide-react';
 const Homepage = () => {
-  const features = [
-    {
-      icon: Settings,
-      title: "Gestão Inteligente e Centralizada",
-      description: "Controle total da sua academia em uma única plataforma"
-    },
-    {
-      icon: Smartphone,
-      title: "Aplicativo Completo",
-      description: "Para alunos e instrutores com experiência intuitiva"
-    },
-    {
-      icon: TrendingUp,
-      title: "Financeiro Simplificado",
-      description: "Controle total das finanças com relatórios detalhados"
-    },
-    {
-      icon: Megaphone,
-      title: "Marketing e Retenção",
-      description: "Ferramentas para engajar e fidelizar seus alunos"
-    },
-    {
-      icon: MessageCircle,
-      title: "Agente WhatsApp Inteligente",
-      description: "Atendimento automatizado 24/7 para seus clientes"
-    },
-    {
-      icon: Shield,
-      title: "Segurança e Confiabilidade",
-      description: "Dados protegidos com a mais alta tecnologia"
-    }
-  ];
-
-  const benefits = [
-    {
-      icon: Users,
-      title: "Aumente a Retenção de Alunos",
-      description: "Ferramentas de engajamento, acompanhamento personalizado e comunicação eficaz."
-    },
-    {
-      icon: Clock,
-      title: "Otimize seu Tempo",
-      description: "Automatize tarefas repetitivas e foque no que realmente importa: seus alunos e seu negócio."
-    },
-    {
-      icon: Target,
-      title: "Melhore a Experiência do Aluno",
-      description: "App intuitivo, treinos na palma da mão, agendamentos fáceis e acompanhamento de progresso."
-    },
-    {
-      icon: TrendingUp,
-      title: "Venda Mais Planos e Serviços",
-      description: "Funis de venda, gestão de leads e ponto de venda integrado."
-    },
-    {
-      icon: BarChart3,
-      title: "Decisões Baseadas em Dados",
-      description: "Relatórios completos e analytics para uma gestão estratégica."
-    }
-  ];
-
-  const differentials = [
-    {
-      title: "Inteligência Artificial e Agente WhatsApp",
-      description: "Um salto para o futuro do atendimento e gestão."
-    },
-    {
-      title: "Ecossistema Completo e Integrado",
-      description: "Da gestão administrativa ao engajamento total do aluno em uma única plataforma."
-    },
-    {
-      title: "Foco na Experiência do Usuário",
-      description: "Interfaces pensadas para todos os níveis, do admin ao aluno."
-    }
-  ];
-
-  const testimonials = [
-    {
-      name: "Carlos Silva",
-      gym: "Academia Forte & Saudável",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-      quote: "O Wefit revolucionou nossa gestão. Aumentamos 40% na retenção de alunos nos primeiros 6 meses!"
-    },
-    {
-      name: "Ana Paula Santos",
-      gym: "FitSpace Premium",
-      image: "https://images.unsplash.com/photo-1494790108755-2616b332c8f8?w=150&h=150&fit=crop&crop=face",
-      quote: "A automação do WhatsApp mudou completamente nosso atendimento. Respondemos 5x mais rápido!"
-    },
-    {
-      name: "Roberto Lima",
-      gym: "Rede MoveFit",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-      quote: "Gerenciar 8 unidades nunca foi tão fácil. O dashboard centralizado é simplesmente perfeito."
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-white">
+  const features = [{
+    icon: Settings,
+    title: "Gestão Inteligente e Centralizada",
+    description: "Controle total da sua academia em uma única plataforma"
+  }, {
+    icon: Smartphone,
+    title: "Aplicativo Completo",
+    description: "Para alunos e instrutores com experiência intuitiva"
+  }, {
+    icon: TrendingUp,
+    title: "Financeiro Simplificado",
+    description: "Controle total das finanças com relatórios detalhados"
+  }, {
+    icon: Megaphone,
+    title: "Marketing e Retenção",
+    description: "Ferramentas para engajar e fidelizar seus alunos"
+  }, {
+    icon: MessageCircle,
+    title: "Agente WhatsApp Inteligente",
+    description: "Atendimento automatizado 24/7 para seus clientes"
+  }, {
+    icon: Shield,
+    title: "Segurança e Confiabilidade",
+    description: "Dados protegidos com a mais alta tecnologia"
+  }];
+  const benefits = [{
+    icon: Users,
+    title: "Aumente a Retenção de Alunos",
+    description: "Ferramentas de engajamento, acompanhamento personalizado e comunicação eficaz."
+  }, {
+    icon: Clock,
+    title: "Otimize seu Tempo",
+    description: "Automatize tarefas repetitivas e foque no que realmente importa: seus alunos e seu negócio."
+  }, {
+    icon: Target,
+    title: "Melhore a Experiência do Aluno",
+    description: "App intuitivo, treinos na palma da mão, agendamentos fáceis e acompanhamento de progresso."
+  }, {
+    icon: TrendingUp,
+    title: "Venda Mais Planos e Serviços",
+    description: "Funis de venda, gestão de leads e ponto de venda integrado."
+  }, {
+    icon: BarChart3,
+    title: "Decisões Baseadas em Dados",
+    description: "Relatórios completos e analytics para uma gestão estratégica."
+  }];
+  const differentials = [{
+    title: "Inteligência Artificial e Agente WhatsApp",
+    description: "Um salto para o futuro do atendimento e gestão."
+  }, {
+    title: "Ecossistema Completo e Integrado",
+    description: "Da gestão administrativa ao engajamento total do aluno em uma única plataforma."
+  }, {
+    title: "Foco na Experiência do Usuário",
+    description: "Interfaces pensadas para todos os níveis, do admin ao aluno."
+  }];
+  const testimonials = [{
+    name: "Carlos Silva",
+    gym: "Academia Forte & Saudável",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    quote: "O Wefit revolucionou nossa gestão. Aumentamos 40% na retenção de alunos nos primeiros 6 meses!"
+  }, {
+    name: "Ana Paula Santos",
+    gym: "FitSpace Premium",
+    image: "https://images.unsplash.com/photo-1494790108755-2616b332c8f8?w=150&h=150&fit=crop&crop=face",
+    quote: "A automação do WhatsApp mudou completamente nosso atendimento. Respondemos 5x mais rápido!"
+  }, {
+    name: "Roberto Lima",
+    gym: "Rede MoveFit",
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    quote: "Gerenciar 8 unidades nunca foi tão fácil. O dashboard centralizado é simplesmente perfeito."
+  }];
+  return <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
+              <h1 className="text-4xl font-bold mb-6 leading-tight lg:text-5xl">
                 Wefit: A Inteligência que sua Academia Precisa para Evoluir
               </h1>
               <p className="text-xl lg:text-2xl mb-8 opacity-90 leading-relaxed">
@@ -139,11 +99,7 @@ const Homepage = () => {
               </div>
             </div>
             <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop" 
-                alt="Academia moderna com tecnologia"
-                className="rounded-lg shadow-2xl"
-              />
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop" alt="Academia moderna com tecnologia" className="rounded-lg shadow-2xl" />
               <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white/20 rounded-full"></div>
               <div className="absolute -top-6 -right-6 w-32 h-32 bg-white/10 rounded-full"></div>
             </div>
@@ -164,17 +120,15 @@ const Homepage = () => {
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((feature, index) => {
-              const Icon = feature.icon;
-              return (
-                <Card key={index} className="p-8 text-center hover:shadow-lg transition-shadow duration-300">
+            const Icon = feature.icon;
+            return <Card key={index} className="p-8 text-center hover:shadow-lg transition-shadow duration-300">
                   <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
                     <Icon className="h-8 w-8 text-purple-600" />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-4">{feature.title}</h3>
                   <p className="text-gray-600">{feature.description}</p>
-                </Card>
-              );
-            })}
+                </Card>;
+          })}
           </div>
         </div>
       </section>
@@ -193,9 +147,8 @@ const Homepage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               {benefits.map((benefit, index) => {
-                const Icon = benefit.icon;
-                return (
-                  <div key={index} className="flex gap-4">
+              const Icon = benefit.icon;
+              return <div key={index} className="flex gap-4">
                     <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
                       <Icon className="h-6 w-6 text-purple-600" />
                     </div>
@@ -203,16 +156,11 @@ const Homepage = () => {
                       <h3 className="text-xl font-semibold text-gray-900 mb-2">{benefit.title}</h3>
                       <p className="text-gray-600">{benefit.description}</p>
                     </div>
-                  </div>
-                );
-              })}
+                  </div>;
+            })}
             </div>
             <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=400&fit=crop" 
-                alt="Pessoa usando aplicativo fitness"
-                className="rounded-lg shadow-xl"
-              />
+              <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=400&fit=crop" alt="Pessoa usando aplicativo fitness" className="rounded-lg shadow-xl" />
             </div>
           </div>
         </div>
@@ -230,15 +178,13 @@ const Homepage = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {differentials.map((differential, index) => (
-              <Card key={index} className="p-8 text-center">
+            {differentials.map((differential, index) => <Card key={index} className="p-8 text-center">
                 <div className="w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Brain className="h-8 w-8 text-white" />
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">{differential.title}</h3>
                 <p className="text-gray-600">{differential.description}</p>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -255,22 +201,16 @@ const Homepage = () => {
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="p-8">
+            {testimonials.map((testimonial, index) => <Card key={index} className="p-8">
                 <div className="flex items-center mb-6">
-                  <img 
-                    src={testimonial.image} 
-                    alt={testimonial.name}
-                    className="w-16 h-16 rounded-full object-cover mr-4"
-                  />
+                  <img src={testimonial.image} alt={testimonial.name} className="w-16 h-16 rounded-full object-cover mr-4" />
                   <div>
                     <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
                     <p className="text-purple-600 font-medium">{testimonial.gym}</p>
                   </div>
                 </div>
                 <p className="text-gray-600 italic">"{testimonial.quote}"</p>
-              </Card>
-            ))}
+              </Card>)}
           </div>
         </div>
       </section>
@@ -294,8 +234,6 @@ const Homepage = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Homepage;
