@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import PublicLayout from '@/components/PublicLayout';
@@ -70,7 +71,6 @@ import AlunoConta from '@/pages/aluno/Conta';
 
 // Not Found page
 import NotFound from '@/pages/NotFound';
-import RedefinirSenha from './pages/RedefinirSenha';
 
 function App() {
   return (

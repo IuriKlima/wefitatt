@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { facebook, instagram, linkedin } from 'lucide-react';
 
 const PublicFooter = () => {
   const currentYear = new Date().getFullYear();
