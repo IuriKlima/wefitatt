@@ -1,3 +1,4 @@
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import { UserProvider } from '@/contexts/UserContext';
@@ -41,6 +42,8 @@ import GestorManutencao from '@/pages/gestor/Manutencao';
 import GestorComunicacao from '@/pages/gestor/Comunicacao';
 import GestorFeedback from '@/pages/gestor/Feedback';
 import GestorMetas from '@/pages/gestor/Metas';
+import GestorPlanos from '@/pages/gestor/Planos';
+import GestorConfiguracoes from '@/pages/gestor/Configuracoes';
 
 // Instrutor pages
 import InstrutorDashboard from '@/pages/instrutor/Dashboard';

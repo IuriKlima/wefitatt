@@ -28,7 +28,8 @@ import {
   Mail,
   PartyPopper,
   Star,
-  PieChart
+  PieChart,
+  FileText
 } from 'lucide-react';
 import { UserProfile } from '@/contexts/UserContext';
 
@@ -122,6 +123,11 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
           href: '/gestor/financeiro',
           icon: CreditCard,
         },
+        {
+          title: 'Planos da Academia',
+          href: '/gestor/planos',
+          icon: FileText,
+        },
       ],
     },
     {
@@ -161,6 +167,16 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
           title: 'Comunicação',
           href: '/gestor/comunicacao',
           icon: Mail,
+        },
+      ],
+    },
+    {
+      title: 'Configurações',
+      items: [
+        {
+          title: 'Configurações da Academia',
+          href: '/gestor/configuracoes',
+          icon: Settings,
         },
       ],
     },
