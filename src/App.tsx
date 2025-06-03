@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import { UserProvider } from '@/contexts/UserContext';
@@ -21,7 +20,6 @@ import CadastroFluxo from '@/pages/CadastroFluxo';
 import CadastroFinalizado from '@/pages/CadastroFinalizado';
 import RecuperarSenha from '@/pages/RecuperarSenha';
 import RedefinirSenha from '@/pages/RedefinirSenha';
-import DashboardGenerico from '@/pages/DashboardGenerico';
 
 // Admin pages
 import AdminDashboard from '@/pages/admin/Dashboard';
@@ -120,7 +118,6 @@ function App() {
           <Route path="/cadastro-finalizado" element={<CadastroFinalizado />} />
           <Route path="/recuperar-senha" element={<RecuperarSenha />} />
           <Route path="/redefinir-senha" element={<RedefinirSenha />} />
-          <Route path="/dashboard-generico" element={<DashboardGenerico />} />
 
           {/* Admin Routes */}
           <Route path="/admin/dashboard" element={<Layout><AdminDashboard /></Layout>} />

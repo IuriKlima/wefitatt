@@ -11,23 +11,8 @@ const CadastroFinalizado = () => {
   const { profile, inviteCode, formData, userName, businessName } = location.state || {};
 
   const handleAccessDashboard = () => {
-    // Simular login automático e redirecionar para o dashboard correspondente
-    if (profile === 'rede') {
-      navigate('/admin/dashboard');
-    } else if (profile === 'academia' || inviteCode) {
-      navigate('/gestor/dashboard');
-    } else if (profile === 'personal') {
-      navigate('/instrutor/dashboard');
-    } else {
-      navigate('/dashboard-generico');
-    }
-  };
-
-  const getDashboardType = () => {
-    if (profile === 'rede') return 'Painel de Administração da Rede';
-    if (profile === 'academia' || inviteCode) return 'Painel de Gestão da Academia';
-    if (profile === 'personal') return 'Painel Personal Trainer';
-    return 'Painel Wefit';
+    // Sempre redirecionar para o dashboard do admin
+    navigate('/admin/dashboard');
   };
 
   return (
@@ -87,7 +72,7 @@ const CadastroFinalizado = () => {
               <ul className="text-blue-700 text-left space-y-2">
                 <li className="flex items-center">
                   <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
-                  <span>Acesse seu {getDashboardType()}</span>
+                  <span>Acesse seu Painel de Administração</span>
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
