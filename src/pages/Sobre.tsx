@@ -1,34 +1,25 @@
-
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Target, Eye, Heart, Users, Lightbulb, Award } from 'lucide-react';
-
 const Sobre = () => {
-  const values = [
-    {
-      icon: Lightbulb,
-      title: "Inovação",
-      description: "Buscamos constantemente novas formas de revolucionar o mercado fitness através da tecnologia."
-    },
-    {
-      icon: Users,
-      title: "Foco no Cliente",
-      description: "Cada decisão é tomada pensando no sucesso e satisfação dos nossos parceiros."
-    },
-    {
-      icon: Eye,
-      title: "Transparência",
-      description: "Construímos relações baseadas na honestidade, clareza e comunicação aberta."
-    },
-    {
-      icon: Heart,
-      title: "Paixão por Resultados",
-      description: "Nos dedicamos incansavelmente para entregar soluções que geram resultados reais."
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-white">
+  const values = [{
+    icon: Lightbulb,
+    title: "Inovação",
+    description: "Buscamos constantemente novas formas de revolucionar o mercado fitness através da tecnologia."
+  }, {
+    icon: Users,
+    title: "Foco no Cliente",
+    description: "Cada decisão é tomada pensando no sucesso e satisfação dos nossos parceiros."
+  }, {
+    icon: Eye,
+    title: "Transparência",
+    description: "Construímos relações baseadas na honestidade, clareza e comunicação aberta."
+  }, {
+    icon: Heart,
+    title: "Paixão por Resultados",
+    description: "Nos dedicamos incansavelmente para entregar soluções que geram resultados reais."
+  }];
+  return <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 text-white py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -132,17 +123,15 @@ const Sobre = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => {
-              const Icon = value.icon;
-              return (
-                <Card key={index} className="p-6 text-center">
+            const Icon = value.icon;
+            return <Card key={index} className="p-6 text-center">
                   <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Icon className="h-6 w-6 text-purple-600" />
                   </div>
                   <h4 className="text-lg font-semibold text-gray-900 mb-3">{value.title}</h4>
                   <p className="text-gray-600 text-sm">{value.description}</p>
-                </Card>
-              );
-            })}
+                </Card>;
+          })}
           </div>
         </div>
       </section>
@@ -178,11 +167,7 @@ const Sobre = () => {
               </div>
               
               <div className="order-1 lg:order-2">
-                <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face" 
-                  alt="Iuri Klimavicius"
-                  className="w-64 h-64 rounded-full object-cover mx-auto shadow-xl"
-                />
+                <img alt="Iuri Klimavicius" className="w-64 h-64 rounded-full object-cover mx-auto shadow-xl" src="/lovable-uploads/10c39f96-e16a-41e7-8de7-e05c2ed3b96d.png" />
               </div>
             </div>
           </Card>
@@ -199,33 +184,21 @@ const Sobre = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             <Card className="p-6 text-center">
-              <img 
-                src="https://images.unsplash.com/photo-1494790108755-2616b332c8f8?w=200&h=200&fit=crop&crop=face" 
-                alt="Ana Silva"
-                className="w-24 h-24 rounded-full object-cover mx-auto mb-4"
-              />
+              <img src="https://images.unsplash.com/photo-1494790108755-2616b332c8f8?w=200&h=200&fit=crop&crop=face" alt="Ana Silva" className="w-24 h-24 rounded-full object-cover mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Ana Silva</h3>
               <p className="text-purple-600 font-medium mb-3">Head de Produto</p>
               <p className="text-gray-600 text-sm">Especialista em UX/UI com foco em experiência do usuário no mercado fitness.</p>
             </Card>
 
             <Card className="p-6 text-center">
-              <img 
-                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" 
-                alt="Carlos Santos"
-                className="w-24 h-24 rounded-full object-cover mx-auto mb-4"
-              />
+              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" alt="Carlos Santos" className="w-24 h-24 rounded-full object-cover mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Carlos Santos</h3>
               <p className="text-purple-600 font-medium mb-3">CTO</p>
               <p className="text-gray-600 text-sm">Arquiteto de software com expertise em sistemas escaláveis e inteligência artificial.</p>
             </Card>
 
             <Card className="p-6 text-center">
-              <img 
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face" 
-                alt="Marina Costa"
-                className="w-24 h-24 rounded-full object-cover mx-auto mb-4"
-              />
+              <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face" alt="Marina Costa" className="w-24 h-24 rounded-full object-cover mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-gray-900 mb-2">Marina Costa</h3>
               <p className="text-purple-600 font-medium mb-3">Head de Customer Success</p>
               <p className="text-gray-600 text-sm">Especialista em relacionamento com clientes e crescimento sustentável no mercado fitness.</p>
@@ -233,8 +206,6 @@ const Sobre = () => {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default Sobre;
