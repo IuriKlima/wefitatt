@@ -99,7 +99,7 @@ const Homepage = () => {
               </div>
             </div>
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop" alt="Academia moderna com tecnologia" className="rounded-lg shadow-2xl" />
+              <img alt="Academia moderna com tecnologia" className="rounded-lg shadow-2xl object-cover" src="/lovable-uploads/f2ed33c3-f8a1-428a-8b3e-53997fc31839.png" />
               <div className="absolute -bottom-6 -left-6 w-24 h-24 bg-white/20 rounded-full"></div>
               <div className="absolute -top-6 -right-6 w-32 h-32 bg-white/10 rounded-full"></div>
             </div>
