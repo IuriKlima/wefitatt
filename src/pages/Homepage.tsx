@@ -160,7 +160,7 @@ const Homepage = () => {
             })}
             </div>
             <div className="relative">
-              <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&h=400&fit=crop" alt="Pessoa usando aplicativo fitness" className="rounded-lg shadow-xl" />
+              <img alt="Pessoa usando aplicativo fitness" className="rounded-lg shadow-xl" src="/lovable-uploads/25e125e9-3020-441a-96bd-df4208648a45.jpg" />
             </div>
           </div>
         </div>
