@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -5,6 +6,14 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserProvider } from "@/contexts/UserContext";
 import Layout from "@/components/Layout";
+
+// Auth Pages
+import Login from "@/pages/Login";
+import Cadastro from "@/pages/Cadastro";
+import CadastroPasso2 from "@/pages/CadastroPasso2";
+import RecuperarSenha from "@/pages/RecuperarSenha";
+import RedefinirSenha from "@/pages/RedefinirSenha";
+import DashboardGenerico from "@/pages/DashboardGenerico";
 
 // Admin Pages
 import AdminDashboard from "@/pages/admin/Dashboard";
@@ -69,6 +78,14 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            
+            {/* Auth Routes */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/cadastro" element={<Cadastro />} />
+            <Route path="/cadastro-passo-2" element={<CadastroPasso2 />} />
+            <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+            <Route path="/redefinir-senha" element={<RedefinirSenha />} />
+            <Route path="/dashboard-generico" element={<DashboardGenerico />} />
             
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<Layout><AdminDashboard /></Layout>} />
