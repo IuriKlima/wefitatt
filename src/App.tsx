@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import { UserProvider } from '@/contexts/UserContext';
@@ -6,7 +5,7 @@ import PublicLayout from '@/components/PublicLayout';
 import Layout from '@/components/Layout';
 
 // Public pages
-import Homepage from '@/pages/Homepage';
+import LandingPage from '@/pages/LandingPage';
 import Planos from '@/pages/Planos';
 import Sobre from '@/pages/Sobre';
 import Contato from '@/pages/Contato';
@@ -84,7 +83,7 @@ function App() {
           {/* Public Routes with Public Layout */}
           <Route path="/" element={
             <PublicLayout>
-              <Homepage />
+              <LandingPage />
             </PublicLayout>
           } />
           <Route path="/planos" element={
@@ -142,6 +141,8 @@ function App() {
           <Route path="/gestor/comunicacao" element={<Layout><GestorComunicacao /></Layout>} />
           <Route path="/gestor/feedback" element={<Layout><GestorFeedback /></Layout>} />
           <Route path="/gestor/metas" element={<Layout><GestorMetas /></Layout>} />
+          <Route path="/gestor/planos" element={<Layout><GestorPlanos /></Layout>} />
+          <Route path="/gestor/configuracoes" element={<Layout><GestorConfiguracoes /></Layout>} />
 
           {/* Instrutor Routes */}
           <Route path="/instrutor/dashboard" element={<Layout><InstrutorDashboard /></Layout>} />
