@@ -23,8 +23,12 @@ const PublicHeader = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link to="/" className="text-2xl font-bold text-purple-600">
-              Wefit
+            <Link to="/" className="flex items-center">
+              <img 
+                src="/lovable-uploads/0eb7a2d0-2d9f-43f8-b2f8-000306583be3.png" 
+                alt="Wefit Logo" 
+                className="h-8 w-auto"
+              />
             </Link>
           </div>
 

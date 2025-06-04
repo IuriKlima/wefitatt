@@ -42,12 +42,11 @@ const Header: React.FC = () => {
           </Button>
           
           <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-wefit-primary to-wefit-accent rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">W</span>
-            </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-wefit-primary to-wefit-accent bg-clip-text text-transparent">
-              Wefit
-            </h1>
+            <img 
+              src="/lovable-uploads/0eb7a2d0-2d9f-43f8-b2f8-000306583be3.png" 
+              alt="Wefit Logo" 
+              className="h-8 w-auto"
+            />
           </div>
         </div>
 

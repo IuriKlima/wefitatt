@@ -46,10 +46,11 @@ const AppSidebar: React.FC = () => {
     <Sidebar className="border-r border-sidebar-border bg-sidebar">
       <SidebarHeader className="p-4">
         <div className="flex items-center space-x-2 mb-4">
-          <div className="w-8 h-8 bg-gradient-to-br from-white to-gray-200 rounded-lg flex items-center justify-center">
-            <span className="text-sidebar font-bold text-sm">W</span>
-          </div>
-          <h2 className="text-lg font-bold text-sidebar-foreground">Wefit</h2>
+          <img 
+            src="/lovable-uploads/6bca13a0-438d-449e-b9ad-9da97f8f226d.png" 
+            alt="Wefit Logo" 
+            className="h-8 w-auto"
+          />
         </div>
         
         <div className="space-y-2">
