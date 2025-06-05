@@ -144,6 +144,8 @@ function App() {
           <Route path="/gestor/comunicacao" element={<Layout><GestorComunicacao /></Layout>} />
           <Route path="/gestor/feedback" element={<Layout><GestorFeedback /></Layout>} />
           <Route path="/gestor/metas" element={<Layout><GestorMetas /></Layout>} />
+          <Route path="/gestor/planos" element={<Layout><GestorPlanos /></Layout>} />
+          <Route path="/gestor/configuracoes" element={<Layout><GestorConfiguracoes /></Layout>} />
 
           {/* Instrutor Routes */}
           <Route path="/instrutor/dashboard" element={<Layout><InstrutorDashboard /></Layout>} />
