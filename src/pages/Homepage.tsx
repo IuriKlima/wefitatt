@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Settings, Smartphone, TrendingUp, Megaphone, MessageCircle, Shield, Users, Clock, BarChart3, Target, Brain } from 'lucide-react';
+
 const Homepage = () => {
   const features = [{
     icon: Settings,
@@ -93,7 +94,7 @@ const Homepage = () => {
                 <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100 text-lg px-8 py-4">
                   <Link to="/planos">Descubra Nossos Planos</Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-purple-700 text-lg px-8 py-4">
+                <Button asChild variant="outline" size="lg" className="bg-purple-600 text-white hover:bg-purple-700 border-purple-600 text-lg px-8 py-4">
                   <Link to="/contato">Comece Agora</Link>
                 </Button>
               </div>
