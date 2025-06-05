@@ -94,7 +94,7 @@ const Homepage = () => {
                 <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100 text-lg px-8 py-4">
                   <Link to="/planos">Descubra Nossos Planos</Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="bg-purple-600 text-white hover:bg-purple-700 border-purple-600 text-lg px-8 py-4">
+                <Button asChild variant="outline" size="lg" className="bg-yellow-500 text-white hover:bg-yellow-600 border-yellow-500 text-lg px-8 py-4">
                   <Link to="/contato">Comece Agora</Link>
                 </Button>
               </div>
@@ -229,8 +229,8 @@ const Homepage = () => {
             <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100 text-lg px-8 py-4">
               <Link to="/planos">Ver Planos e Preços</Link>
             </Button>
-            <Button asChild variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-purple-700 text-lg px-8 py-4">
-              <Link to="/contato">Fale com um Consultor</Link>
+            <Button asChild variant="outline" size="lg" className="bg-yellow-500 text-white hover:bg-yellow-600 border-yellow-500 text-lg px-8 py-4">
+              <Link to="/contato">Falar com um Consultor</Link>
             </Button>
           </div>
         </div>

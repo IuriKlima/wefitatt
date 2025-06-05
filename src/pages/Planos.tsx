@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Check, Star } from 'lucide-react';
+
 const Planos = () => {
   const plans = [{
     name: "Personal",
@@ -23,10 +24,10 @@ const Planos = () => {
   }, {
     name: "Rede",
     highlight: "Solução Completa para Redes e Grandes Academias",
-    price: "149",
-    originalPrice: "299",
+    price: "Consultar",
+    originalPrice: null,
     features: ["Tudo do plano Academia", "Gestão multi-unidades", "Painel admin global", "Analytics avançado e comparativo", "Gestão centralizada de templates", "Marketplace interno", "RBAC avançado", "Logs de auditoria", "Agente WhatsApp avançado", "Suporte dedicado 24/7", "Treinamento personalizado"],
-    cta: "Assinar Plano Rede",
+    cta: "Falar com Consultor",
     popular: false
   }];
   const faqs = [{
@@ -80,13 +81,17 @@ const Planos = () => {
                   
                   <div className="mb-6">
                     <div className="flex items-center justify-center gap-2 mb-2">
-                      <span className="text-4xl font-bold text-gray-900">R$ {plan.price}</span>
-                      <span className="text-gray-500">/mês</span>
+                      <span className="text-4xl font-bold text-gray-900">
+                        {plan.price === "Consultar" ? plan.price : `R$ ${plan.price}`}
+                      </span>
+                      {plan.price !== "Consultar" && <span className="text-gray-500">/mês</span>}
                     </div>
-                    <div className="flex items-center justify-center gap-2">
-                      <span className="text-sm text-gray-500">no primeiro mês, depois</span>
-                      <span className="text-lg line-through text-gray-400">R$ {plan.originalPrice}</span>
-                    </div>
+                    {plan.originalPrice && (
+                      <div className="flex items-center justify-center gap-2">
+                        <span className="text-sm text-gray-500">no primeiro mês, depois</span>
+                        <span className="text-lg line-through text-gray-400">R$ {plan.originalPrice}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -97,8 +102,8 @@ const Planos = () => {
                     </li>)}
                 </ul>
 
-                <Button asChild className={`w-full ${plan.popular ? 'bg-purple-600 hover:bg-purple-700' : ''}`} size="lg">
-                  <Link to="/cadastro">{plan.cta}</Link>
+                <Button asChild className={`w-full ${plan.cta === "Falar com Consultor" ? 'bg-yellow-500 hover:bg-yellow-600 text-white' : plan.popular ? 'bg-purple-600 hover:bg-purple-700' : ''}`} size="lg">
+                  <Link to={plan.cta === "Falar com Consultor" ? "/contato" : "/cadastro"}>{plan.cta}</Link>
                 </Button>
               </Card>)}
           </div>
@@ -135,7 +140,7 @@ const Planos = () => {
           <p className="text-xl mb-8 opacity-90">
             Nossa equipe está pronta para ajudar você a escolher o melhor plano
           </p>
-          <Button asChild size="lg" className="bg-white text-purple-700 hover:bg-gray-100 text-lg px-8 py-4">
+          <Button asChild size="lg" className="bg-yellow-500 text-white hover:bg-yellow-600 text-lg px-8 py-4">
             <Link to="/contato">Falar com Consultor</Link>
           </Button>
         </div>
