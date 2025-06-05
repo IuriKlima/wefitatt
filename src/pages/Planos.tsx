@@ -102,7 +102,7 @@ const Planos = () => {
                     </li>)}
                 </ul>
 
-                <Button asChild className={`w-full ${plan.cta === "Falar com Consultor" ? 'bg-yellow-500 hover:bg-yellow-600 text-white' : plan.popular ? 'bg-purple-600 hover:bg-purple-700' : ''}`} size="lg">
+                <Button asChild className={`w-full ${plan.cta === "Falar com Consultor" ? 'bg-purple-600 hover:bg-purple-700 text-white' : plan.popular ? 'bg-purple-600 hover:bg-purple-700' : ''}`} size="lg">
                   <Link to={plan.cta === "Falar com Consultor" ? "/contato" : "/cadastro"}>{plan.cta}</Link>
                 </Button>
               </Card>)}
