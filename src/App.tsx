@@ -24,6 +24,7 @@ import RedefinirSenha from '@/pages/RedefinirSenha';
 
 // Admin pages
 import AdminDashboard from '@/pages/admin/Dashboard';
+import SystemDashboard from '@/pages/admin/SystemDashboard';
 import AdminUsuarios from '@/pages/admin/Usuarios';
 import AdminUnidades from '@/pages/admin/Unidades';
 import AdminAnalytics from '@/pages/admin/Analytics';
@@ -124,6 +125,7 @@ function App() {
 
           {/* Admin Routes */}
           <Route path="/admin/dashboard" element={<Layout><AdminDashboard /></Layout>} />
+          <Route path="/admin/system" element={<Layout><SystemDashboard /></Layout>} />
           <Route path="/admin/usuarios" element={<Layout><AdminUsuarios /></Layout>} />
           <Route path="/admin/unidades" element={<Layout><AdminUnidades /></Layout>} />
           <Route path="/admin/analytics" element={<Layout><AdminAnalytics /></Layout>} />
