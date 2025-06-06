@@ -1,4 +1,3 @@
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import { UserProvider } from '@/contexts/UserContext';
@@ -45,6 +44,7 @@ import GestorFeedback from '@/pages/gestor/Feedback';
 import GestorMetas from '@/pages/gestor/Metas';
 import GestorPlanos from '@/pages/gestor/Planos';
 import GestorConfiguracoes from '@/pages/gestor/Configuracoes';
+import GestorLandingPageBuilder from '@/pages/gestor/LandingPageBuilder';
 
 // Instrutor pages
 import InstrutorDashboard from '@/pages/instrutor/Dashboard';
@@ -145,6 +145,7 @@ function App() {
           <Route path="/gestor/feedback" element={<Layout><GestorFeedback /></Layout>} />
           <Route path="/gestor/metas" element={<Layout><GestorMetas /></Layout>} />
           <Route path="/gestor/planos" element={<Layout><GestorPlanos /></Layout>} />
+          <Route path="/gestor/landing-page" element={<Layout><GestorLandingPageBuilder /></Layout>} />
           <Route path="/gestor/configuracoes" element={<Layout><GestorConfiguracoes /></Layout>} />
 
           {/* Instrutor Routes */}
