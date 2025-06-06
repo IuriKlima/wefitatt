@@ -148,13 +148,19 @@ const LandingPageBuilder: React.FC = () => {
   ];
 
   const updateConfig = (section: keyof LandingPageConfig, field: string, value: any) => {
-    setConfig(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section],
-        [field]: value
+    setConfig(prev => {
+      const currentSection = prev[section];
+      if (typeof currentSection === 'object' && currentSection !== null && !Array.isArray(currentSection)) {
+        return {
+          ...prev,
+          [section]: {
+            ...currentSection,
+            [field]: value
+          }
+        };
       }
-    }));
+      return prev;
+    });
   };
 
   const addBenefit = () => {
