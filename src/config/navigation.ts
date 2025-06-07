@@ -1,4 +1,3 @@
-
 import { 
   LayoutDashboard, 
   Building2, 
@@ -29,7 +28,8 @@ import {
   PartyPopper,
   Star,
   PieChart,
-  FileText
+  FileText,
+  Globe
 } from 'lucide-react';
 import { UserProfile } from '@/contexts/UserContext';
 
@@ -158,6 +158,11 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
     {
       title: 'Engajamento',
       items: [
+        {
+          title: 'Landing Page',
+          href: '/gestor/landing-page',
+          icon: Globe,
+        },
         {
           title: 'Feedback e NPS',
           href: '/gestor/feedback',
