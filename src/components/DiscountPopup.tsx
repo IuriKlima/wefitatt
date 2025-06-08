@@ -1,28 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Gift } from 'lucide-react';
-
 interface DiscountPopupProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
-const DiscountPopup: React.FC<DiscountPopupProps> = ({ isOpen, onClose }) => {
+const DiscountPopup: React.FC<DiscountPopupProps> = ({
+  isOpen,
+  onClose
+}) => {
   if (!isOpen) {
     return null;
   }
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+  return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md p-8 bg-gradient-to-br from-purple-50 to-indigo-100">
         <DialogHeader className="items-center text-center">
           <div className="p-3 bg-white rounded-full shadow-md mb-4">
@@ -44,13 +36,11 @@ const DiscountPopup: React.FC<DiscountPopupProps> = ({ isOpen, onClose }) => {
           <Button asChild className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold text-lg py-6">
             <Link to="/planos">Ver Planos</Link>
           </Button>
-          <Button onClick={onClose} variant="ghost" className="w-full text-gray-600">
+          <Button onClick={onClose} variant="ghost" className="w-full bg-violet-400 hover:bg-violet-300 text-zinc-600">
             Agora não
           </Button>
         </DialogFooter>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
-
-export default DiscountPopup; 
+export default DiscountPopup;
