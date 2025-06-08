@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -20,13 +19,19 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
+interface Pagamento { nome: string; plano: string; vencimento: string; }
+interface Aniversario { nome: string; dataNasc: string; }
+interface Ausencia { nome: string; ultimoCheckin: string; }
+interface AulaBaixa { nome: string; horario: string; ocupacao: string; }
+interface Pendencia { descricao: string; }
+
 interface AlertaProativo {
   id: number;
   tipo: 'pagamento' | 'aniversario' | 'ausencia' | 'aula_baixa' | 'pendencia';
   titulo: string;
   descricao: string;
   prioridade: 'alta' | 'media' | 'baixa';
-  dados: any;
+  dados: (Pagamento | Aniversario | Ausencia | AulaBaixa | Pendencia)[];
 }
 
 const RecepcionistaDashboard: React.FC = () => {
@@ -125,7 +130,7 @@ const RecepcionistaDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center pt-5">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Painel da Recepção - Wefit</h1>
           <p className="text-gray-600 mt-2">Sua central de comando para atendimento de excelência</p>
@@ -248,57 +253,27 @@ const RecepcionistaDashboard: React.FC = () => {
             {alertas.map((alerta) => {
               const IconComponent = getTipoIcon(alerta.tipo);
               return (
-                <div
-                  key={alerta.id}
-                  className={`p-4 border-l-4 rounded-lg ${getPrioridadeColor(alerta.prioridade)}`}
-                >
-                  <div className="flex items-start justify-between">
-                    <div className="flex items-start gap-3 flex-1">
-                      <IconComponent className="h-5 w-5 mt-1" />
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <h3 className="font-semibold">{alerta.titulo}</h3>
-                          <Badge variant="outline">
-                            {alerta.prioridade.toUpperCase()}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-gray-600 mb-2">{alerta.descricao}</p>
-                        
-                        {/* Dados específicos por tipo de alerta */}
-                        <div className="space-y-1">
-                          {alerta.dados.slice(0, 3).map((item: any, index: number) => (
-                            <div key={index} className="text-xs bg-white p-2 rounded border">
-                              {alerta.tipo === 'pagamento' && (
-                                <span>{item.nome} - {item.plano} - Vence: {item.vencimento}</span>
-                              )}
-                              {alerta.tipo === 'aniversario' && (
-                                <span>{item.nome} - {item.dataNasc}</span>
-                              )}
-                              {alerta.tipo === 'ausencia' && (
-                                <span>{item.nome} - Último check-in: {item.ultimoCheckin}</span>
-                              )}
-                              {alerta.tipo === 'aula_baixa' && (
-                                <span>{item.nome} - {item.horario} - {item.ocupacao}</span>
-                              )}
-                              {alerta.tipo === 'pendencia' && (
-                                <span>{item.descricao}</span>
-                              )}
-                            </div>
-                          ))}
-                          {alerta.dados.length > 3 && (
-                            <p className="text-xs text-gray-500">
-                              +{alerta.dados.length - 3} itens adicionais
-                            </p>
-                          )}
+                <Alert key={alerta.id} className={`${getPrioridadeColor(alerta.prioridade)}`}>
+                  <AlertDescription>
+                    <div className="flex justify-between items-start">
+                      <div className="flex items-start gap-3">
+                        <IconComponent className="h-5 w-5 mt-1" />
+                        <div>
+                          <p className="font-bold text-gray-900">{alerta.titulo}</p>
+                          <p className="text-sm text-gray-600">{alerta.descricao}</p>
+                          <div className="mt-2 text-xs text-gray-500">
+                            {alerta.dados.map((d, index) => (
+                              <span key={index} className="mr-2 inline-block bg-gray-200 rounded-full px-2 py-1">
+                                {'nome' in d ? d.nome : d.descricao}
+                              </span>
+                            ))}
+                          </div>
                         </div>
                       </div>
+                      <Button size="sm" variant="outline">Ver Detalhes</Button>
                     </div>
-                    
-                    <Button size="sm" variant="outline">
-                      Ver Todos
-                    </Button>
-                  </div>
-                </div>
+                  </AlertDescription>
+                </Alert>
               );
             })}
           </div>

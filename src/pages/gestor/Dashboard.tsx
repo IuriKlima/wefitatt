@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Users, Calendar, CreditCard, Star, TrendingUp, BarChart3, Plus, UserPlus } from 'lucide-react';
@@ -42,7 +41,7 @@ const GestorDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className='pt-5'>
         <h1 className="text-3xl font-bold text-gray-900">Dashboard da Unidade: Wefit Centro</h1>
         <p className="text-gray-600 mt-2">Visão geral das operações e métricas da unidade</p>
       </div>

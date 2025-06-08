@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Settings, Smartphone, TrendingUp, Megaphone, MessageCircle, Shield, Users, Clock, BarChart3, Target, Brain } from 'lucide-react';
+import DiscountPopup from '@/components/DiscountPopup';
 
 const Homepage = () => {
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPopupOpen(true);
+    }, 10000); // 10 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const features = [{
     icon: Settings,
     title: "Gestão Inteligente e Centralizada",
@@ -77,7 +88,20 @@ const Homepage = () => {
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
     quote: "Gerenciar 8 unidades nunca foi tão fácil. O dashboard centralizado é simplesmente perfeito."
   }];
+
+  const comparisonData = [
+    { feature: 'Bot no WhatsApp integrado', competitor1: '❌', competitor2: '✅', wefit: '✅' },
+    { feature: 'Agendamento automático', competitor1: '✅', competitor2: '✅', wefit: '✅' },
+    { feature: 'Funil de vendas integrado', competitor1: '❌', competitor2: '❌', wefit: '✅' },
+    { feature: 'Treino digital personalizável', competitor1: '✅', competitor2: '❌', wefit: '✅' },
+    { feature: 'Controle de planos e pagamentos', competitor1: '✅', competitor2: '✅', wefit: '✅' },
+    { feature: 'Campanhas automáticas', competitor1: '❌', competitor2: '❌', wefit: '✅' },
+    { feature: 'Preço a partir de R$49/mês', competitor1: '❌', competitor2: '❌', wefit: '✅' },
+    { feature: 'Suporte via WhatsApp', competitor1: '✅', competitor2: '✅', wefit: '✅' },
+  ];
+
   return <div className="min-h-screen bg-white">
+      <DiscountPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
       {/* Hero Section */}
       <section className="relative bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 text-white overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
@@ -186,6 +210,46 @@ const Homepage = () => {
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">{differential.title}</h3>
                 <p className="text-gray-600">{differential.description}</p>
               </Card>)}
+          </div>
+        </div>
+      </section>
+
+      {/* Comparison Table Section */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              Por que a WeFit é a melhor escolha?
+            </h2>
+          </div>
+          <Card className="overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="min-w-full text-center">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="py-4 px-6 font-semibold text-gray-700 text-left">Recursos / Sistemas</th>
+                    <th className="py-4 px-6 font-semibold text-gray-700">Concorrente 1</th>
+                    <th className="py-4 px-6 font-semibold text-gray-700">Concorrente 2</th>
+                    <th className="py-4 px-6 font-semibold text-purple-600 bg-purple-50">WeFit</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200">
+                  {comparisonData.map((row, index) => (
+                    <tr key={index} className="hover:bg-gray-50">
+                      <td className="py-4 px-6 text-gray-800 text-left font-medium">{row.feature}</td>
+                      <td className="py-4 px-6 text-2xl">{row.competitor1}</td>
+                      <td className="py-4 px-6 text-2xl">{row.competitor2}</td>
+                      <td className="py-4 px-6 text-2xl font-bold text-purple-600 bg-purple-50">{row.wefit}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+          <div className="mt-12 text-center">
+            <Button asChild size="lg" className="bg-yellow-500 text-white hover:bg-yellow-600 text-lg px-8 py-4">
+              <Link to="/planos">Quero experimentar com 50% de desconto</Link>
+            </Button>
           </div>
         </div>
       </section>

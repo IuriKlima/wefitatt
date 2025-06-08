@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -61,7 +60,7 @@ const InstrutorDashboard: React.FC = () => {
       id: 2,
       nome: 'João Costa',
       foto: '/placeholder.svg',
-      motivo: '3 mensagens não lidas no chat',
+      motivo: '3 mensagens não lidas',
       tipo: 'message',
       urgencia: 'media'
     },
@@ -109,7 +108,7 @@ const InstrutorDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header de Boas-vindas */}
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center pt-5">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Olá, Instrutor {nomeInstrutor}!</h1>
           <p className="text-gray-600 mt-2">Aqui está sua visão geral do dia e atividades importantes</p>

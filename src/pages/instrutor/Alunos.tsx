@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -7,11 +6,24 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Search, User, Calendar, MessageCircle, TrendingUp, Users, Target, Award } from 'lucide-react';
 
+type Aluno = {
+  id: number;
+  nome: string;
+  email: string;
+  foto: string;
+  planoAtual: string;
+  ultimoTreino: string;
+  proximaAvaliacao: string;
+  frequenciaSemanal: number;
+  metaPrincipal: string;
+  progresso: number;
+};
+
 const InstrutorAlunos: React.FC = () => {
-  const [selectedAluno, setSelectedAluno] = useState<any>(null);
+  const [selectedAluno, setSelectedAluno] = useState<Aluno | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const alunosIndividuais = [
+  const alunosIndividuais: Aluno[] = [
     {
       id: 1,
       nome: 'Maria Silva',
@@ -192,10 +204,6 @@ const InstrutorAlunos: React.FC = () => {
                       <Button size="sm" variant="outline" className="flex-1">
                         <User className="h-3 w-3 mr-1" />
                         Perfil
-                      </Button>
-                      <Button size="sm" variant="outline" className="flex-1">
-                        <MessageCircle className="h-3 w-3 mr-1" />
-                        Chat
                       </Button>
                     </div>
                   </div>

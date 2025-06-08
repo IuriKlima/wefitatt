@@ -219,17 +219,12 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
         {
           title: 'Biblioteca de Exercícios',
           href: '/instrutor/exercicios',
-          icon: Dumbbell,
+          icon: BookOpen,
         },
         {
           title: 'Avaliações Físicas',
           href: '/instrutor/avaliacoes',
           icon: Activity,
-        },
-        {
-          title: 'Chat/Mensagens',
-          href: '/instrutor/chat',
-          icon: MessageSquare,
         },
       ],
     },

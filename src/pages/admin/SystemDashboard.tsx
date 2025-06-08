@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -101,7 +100,7 @@ const SystemDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="pt-5">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard de Sistema - Wefit Global</h1>
         <p className="text-gray-600 mt-2">Visão completa do sistema e operações globais</p>
       </div>

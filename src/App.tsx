@@ -54,7 +54,6 @@ import InstrutorAlunos from '@/pages/instrutor/Alunos';
 import InstrutorPlanosTreino from '@/pages/instrutor/PlanosTreino';
 import InstrutorExercicios from '@/pages/instrutor/Exercicios';
 import InstrutorAvaliacoes from '@/pages/instrutor/Avaliacoes';
-import InstrutorChat from '@/pages/instrutor/Chat';
 
 // Recepcionista pages
 import RecepcionistaDashboard from '@/pages/recepcionista/Dashboard';
@@ -135,7 +134,7 @@ function App() {
             <Route path="/admin/configuracoes" element={<Layout><AdminConfiguracoes /></Layout>} />
 
             {/* Gestor Routes */}
-            <Route path="/gestor/dashboard" element={<Layout><GestorDashboard /></Layout>} />
+            <Route path="/gestor" element={<Layout><GestorDashboard /></Layout>} />
             <Route path="/gestor/alunos" element={<Layout><GestorAlunos /></Layout>} />
             <Route path="/gestor/instrutores" element={<Layout><GestorInstrutores /></Layout>} />
             <Route path="/gestor/financeiro" element={<Layout><GestorFinanceiro /></Layout>} />
@@ -157,7 +156,6 @@ function App() {
             <Route path="/instrutor/planos-treino" element={<Layout><InstrutorPlanosTreino /></Layout>} />
             <Route path="/instrutor/exercicios" element={<Layout><InstrutorExercicios /></Layout>} />
             <Route path="/instrutor/avaliacoes" element={<Layout><InstrutorAvaliacoes /></Layout>} />
-            <Route path="/instrutor/chat" element={<Layout><InstrutorChat /></Layout>} />
 
             {/* Recepcionista Routes */}
             <Route path="/recepcionista/dashboard" element={<Layout><RecepcionistaDashboard /></Layout>} />

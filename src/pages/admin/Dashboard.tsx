@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -64,7 +63,7 @@ const AdminDashboard: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div>
+      <div className="pt-5">
         <h1 className="text-3xl font-bold text-gray-900">Dashboard de Administração Global - Wefit</h1>
         <p className="text-gray-600 mt-2">Visão completa da plataforma e performance das unidades</p>
       </div>
@@ -205,7 +204,7 @@ const AdminDashboard: React.FC = () => {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="mes" />
                 <YAxis />
-                <Tooltip formatter={(value) => [`R$ ${value.toLocaleString()}`, 'MRR']} />
+                <Tooltip formatter={(value: number) => [`R$ ${value.toLocaleString()}`, 'MRR']} />
                 <Bar dataKey="mrr" fill="#82ca9d" />
               </BarChart>
             </ResponsiveContainer>
