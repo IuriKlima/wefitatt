@@ -4,10 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Settings, Smartphone, TrendingUp, Megaphone, MessageCircle, Shield, Users, Clock, BarChart3, Target, Brain } from 'lucide-react';
 import DiscountPopup from '@/components/DiscountPopup';
-
 const Homepage = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsPopupOpen(true);
@@ -15,7 +13,6 @@ const Homepage = () => {
 
     return () => clearTimeout(timer);
   }, []);
-
   const features = [{
     icon: Settings,
     title: "Gestão Inteligente e Centralizada",
@@ -88,18 +85,47 @@ const Homepage = () => {
     image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
     quote: "Gerenciar 8 unidades nunca foi tão fácil. O dashboard centralizado é simplesmente perfeito."
   }];
-
-  const comparisonData = [
-    { feature: 'Bot no WhatsApp integrado', competitor1: '❌', competitor2: '✅', wefit: '✅' },
-    { feature: 'Agendamento automático', competitor1: '✅', competitor2: '✅', wefit: '✅' },
-    { feature: 'Funil de vendas integrado', competitor1: '❌', competitor2: '❌', wefit: '✅' },
-    { feature: 'Treino digital personalizável', competitor1: '✅', competitor2: '❌', wefit: '✅' },
-    { feature: 'Controle de planos e pagamentos', competitor1: '✅', competitor2: '✅', wefit: '✅' },
-    { feature: 'Campanhas automáticas', competitor1: '❌', competitor2: '❌', wefit: '✅' },
-    { feature: 'Preço a partir de R$49/mês', competitor1: '❌', competitor2: '❌', wefit: '✅' },
-    { feature: 'Suporte via WhatsApp', competitor1: '✅', competitor2: '✅', wefit: '✅' },
-  ];
-
+  const comparisonData = [{
+    feature: 'Bot no WhatsApp integrado',
+    competitor1: '❌',
+    competitor2: '✅',
+    wefit: '✅'
+  }, {
+    feature: 'Agendamento automático',
+    competitor1: '✅',
+    competitor2: '✅',
+    wefit: '✅'
+  }, {
+    feature: 'Funil de vendas integrado',
+    competitor1: '❌',
+    competitor2: '❌',
+    wefit: '✅'
+  }, {
+    feature: 'Treino digital personalizável',
+    competitor1: '✅',
+    competitor2: '❌',
+    wefit: '✅'
+  }, {
+    feature: 'Controle de planos e pagamentos',
+    competitor1: '✅',
+    competitor2: '✅',
+    wefit: '✅'
+  }, {
+    feature: 'Campanhas automáticas',
+    competitor1: '❌',
+    competitor2: '❌',
+    wefit: '✅'
+  }, {
+    feature: 'Preço a partir de R$49/mês',
+    competitor1: '❌',
+    competitor2: '❌',
+    wefit: '✅'
+  }, {
+    feature: 'Suporte via WhatsApp',
+    competitor1: '✅',
+    competitor2: '✅',
+    wefit: '✅'
+  }];
   return <div className="min-h-screen bg-white">
       <DiscountPopup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
       {/* Hero Section */}
@@ -234,21 +260,19 @@ const Homepage = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {comparisonData.map((row, index) => (
-                    <tr key={index} className="hover:bg-gray-50">
-                      <td className="py-4 px-6 text-gray-800 text-left font-medium">{row.feature}</td>
-                      <td className="py-4 px-6 text-2xl">{row.competitor1}</td>
-                      <td className="py-4 px-6 text-2xl">{row.competitor2}</td>
-                      <td className="py-4 px-6 text-2xl font-bold text-purple-600 bg-purple-50">{row.wefit}</td>
-                    </tr>
-                  ))}
+                  {comparisonData.map((row, index) => <tr key={index} className="hover:bg-gray-50">
+                      <td className="px-6 text-gray-800 text-left font-medium py-[13px]">{row.feature}</td>
+                      <td className="text-2xl py-0 px-0">{row.competitor1}</td>
+                      <td className="text-2xl py-0 px-0">{row.competitor2}</td>
+                      <td className="text-2xl font-bold text-purple-600 bg-purple-50 py-0 px-0">{row.wefit}</td>
+                    </tr>)}
                 </tbody>
               </table>
             </div>
           </Card>
           <div className="mt-12 text-center">
             <Button asChild size="lg" className="bg-yellow-500 text-white hover:bg-yellow-600 text-lg px-8 py-4">
-              <Link to="/planos">Quero experimentar com 50% de desconto</Link>
+              <Link to="/planos" className="">Quero experimentar com 50% de desconto</Link>
             </Button>
           </div>
         </div>
