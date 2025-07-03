@@ -1,73 +1,46 @@
-# Welcome to your Lovable project
+WeFit – Plataforma SaaS de Gestão para Academias
 
-## Project info
+WeFit é uma solução SaaS desenvolvida para otimizar a gestão de academias, estúdios de treinamento e redes fitness. O sistema foi projetado com foco em escalabilidade, usabilidade e automação de processos operacionais, integrando funcionalidades administrativas, financeiras, comerciais e de atendimento em uma única plataforma.
 
-**URL**: https://lovable.dev/projects/c9c86626-291f-4362-8619-7932e54a41a3
+A aplicação é composta por um front-end em React com estilização em TailwindCSS, e um back-end em Node.js com TypeScript, utilizando banco de dados relacional (PostgreSQL ou MySQL) e arquitetura multi-tenant. O projeto possui suporte a autenticação multiusuário com diferentes níveis de acesso (Proprietário, Gestor, Instrutor, Recepcionista, Vendedor, Marketing e Aluno), garantindo controle granular de permissões.
 
-## How can I edit this code?
+Entre os principais módulos, destacam-se:
 
-There are several ways of editing your application.
+Gestão Financeira: controle de planos, inadimplência, relatórios e dashboards em tempo real.
 
-**Use Lovable**
+Agendamento e Presença: sistema de marcação de aulas com limite de vagas e check-in integrado.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/c9c86626-291f-4362-8619-7932e54a41a3) and start prompting.
+Fichas de Treino e Avaliações: criação e histórico de treinos, evolução física com gráficos comparativos.
 
-Changes made via Lovable will be committed automatically to this repo.
+CRM e Funil de Vendas: cadastro de leads, pipeline de propostas, automação de follow-ups.
 
-**Use your preferred IDE**
+Marketing Integrado: criação de landing pages, campanhas automatizadas e segmentação por perfil.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Integração com WhatsApp: atendimento automatizado via chatbot (TalkMate) com variações de mensagem para evitar bloqueio, integração direta com o sistema via API.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
-Follow these steps:
+A plataforma também conta com um painel do aluno, onde é possível acompanhar treinos, pagamentos, agendamentos e progresso, tudo com interface mobile-first e responsiva.
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Este repositório representa a base do sistema e está em desenvolvimento contínuo. Ele segue boas práticas de estruturação de código, componentização, versionamento e integração futura com gateways de pagamento como o Wefit Pay.
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
+Tecnologias utilizadas:
 
-**Edit a file directly in GitHub**
+Front-end: React, TailwindCSS
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Back-end: Node.js, TypeScript
 
-**Use GitHub Codespaces**
+Banco de dados: PostgreSQL ou MySQL
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Autenticação: JWT ou OAuth (configurável)
 
-## What technologies are used for this project?
+Integrações: WhatsApp API, serviços de e-mail, gateway de pagamento
 
-This project is built with:
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/c9c86626-291f-4362-8619-7932e54a41a3) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+Licença: MIT
+Desenvolvedor: @IuriKlima
