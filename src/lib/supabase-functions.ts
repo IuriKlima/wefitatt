@@ -10,7 +10,7 @@ export const wefitApi = {
     cnpj?: string;
     address?: any;
   }) {
-    const { data, error } = await supabase.rpc('create_company_with_owner', {
+    const { data, error } = await supabase.rpc('create_company_with_owner' as any, {
       company_name: companyData.name,
       company_email: companyData.email,
       company_phone: companyData.phone,
@@ -29,7 +29,7 @@ export const wefitApi = {
     email?: string;
     operating_hours?: any;
   }) {
-    const { data, error } = await supabase.rpc('create_branch', {
+    const { data, error } = await supabase.rpc('create_branch' as any, {
       company_id_param: branchData.company_id,
       branch_name: branchData.name,
       branch_address: branchData.address,
@@ -53,7 +53,7 @@ export const wefitApi = {
     emergency_contact?: any;
     goal?: string;
   }) {
-    const { data, error } = await supabase.rpc('register_student', {
+    const { data, error } = await supabase.rpc('register_student' as any, {
       company_id_param: studentData.company_id,
       branch_id_param: studentData.branch_id,
       student_name: studentData.name,
@@ -81,7 +81,7 @@ export const wefitApi = {
     max_participants?: number;
     room?: string;
   }) {
-    const { data, error } = await supabase.rpc('schedule_class', {
+    const { data, error } = await supabase.rpc('schedule_class' as any, {
       company_id_param: classData.company_id,
       branch_id_param: classData.branch_id,
       class_type_id_param: classData.class_type_id,
@@ -98,7 +98,7 @@ export const wefitApi = {
 
   // Inscrever aluno em aula
   async enrollStudentInClass(classId: number, studentId: number) {
-    const { data, error } = await supabase.rpc('enroll_student_in_class', {
+    const { data, error } = await supabase.rpc('enroll_student_in_class' as any, {
       class_id_param: classId,
       student_id_param: studentId,
     });
@@ -107,7 +107,7 @@ export const wefitApi = {
 
   // Obter resumo diário
   async getDailySummary(branchId: number, date?: string) {
-    const { data, error } = await supabase.rpc('get_daily_summary', {
+    const { data, error } = await supabase.rpc('get_daily_summary' as any, {
       branch_id_param: branchId,
       summary_date: date,
     });
@@ -123,7 +123,7 @@ export const wefitApi = {
     message: string;
     recipient?: string;
   }) {
-    const { data, error } = await supabase.rpc('send_notification', {
+    const { data, error } = await supabase.rpc('send_notification' as any, {
       company_id_param: notificationData.company_id,
       user_id_param: notificationData.user_id,
       notification_type_param: notificationData.type,
