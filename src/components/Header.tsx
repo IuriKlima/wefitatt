@@ -1,98 +1,97 @@
 
 import React from 'react';
-import { useUser } from '@/contexts/UserContext';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Button } from '@/components/ui/button';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
-import { User, Settings, LogOut, Menu } from 'lucide-react';
-import { useSidebar } from '@/components/ui/sidebar';
-import ThemeToggle from '@/components/ThemeToggle';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
+import { Bell, Search, Settings, LogOut } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from '@/hooks/use-toast';
+import ThemeToggle from './ThemeToggle';
 
-const Header: React.FC = () => {
-  const { user } = useUser();
-  const { toggleSidebar } = useSidebar();
+const Header = () => {
+  const { user, signOut } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
 
-  const getProfileDisplayName = (profile: string) => {
-    const profiles = {
-      administrador: 'Administrador',
-      gestor: 'Gestor',
-      instrutor: 'Instrutor',
-      recepcionista: 'Recepcionista',
-      aluno: 'Aluno'
-    };
-    return profiles[profile as keyof typeof profiles] || profile;
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      toast({
+        title: "Logout realizado",
+        description: "Até logo!",
+      });
+      navigate('/login');
+    } catch (error) {
+      toast({
+        title: "Erro ao fazer logout",
+        description: "Tente novamente",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const getUserName = () => {
+    if (user?.user_metadata?.full_name) {
+      return user.user_metadata.full_name;
+    }
+    return user?.email?.split('@')[0] || 'Usuário';
+  };
+
+  const getUserInitials = () => {
+    const name = getUserName();
+    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background border-b border-border h-16">
-      <div className="flex items-center justify-between h-full px-4">
+    <header className="fixed top-0 right-0 left-0 lg:left-64 z-40 bg-background border-b border-border">
+      <div className="flex items-center justify-between px-6 py-3">
         <div className="flex items-center space-x-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleSidebar}
-            className="lg:hidden"
-          >
-            <Menu className="h-5 w-5" />
-          </Button>
-          
-          <div className="flex items-center space-x-2">
-            <img 
-              src="/lovable-uploads/0eb7a2d0-2d9f-43f8-b2f8-000306583be3.png" 
-              alt="Wefit Logo" 
-              className="h-8 w-auto"
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <input
+              type="text"
+              placeholder="Buscar..."
+              className="pl-10 pr-4 py-2 w-64 bg-muted rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-primary"
             />
           </div>
         </div>
 
         <div className="flex items-center space-x-4">
           <ThemeToggle />
-
-          {user && (
-            <div className="hidden md:flex flex-col items-end text-sm">
-              <span className="font-semibold text-foreground">{user.name}</span>
-              <span className="text-muted-foreground">{getProfileDisplayName(user.profile)}</span>
-            </div>
-          )}
+          
+          <Button variant="ghost" size="icon" className="relative">
+            <Bell className="h-5 w-5" />
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+              3
+            </span>
+          </Button>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                 <Avatar className="h-10 w-10">
-                  <AvatarFallback className="bg-primary text-primary-foreground">
-                    {user?.name?.charAt(0).toUpperCase() || 'U'}
+                  <AvatarImage src={user?.user_metadata?.avatar_url} />
+                  <AvatarFallback className="bg-purple-100 text-purple-600">
+                    {getUserInitials()}
                   </AvatarFallback>
                 </Avatar>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56 bg-card border border-border" align="end" forceMount>
-              <div className="flex items-center justify-start gap-2 p-2">
-                <div className="flex flex-col space-y-1 leading-none">
-                  {user?.name && <p className="font-medium text-foreground">{user.name}</p>}
-                  {user?.email && (
-                    <p className="w-[200px] truncate text-sm text-muted-foreground">
-                      {user.email}
-                    </p>
-                  )}
-                </div>
+            <DropdownMenuContent className="w-56" align="end" forceMount>
+              <div className="flex flex-col space-y-1 p-2">
+                <p className="text-sm font-medium leading-none">{getUserName()}</p>
+                <p className="text-xs leading-none text-muted-foreground">
+                  {user?.email}
+                </p>
               </div>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer text-foreground hover:bg-accent">
-                <User className="mr-2 h-4 w-4" />
-                <span>Meu Perfil</span>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer text-foreground hover:bg-accent">
+              <DropdownMenuItem onClick={() => navigate('/admin/configuracoes')}>
                 <Settings className="mr-2 h-4 w-4" />
-                <span>Configurações da Conta</span>
+                <span>Configurações</span>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer text-destructive hover:bg-accent">
+              <DropdownMenuItem onClick={handleLogout} className="text-red-600">
                 <LogOut className="mr-2 h-4 w-4" />
                 <span>Sair</span>
               </DropdownMenuItem>

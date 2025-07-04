@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -5,19 +6,49 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
 
 const Login = () => {
   const navigate = useNavigate();
+  const { signIn } = useAuth();
+  const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulação de login bem-sucedido - redirecionando para dashboard
-    navigate('/admin/dashboard');
+    setLoading(true);
+
+    try {
+      const { error } = await signIn(formData.email, formData.password);
+      
+      if (error) {
+        toast({
+          title: "Erro no login",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Login realizado com sucesso!",
+          description: "Bem-vindo ao WeFit",
+        });
+        navigate('/admin/dashboard');
+      }
+    } catch (error) {
+      toast({
+        title: "Erro inesperado",
+        description: "Tente novamente em alguns instantes",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -64,6 +95,7 @@ const Login = () => {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="pl-10"
                   required
+                  disabled={loading}
                 />
               </div>
             </div>
@@ -82,11 +114,13 @@ const Login = () => {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="pl-10 pr-10"
                   required
+                  disabled={loading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  disabled={loading}
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -104,8 +138,9 @@ const Login = () => {
             <Button 
               type="submit" 
               className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 text-lg"
+              disabled={loading}
             >
-              ENTRAR
+              {loading ? 'ENTRANDO...' : 'ENTRAR'}
             </Button>
           </form>
 

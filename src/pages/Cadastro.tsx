@@ -3,49 +3,74 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
-import { Building2, Dumbbell, User } from 'lucide-react';
+import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useToast } from '@/hooks/use-toast';
 
 const Cadastro = () => {
   const navigate = useNavigate();
-  const [selectedProfile, setSelectedProfile] = useState<string>('');
-  const [inviteCode, setInviteCode] = useState('');
+  const { signUp } = useAuth();
+  const { toast } = useToast();
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
-  const profiles = [
-    {
-      id: 'rede',
-      title: 'Sou uma Rede de Academias',
-      description: 'Gerencie múltiplas unidades e franquias',
-      icon: Building2
-    },
-    {
-      id: 'academia',
-      title: 'Sou uma Academia (Unidade Única)',
-      description: 'Gerencie minha academia independente',
-      icon: Dumbbell
-    },
-    {
-      id: 'personal',
-      title: 'Sou Personal Trainer',
-      description: 'Gerencie meus clientes e treinos',
-      icon: User
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Erro na confirmação de senha",
+        description: "As senhas não coincidem",
+        variant: "destructive",
+      });
+      return;
     }
-  ];
 
-  const handleContinue = () => {
-    if (selectedProfile || inviteCode.trim()) {
-      const params = new URLSearchParams();
-      if (selectedProfile) {
-        params.set('profile', selectedProfile);
+    if (formData.password.length < 6) {
+      toast({
+        title: "Senha muito fraca",
+        description: "A senha deve ter pelo menos 6 caracteres",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { error } = await signUp(formData.email, formData.password, formData.fullName);
+      
+      if (error) {
+        toast({
+          title: "Erro no cadastro",
+          description: error.message,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Cadastro realizado com sucesso!",
+          description: "Verifique seu email para confirmar a conta",
+        });
+        navigate('/login');
       }
-      if (inviteCode.trim()) {
-        params.set('inviteCode', inviteCode);
-      }
-      navigate(`/cadastro-passo-2?${params.toString()}`);
+    } catch (error) {
+      toast({
+        title: "Erro inesperado",
+        description: "Tente novamente em alguns instantes",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
     }
   };
-
-  const isFormValid = selectedProfile || inviteCode.trim();
 
   return (
     <div className="min-h-screen flex">
@@ -55,121 +80,129 @@ const Cadastro = () => {
         <div className="relative z-10 flex flex-col justify-center items-center p-12 text-white">
           <div className="max-w-md text-center">
             <h1 className="text-5xl font-bold mb-6 tracking-tight">Wefit</h1>
-            <h2 className="text-2xl font-semibold mb-4">Junte-se à revolução Wefit!</h2>
+            <h2 className="text-2xl font-semibold mb-4">Junte-se ao Wefit!</h2>
             <p className="text-lg opacity-90 leading-relaxed">
-              Crie sua conta e comece a transformar a gestão fitness.
+              Crie sua conta e transforme a gestão da sua academia.
             </p>
           </div>
           
           {/* Elementos gráficos decorativos */}
-          <div className="absolute top-16 right-16 w-24 h-24 border-2 border-white/20 rounded-full"></div>
-          <div className="absolute bottom-24 left-16 w-20 h-20 border-2 border-white/20 rounded-full"></div>
-          <div className="absolute top-1/4 left-1/3 w-16 h-16 border border-white/10 rounded-full"></div>
+          <div className="absolute top-10 right-10 w-20 h-20 border-2 border-white/20 rounded-full"></div>
+          <div className="absolute bottom-20 left-10 w-16 h-16 border-2 border-white/20 rounded-full"></div>
+          <div className="absolute top-1/3 left-1/4 w-12 h-12 border border-white/10 rounded-full"></div>
         </div>
       </div>
 
       {/* Área do Formulário - Lado Direito */}
       <div className="flex-1 flex items-center justify-center p-8 bg-gray-50">
-        <Card className="w-full max-w-2xl p-8 bg-white shadow-lg">
+        <Card className="w-full max-w-md p-8 bg-white shadow-lg">
           <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Vamos começar!</h2>
-            <p className="text-gray-600 text-lg">Como você usará o Wefit?</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Criar Conta</h2>
+            <p className="text-gray-600">Preencha os dados para começar</p>
           </div>
 
-          <div className="space-y-8">
-            {/* Seleção de Perfil */}
-            <div className="grid gap-4">
-              {profiles.map((profile) => {
-                const Icon = profile.icon;
-                return (
-                  <button
-                    key={profile.id}
-                    onClick={() => {
-                      setSelectedProfile(profile.id);
-                      setInviteCode(''); // Limpar código de convite quando selecionar perfil
-                    }}
-                    className={`p-6 border-2 rounded-lg text-left transition-all duration-200 ${
-                      selectedProfile === profile.id
-                        ? 'border-purple-600 bg-purple-50 shadow-md'
-                        : 'border-gray-200 hover:border-purple-300 hover:bg-gray-50'
-                    } ${inviteCode.trim() ? 'opacity-50' : ''}`}
-                    disabled={!!inviteCode.trim()}
-                  >
-                    <div className="flex items-center space-x-4">
-                      <div className={`p-3 rounded-full ${
-                        selectedProfile === profile.id ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-600'
-                      }`}>
-                        <Icon className="h-6 w-6" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg text-gray-900">{profile.title}</h3>
-                        <p className="text-gray-600 mt-1">{profile.description}</p>
-                      </div>
-                      {selectedProfile === profile.id && (
-                        <div className="w-6 h-6 bg-purple-600 rounded-full flex items-center justify-center">
-                          <div className="w-3 h-3 bg-white rounded-full"></div>
-                        </div>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Separador */}
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-white text-gray-500 font-medium">OU</span>
-              </div>
-            </div>
-
-            {/* Código de Convite */}
-            <div className="space-y-4">
-              <div className="text-center">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  Já tem um código de convite?
-                </h3>
-                <p className="text-gray-600">Digite seu código para acessar uma conta existente</p>
-              </div>
-              
-              <div className="flex gap-3">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="fullName" className="text-sm font-medium text-gray-700">
+                Nome Completo
+              </Label>
+              <div className="relative">
+                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
                 <Input
+                  id="fullName"
                   type="text"
-                  placeholder="Insira seu código de convite"
-                  value={inviteCode}
-                  onChange={(e) => {
-                    setInviteCode(e.target.value);
-                    if (e.target.value.trim()) {
-                      setSelectedProfile(''); // Limpar seleção de perfil quando digitar código
-                    }
-                  }}
-                  className={`flex-1 ${selectedProfile ? 'opacity-50' : ''}`}
-                  disabled={!!selectedProfile}
+                  placeholder="Seu nome completo"
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                  className="pl-10"
+                  required
+                  disabled={loading}
                 />
               </div>
             </div>
 
-            {/* Botão Continuar */}
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                Email
+              </Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="seu@email.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="pl-10"
+                  required
+                  disabled={loading}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+                Senha
+              </Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="Sua senha (min. 6 caracteres)"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="pl-10 pr-10"
+                  required
+                  disabled={loading}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  disabled={loading}
+                >
+                  {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword" className="text-sm font-medium text-gray-700">
+                Confirmar Senha
+              </Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Input
+                  id="confirmPassword"
+                  type="password"
+                  placeholder="Confirme sua senha"
+                  value={formData.confirmPassword}
+                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                  className="pl-10"
+                  required
+                  disabled={loading}
+                />
+              </div>
+            </div>
+
             <Button 
-              onClick={handleContinue}
-              disabled={!isFormValid}
-              className="w-full bg-purple-600 hover:bg-purple-700 disabled:bg-gray-300 text-white font-semibold py-3 text-lg"
+              type="submit" 
+              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 text-lg"
+              disabled={loading}
             >
-              Continuar Cadastro
+              {loading ? 'CRIANDO CONTA...' : 'CRIAR CONTA'}
             </Button>
-          </div>
+          </form>
 
           <div className="mt-8 text-center">
             <p className="text-gray-600">
-              Já possui uma conta?{' '}
+              Já tem uma conta?{' '}
               <Link 
                 to="/login" 
                 className="text-purple-600 hover:text-purple-700 font-semibold"
               >
-                Faça Login
+                Faça login aqui
               </Link>
             </p>
           </div>
