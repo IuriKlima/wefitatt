@@ -6,12 +6,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { Eye, EyeOff, Mail, Lock, User } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 
 const Cadastro = () => {
   const navigate = useNavigate();
-  const { signUp } = useAuth();
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -46,21 +44,12 @@ const Cadastro = () => {
     setLoading(true);
 
     try {
-      const { error } = await signUp(formData.email, formData.password, formData.fullName);
-      
-      if (error) {
-        toast({
-          title: "Erro no cadastro",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Cadastro realizado com sucesso!",
-          description: "Verifique seu email para confirmar a conta",
-        });
-        navigate('/login');
-      }
+      // Simular cadastro bem-sucedido
+      toast({
+        title: "Cadastro realizado com sucesso!",
+        description: "Bem-vindo ao WeFit",
+      });
+      navigate('/');
     } catch (error) {
       toast({
         title: "Erro inesperado",

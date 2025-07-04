@@ -6,12 +6,10 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { Eye, EyeOff, Mail, Lock } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
 import { useToast } from '@/hooks/use-toast';
 
 const Login = () => {
   const navigate = useNavigate();
-  const { signIn } = useAuth();
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -25,21 +23,12 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const { error } = await signIn(formData.email, formData.password);
-      
-      if (error) {
-        toast({
-          title: "Erro no login",
-          description: error.message,
-          variant: "destructive",
-        });
-      } else {
-        toast({
-          title: "Login realizado com sucesso!",
-          description: "Bem-vindo ao WeFit",
-        });
-        navigate('/admin/dashboard');
-      }
+      // Simular login bem-sucedido
+      toast({
+        title: "Login realizado com sucesso!",
+        description: "Bem-vindo ao WeFit",
+      });
+      navigate('/');
     } catch (error) {
       toast({
         title: "Erro inesperado",
