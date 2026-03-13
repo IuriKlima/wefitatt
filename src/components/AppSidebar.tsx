@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/sidebar';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Badge } from '@/components/ui/badge';
+import { Zap } from 'lucide-react';
 
 const AppSidebar: React.FC = () => {
   const { user, switchProfile } = useUser();
@@ -44,23 +45,30 @@ const AppSidebar: React.FC = () => {
 
   return (
     <Sidebar className="border-r border-sidebar-border bg-sidebar">
-      <SidebarHeader className="p-4">
-        <div className="flex items-center space-x-2 mb-4">
-          <img 
-            src="/lovable-uploads/6bca13a0-438d-449e-b9ad-9da97f8f226d.png" 
-            alt="Wefit Logo" 
-            className="h-8 w-auto"
-          />
+      {/* Logo Area */}
+      <SidebarHeader className="p-5 pb-4">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="relative">
+            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/20">
+              <Zap className="h-5 w-5 text-white" />
+            </div>
+            <div className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400 border-2 border-sidebar" />
+          </div>
+          <div>
+            <span className="text-lg font-bold text-sidebar-foreground tracking-tight">WeFit</span>
+            <span className="text-[10px] ml-1.5 px-1.5 py-0.5 rounded-full bg-purple-500/15 text-purple-400 font-medium">PRO</span>
+          </div>
         </div>
-        
-        <div className="space-y-2">
-          <label className="text-xs font-medium text-sidebar-foreground/70 uppercase tracking-wide">
-            Perfil Ativo
+
+        {/* Profile Switcher */}
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-semibold text-sidebar-foreground/50 uppercase tracking-widest">
+            Perfil
           </label>
           <select
             value={user.profile}
             onChange={(e) => switchProfile(e.target.value as any)}
-            className="w-full bg-sidebar-accent text-sidebar-accent-foreground border border-sidebar-border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-sidebar-ring"
+            className="w-full bg-sidebar-accent/60 text-sidebar-accent-foreground border border-sidebar-border/50 rounded-lg px-3 py-2 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-purple-500/40 focus:border-purple-500/40 transition-all duration-200 cursor-pointer hover:bg-sidebar-accent"
           >
             {profiles.map((profile) => (
               <option key={profile.value} value={profile.value}>
@@ -71,10 +79,11 @@ const AppSidebar: React.FC = () => {
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="px-2">
+      {/* Navigation */}
+      <SidebarContent className="px-3">
         {userNavigation.map((section, sectionIndex) => (
-          <SidebarGroup key={sectionIndex}>
-            <SidebarGroupLabel className="text-sidebar-foreground/70 text-xs font-medium uppercase tracking-wide">
+          <SidebarGroup key={sectionIndex} className="mb-1">
+            <SidebarGroupLabel className="text-[10px] font-semibold text-sidebar-foreground/40 uppercase tracking-widest px-3 mb-1">
               {section.title}
             </SidebarGroupLabel>
             <SidebarGroupContent>
@@ -85,18 +94,20 @@ const AppSidebar: React.FC = () => {
                       asChild
                       isActive={isActiveRoute(item.href)}
                       className={`
-                        w-full justify-start px-3 py-2 rounded-md transition-colors duration-200
-                        ${isActiveRoute(item.href) 
-                          ? 'bg-sidebar-accent text-sidebar-accent-foreground' 
-                          : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground'
+                        w-full justify-start px-3 py-2 rounded-lg transition-all duration-200 group
+                        ${isActiveRoute(item.href)
+                          ? 'bg-gradient-to-r from-purple-500/15 to-indigo-500/10 text-purple-400 border border-purple-500/20 shadow-sm shadow-purple-500/5'
+                          : 'text-sidebar-foreground/70 hover:text-sidebar-foreground hover:bg-sidebar-accent/80'
                         }
                       `}
                     >
-                      <button onClick={() => handleNavigation(item.href)} className="flex items-center space-x-3 w-full">
-                        <item.icon className="h-4 w-4 flex-shrink-0" />
-                        <span className="flex-1 text-left">{item.title}</span>
+                      <button onClick={() => handleNavigation(item.href)} className="flex items-center gap-3 w-full">
+                        <item.icon className={`h-[18px] w-[18px] flex-shrink-0 transition-colors duration-200 ${
+                          isActiveRoute(item.href) ? 'text-purple-400' : 'text-sidebar-foreground/50 group-hover:text-sidebar-foreground/80'
+                        }`} />
+                        <span className="flex-1 text-left text-[13px] font-medium">{item.title}</span>
                         {item.badge && (
-                          <Badge variant="secondary" className="ml-auto">
+                          <Badge className="ml-auto h-5 min-w-[20px] flex items-center justify-center rounded-full bg-purple-500/15 text-purple-400 text-[10px] font-bold border-0 px-1.5">
                             {item.badge}
                           </Badge>
                         )}
@@ -110,9 +121,11 @@ const AppSidebar: React.FC = () => {
         ))}
       </SidebarContent>
 
-      <SidebarFooter className="p-4">
-        <div className="text-xs text-sidebar-foreground/70 text-center">
-          Wefit v1.0.0
+      {/* Footer */}
+      <SidebarFooter className="p-4 border-t border-sidebar-border/50">
+        <div className="flex items-center justify-between">
+          <span className="text-[11px] text-sidebar-foreground/40 font-medium">WeFit Platform</span>
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-semibold">v2.0</span>
         </div>
       </SidebarFooter>
     </Sidebar>

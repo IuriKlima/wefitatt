@@ -1,10 +1,11 @@
 
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from '@/components/ui/toaster';
 import { AuthProvider } from '@/hooks/useAuth';
 import { ThemeProvider } from '@/contexts/ThemeContext';
 import PublicLayout from '@/components/PublicLayout';
 import Layout from '@/components/Layout';
+import { UserProvider } from '@/contexts/UserContext';
 
 // Public pages
 import Homepage from '@/pages/Homepage';
@@ -85,274 +86,277 @@ function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <Router>
-          <Routes>
-            {/* Public Routes with Public Layout */}
-            <Route path="/" element={
-              <PublicLayout>
-                <Homepage />
-              </PublicLayout>
-            } />
-            <Route path="/planos" element={
-              <PublicLayout>
-                <Planos />
-              </PublicLayout>
-            } />
-            <Route path="/sobre" element={
-              <PublicLayout>
-                <Sobre />
-              </PublicLayout>
-            } />
-            <Route path="/contato" element={
-              <PublicLayout>
-                <Contato />
-              </PublicLayout>
-            } />
-            <Route path="/politica-privacidade" element={
-              <PublicLayout>
-                <PoliticaPrivacidade />
-              </PublicLayout>
-            } />
-            <Route path="/termos-uso" element={
-              <PublicLayout>
-                <TermosUso />
-              </PublicLayout>
-            } />
+        <UserProvider>
+          <Router>
+            <Routes>
+              {/* Public Routes with Public Layout */}
+              <Route path="/" element={
+                <PublicLayout>
+                  <Homepage />
+                </PublicLayout>
+              } />
+              <Route path="/planos" element={
+                <PublicLayout>
+                  <Planos />
+                </PublicLayout>
+              } />
+              <Route path="/sobre" element={
+                <PublicLayout>
+                  <Sobre />
+                </PublicLayout>
+              } />
+              <Route path="/contato" element={
+                <PublicLayout>
+                  <Contato />
+                </PublicLayout>
+              } />
+              <Route path="/politica-privacidade" element={
+                <PublicLayout>
+                  <PoliticaPrivacidade />
+                </PublicLayout>
+              } />
+              <Route path="/termos-uso" element={
+                <PublicLayout>
+                  <TermosUso />
+                </PublicLayout>
+              } />
 
-            {/* Auth Routes (no layout) */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/cadastro" element={<Cadastro />} />
-            <Route path="/cadastro-passo-2" element={<CadastroPasso2 />} />
-            <Route path="/cadastro-fluxo" element={<CadastroFluxo />} />
-            <Route path="/cadastro-finalizado" element={<CadastroFinalizado />} />
-            <Route path="/recuperar-senha" element={<RecuperarSenha />} />
-            <Route path="/redefinir-senha" element={<RedefinirSenha />} />
+              {/* Auth Routes (no layout) */}
+              <Route path="/login" element={<Login />} />
+              <Route path="/cadastro" element={<Cadastro />} />
+              <Route path="/cadastro-passo-2" element={<CadastroPasso2 />} />
+              <Route path="/cadastro-fluxo" element={<CadastroFluxo />} />
+              <Route path="/cadastro-finalizado" element={<CadastroFinalizado />} />
+              <Route path="/recuperar-senha" element={<RecuperarSenha />} />
+              <Route path="/redefinir-senha" element={<RedefinirSenha />} />
 
-            {/* Admin Routes */}
-            <Route path="/admin/dashboard" element={
-              <ProtectedRoute>
-                <Layout><AdminDashboard /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/system" element={
-              <ProtectedRoute>
-                <Layout><SystemDashboard /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/usuarios" element={
-              <ProtectedRoute>
-                <Layout><AdminUsuarios /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/unidades" element={
-              <ProtectedRoute>
-                <Layout><AdminUnidades /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/analytics" element={
-              <ProtectedRoute>
-                <Layout><AdminAnalytics /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/relatorios" element={
-              <ProtectedRoute>
-                <Layout><AdminRelatorios /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/admin/configuracoes" element={
-              <ProtectedRoute>
-                <Layout><AdminConfiguracoes /></Layout>
-              </ProtectedRoute>
-            } />
+              {/* Admin Routes */}
+              <Route path="/admin/dashboard" element={
+                <ProtectedRoute>
+                  <Layout><AdminDashboard /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/system" element={
+                <ProtectedRoute>
+                  <Layout><SystemDashboard /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/usuarios" element={
+                <ProtectedRoute>
+                  <Layout><AdminUsuarios /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/unidades" element={
+                <ProtectedRoute>
+                  <Layout><AdminUnidades /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/analytics" element={
+                <ProtectedRoute>
+                  <Layout><AdminAnalytics /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/relatorios" element={
+                <ProtectedRoute>
+                  <Layout><AdminRelatorios /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/configuracoes" element={
+                <ProtectedRoute>
+                  <Layout><AdminConfiguracoes /></Layout>
+                </ProtectedRoute>
+              } />
 
-            {/* Gestor Routes */}
-            <Route path="/gestor" element={
-              <ProtectedRoute>
-                <Layout><GestorDashboard /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/alunos" element={
-              <ProtectedRoute>
-                <Layout><GestorAlunos /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/instrutores" element={
-              <ProtectedRoute>
-                <Layout><GestorInstrutores /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/financeiro" element={
-              <ProtectedRoute>
-                <Layout><GestorFinanceiro /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/grade-aulas" element={
-              <ProtectedRoute>
-                <Layout><GestorGradeAulas /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/eventos" element={
-              <ProtectedRoute>
-                <Layout><GestorEventos /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/estoque" element={
-              <ProtectedRoute>
-                <Layout><GestorEstoque /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/manutencao" element={
-              <ProtectedRoute>
-                <Layout><GestorManutencao /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/comunicacao" element={
-              <ProtectedRoute>
-                <Layout><GestorComunicacao /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/feedback" element={
-              <ProtectedRoute>
-                <Layout><GestorFeedback /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/metas" element={
-              <ProtectedRoute>
-                <Layout><GestorMetas /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/planos" element={
-              <ProtectedRoute>
-                <Layout><GestorPlanos /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/landing-page" element={
-              <ProtectedRoute>
-                <Layout><GestorLandingPageBuilder /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/gestor/configuracoes" element={
-              <ProtectedRoute>
-                <Layout><GestorConfiguracoes /></Layout>
-              </ProtectedRoute>
-            } />
+              {/* Gestor Routes */}
+              <Route path="/gestor" element={<Navigate to="/gestor/dashboard" replace />} />
+              <Route path="/gestor/dashboard" element={
+                <ProtectedRoute>
+                  <Layout><GestorDashboard /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/alunos" element={
+                <ProtectedRoute>
+                  <Layout><GestorAlunos /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/instrutores" element={
+                <ProtectedRoute>
+                  <Layout><GestorInstrutores /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/financeiro" element={
+                <ProtectedRoute>
+                  <Layout><GestorFinanceiro /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/grade-aulas" element={
+                <ProtectedRoute>
+                  <Layout><GestorGradeAulas /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/eventos" element={
+                <ProtectedRoute>
+                  <Layout><GestorEventos /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/estoque" element={
+                <ProtectedRoute>
+                  <Layout><GestorEstoque /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/manutencao" element={
+                <ProtectedRoute>
+                  <Layout><GestorManutencao /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/comunicacao" element={
+                <ProtectedRoute>
+                  <Layout><GestorComunicacao /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/feedback" element={
+                <ProtectedRoute>
+                  <Layout><GestorFeedback /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/metas" element={
+                <ProtectedRoute>
+                  <Layout><GestorMetas /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/planos" element={
+                <ProtectedRoute>
+                  <Layout><GestorPlanos /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/landing-page" element={
+                <ProtectedRoute>
+                  <Layout><GestorLandingPageBuilder /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/configuracoes" element={
+                <ProtectedRoute>
+                  <Layout><GestorConfiguracoes /></Layout>
+                </ProtectedRoute>
+              } />
 
-            {/* Instrutor Routes */}
-            <Route path="/instrutor/dashboard" element={
-              <ProtectedRoute>
-                <Layout><InstrutorDashboard /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/instrutor/aulas" element={
-              <ProtectedRoute>
-                <Layout><InstrutorAulas /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/instrutor/alunos" element={
-              <ProtectedRoute>
-                <Layout><InstrutorAlunos /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/instrutor/planos-treino" element={
-              <ProtectedRoute>
-                <Layout><InstrutorPlanosTreino /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/instrutor/exercicios" element={
-              <ProtectedRoute>
-                <Layout><InstrutorExercicios /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/instrutor/avaliacoes" element={
-              <ProtectedRoute>
-                <Layout><InstrutorAvaliacoes /></Layout>
-              </ProtectedRoute>
-            } />
+              {/* Instrutor Routes */}
+              <Route path="/instrutor/dashboard" element={
+                <ProtectedRoute>
+                  <Layout><InstrutorDashboard /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/instrutor/aulas" element={
+                <ProtectedRoute>
+                  <Layout><InstrutorAulas /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/instrutor/alunos" element={
+                <ProtectedRoute>
+                  <Layout><InstrutorAlunos /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/instrutor/planos-treino" element={
+                <ProtectedRoute>
+                  <Layout><InstrutorPlanosTreino /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/instrutor/exercicios" element={
+                <ProtectedRoute>
+                  <Layout><InstrutorExercicios /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/instrutor/avaliacoes" element={
+                <ProtectedRoute>
+                  <Layout><InstrutorAvaliacoes /></Layout>
+                </ProtectedRoute>
+              } />
 
-            {/* Recepcionista Routes */}
-            <Route path="/recepcionista/dashboard" element={
-              <ProtectedRoute>
-                <Layout><RecepcionistaDashboard /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/recepcionista/checkin" element={
-              <ProtectedRoute>
-                <Layout><RecepcionistaCheckin /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/recepcionista/cadastro" element={
-              <ProtectedRoute>
-                <Layout><RecepcionistaCadastro /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/recepcionista/agendamentos" element={
-              <ProtectedRoute>
-                <Layout><RecepcionistaAgendamentos /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/recepcionista/pos" element={
-              <ProtectedRoute>
-                <Layout><RecepcionistaPOS /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/recepcionista/lista-espera" element={
-              <ProtectedRoute>
-                <Layout><RecepcionistaListaEspera /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/recepcionista/ocorrencias" element={
-              <ProtectedRoute>
-                <Layout><RecepcionistaOcorrencias /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/recepcionista/alertas" element={
-              <ProtectedRoute>
-                <Layout><RecepcionistaAlertas /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/recepcionista/faq" element={
-              <ProtectedRoute>
-                <Layout><RecepcionistaFAQ /></Layout>
-              </ProtectedRoute>
-            } />
+              {/* Recepcionista Routes */}
+              <Route path="/recepcionista/dashboard" element={
+                <ProtectedRoute>
+                  <Layout><RecepcionistaDashboard /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/recepcionista/checkin" element={
+                <ProtectedRoute>
+                  <Layout><RecepcionistaCheckin /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/recepcionista/cadastro" element={
+                <ProtectedRoute>
+                  <Layout><RecepcionistaCadastro /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/recepcionista/agendamentos" element={
+                <ProtectedRoute>
+                  <Layout><RecepcionistaAgendamentos /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/recepcionista/pos" element={
+                <ProtectedRoute>
+                  <Layout><RecepcionistaPOS /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/recepcionista/lista-espera" element={
+                <ProtectedRoute>
+                  <Layout><RecepcionistaListaEspera /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/recepcionista/ocorrencias" element={
+                <ProtectedRoute>
+                  <Layout><RecepcionistaOcorrencias /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/recepcionista/alertas" element={
+                <ProtectedRoute>
+                  <Layout><RecepcionistaAlertas /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/recepcionista/faq" element={
+                <ProtectedRoute>
+                  <Layout><RecepcionistaFAQ /></Layout>
+                </ProtectedRoute>
+              } />
 
-            {/* Aluno Routes */}
-            <Route path="/aluno/painel" element={
-              <ProtectedRoute>
-                <Layout><AlunoPainel /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/aluno/treinos" element={
-              <ProtectedRoute>
-                <Layout><AlunoTreinos /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/aluno/agendar" element={
-              <ProtectedRoute>
-                <Layout><AlunoAgendar /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/aluno/progresso" element={
-              <ProtectedRoute>
-                <Layout><AlunoProgresso /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/aluno/gamificacao" element={
-              <ProtectedRoute>
-                <Layout><AlunoGamificacao /></Layout>
-              </ProtectedRoute>
-            } />
-            <Route path="/aluno/conta" element={
-              <ProtectedRoute>
-                <Layout><AlunoConta /></Layout>
-              </ProtectedRoute>
-            } />
+              {/* Aluno Routes */}
+              <Route path="/aluno/painel" element={
+                <ProtectedRoute>
+                  <Layout><AlunoPainel /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/aluno/treinos" element={
+                <ProtectedRoute>
+                  <Layout><AlunoTreinos /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/aluno/agendar" element={
+                <ProtectedRoute>
+                  <Layout><AlunoAgendar /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/aluno/progresso" element={
+                <ProtectedRoute>
+                  <Layout><AlunoProgresso /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/aluno/gamificacao" element={
+                <ProtectedRoute>
+                  <Layout><AlunoGamificacao /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/aluno/conta" element={
+                <ProtectedRoute>
+                  <Layout><AlunoConta /></Layout>
+                </ProtectedRoute>
+              } />
 
-            {/* Fallback route */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Toaster />
-        </Router>
+              {/* Fallback route */}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+            <Toaster />
+          </Router>
+        </UserProvider>
       </AuthProvider>
     </ThemeProvider>
   );

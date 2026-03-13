@@ -1,67 +1,72 @@
+import { createContext, useContext, useState, useEffect } from 'react';
+import api from '@/lib/api';
 
-import { createContext, useContext, useEffect, useState } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { authService } from '@/lib/supabase-auth';
+interface User {
+  id: string;
+  email?: string;
+  user_metadata?: any;
+}
 
 interface AuthContextType {
   user: User | null;
-  session: Session | null;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<any>;
-  signUp: (email: string, password: string, fullName: string) => Promise<any>;
-  signOut: () => Promise<any>;
+  signIn: (email: string, password: string) => Promise<{ error?: { message: string } }>;
+  signUp: (email: string, password: string, fullName: string) => Promise<{ error?: { message: string } }>;
+  signOut: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Ao montar, verifica se já existe um token salvo no localStorage
   useEffect(() => {
-    // Configurar listener para mudanças na autenticação
-    const { data: { subscription } } = authService.onAuthStateChange(
-      (event, session) => {
-        setSession(session);
-        setUser(session?.user ?? null);
-        setLoading(false);
+    const token = localStorage.getItem('wefit_token');
+    const savedUser = localStorage.getItem('wefit_user');
+    if (token && savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch {
+        localStorage.removeItem('wefit_token');
+        localStorage.removeItem('wefit_user');
       }
-    );
-
-    // Verificar sessão inicial
-    authService.getSession().then(({ session }) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
+    }
+    setLoading(false);
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const result = await authService.signIn(email, password);
-    return result;
+    try {
+      const data = await api.login(email, password);
+      // Salvar token e dados do usuário
+      localStorage.setItem('wefit_token', data.access_token);
+      localStorage.setItem('wefit_refresh_token', data.refresh_token);
+      localStorage.setItem('wefit_user', JSON.stringify(data.user));
+      setUser(data.user);
+      return {};
+    } catch (err: any) {
+      return { error: { message: err.message || 'Erro no login' } };
+    }
   };
 
   const signUp = async (email: string, password: string, fullName: string) => {
-    const result = await authService.signUp(email, password, fullName);
-    return result;
+    try {
+      await api.register({ email, password, full_name: fullName });
+      return {};
+    } catch (err: any) {
+      return { error: { message: err.message || 'Erro no cadastro' } };
+    }
   };
 
   const signOut = async () => {
-    const result = await authService.signOut();
-    return result;
+    localStorage.removeItem('wefit_token');
+    localStorage.removeItem('wefit_refresh_token');
+    localStorage.removeItem('wefit_user');
+    setUser(null);
   };
 
-  const value = {
-    user,
-    session,
-    loading,
-    signIn,
-    signUp,
-    signOut,
-  };
+  const value = { user, loading, signIn, signUp, signOut };
 
   return (
     <AuthContext.Provider value={value}>
