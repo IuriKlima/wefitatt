@@ -10,15 +10,7 @@ import { useUser } from '@/contexts/UserContext';
 import { useToast } from '@/hooks/use-toast';
 import type { UserProfile } from '@/contexts/UserContext';
 
-// Demo accounts for development/testing
-const DEMO_ACCOUNTS: Record<string, { id: string; name: string; email: string; profile: UserProfile }> = {
-  'super@wefit.com': { id: 'super-1', name: 'Super Admin', email: 'super@wefit.com', profile: 'super_admin' },
-  'admin@wefit.com': { id: 'admin-1', name: 'Administrador Rede', email: 'admin@wefit.com', profile: 'administrador' },
-  'gestor@wefit.com': { id: 'gestor-1', name: 'Gestor Academia', email: 'gestor@wefit.com', profile: 'gestor' },
-  'instrutor@wefit.com': { id: 'inst-1', name: 'Personal Trainer', email: 'instrutor@wefit.com', profile: 'instrutor' },
-  'recepcionista@wefit.com': { id: 'recep-1', name: 'Recepcionista', email: 'recepcionista@wefit.com', profile: 'recepcionista' },
-  'aluno@wefit.com': { id: 'aluno-1', name: 'Aluno Demo', email: 'aluno@wefit.com', profile: 'aluno' },
-};
+
 
 const ROLE_DASHBOARD: Record<UserProfile, string> = {
   super_admin: '/super/dashboard',
@@ -38,32 +30,13 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ email: '', password: '' });
 
-  const handleDemoLogin = (demoEmail: string) => {
-    const account = DEMO_ACCOUNTS[demoEmail];
-    if (!account) return;
 
-    // Set auth token so ProtectedRoute works
-    localStorage.setItem('wefit_token', 'demo-token');
-    localStorage.setItem('wefit_user', JSON.stringify({ id: account.id, email: account.email }));
-    localStorage.setItem('wefit_profile_user', JSON.stringify(account));
-
-    setUser(account);
-    toast({ title: "Login demo realizado!", description: `Bem-vindo, ${account.name}` });
-    // Need to reload to trigger auth state
-    window.location.href = ROLE_DASHBOARD[account.profile];
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    // Check if it's a demo account first
-    const demoAccount = DEMO_ACCOUNTS[formData.email];
-    if (demoAccount) {
-      handleDemoLogin(formData.email);
-      setLoading(false);
-      return;
-    }
+
 
     try {
       const { error } = await signIn(formData.email, formData.password);
@@ -71,7 +44,10 @@ const Login = () => {
         toast({ title: "Erro no login", description: error.message, variant: "destructive" });
       } else {
         toast({ title: "Login realizado!", description: "Bem-vindo ao WeFit" });
-        navigate('/admin/dashboard');
+        // Small delay to allow UserProvider to fetch the role based on session
+        setTimeout(() => {
+          navigate('/admin/dashboard');
+        }, 500);
       }
     } catch (error) {
       toast({ title: "Erro inesperado", description: "Tente novamente", variant: "destructive" });
@@ -191,20 +167,7 @@ const Login = () => {
             </Button>
           </form>
 
-          {/* Demo Access */}
-          <div className="mt-6 p-4 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-            <p className="text-[10px] font-semibold text-gray-500 uppercase tracking-wider mb-3 flex items-center gap-1.5">
-              <Shield className="h-3 w-3" /> Acesso demo (senha: 123456)
-            </p>
-            <div className="grid grid-cols-3 gap-1.5">
-              {Object.entries(DEMO_ACCOUNTS).map(([email, acc]) => (
-                <button key={email} onClick={() => handleDemoLogin(email)}
-                  className="text-[10px] py-1.5 px-2 rounded-lg bg-white/[0.04] hover:bg-purple-500/10 text-gray-500 hover:text-purple-400 transition-colors border border-white/[0.06] hover:border-purple-500/20 truncate font-medium">
-                  {acc.profile === 'super_admin' ? '⚡ Super' : acc.profile === 'administrador' ? 'Admin' : acc.profile === 'gestor' ? 'Gestor' : acc.profile === 'instrutor' ? 'Instrutor' : acc.profile === 'recepcionista' ? 'Recep.' : 'Aluno'}
-                </button>
-              ))}
-            </div>
-          </div>
+
 
           <div className="mt-6 text-center">
             <p className="text-gray-600 text-sm">

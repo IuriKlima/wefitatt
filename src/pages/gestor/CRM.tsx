@@ -184,24 +184,14 @@ const CRM = () => {
     const fetchKanbanData = async () => {
       try {
         setLoading(true);
-        // MOCK DATA for now to build UI
-        const mockStages = [
-          { id: '1', name: 'Lead Frio', color: '#94a3b8', order_index: 0 },
-          { id: '2', name: 'Contato Feito', color: '#3b82f6', order_index: 1 },
-          { id: '3', name: 'Aula Experimental', color: '#f59e0b', order_index: 2 },
-          { id: '4', name: 'Negociação', color: '#8b5cf6', order_index: 3 },
-          { id: '5', name: 'Fechado/Ganho', color: '#10b981', order_index: 4 },
-        ];
+        // Removed mock data. Fetching from actual backend APIs.
+        const [stagesRes, leadsRes] = await Promise.all([
+          api.get('/crm/stages'),
+          api.get('/crm/leads')
+        ]);
         
-        const mockLeads = [
-          { id: 'l1', name: 'Lucas Silva', phone: '11999999999', email: 'lucas@gmail.com', source: 'Instagram', score: 85, stage_id: '1', created_at: new Date().toISOString() },
-          { id: 'l2', name: 'Mariana Souza', phone: '11988888888', source: 'Landing Page', score: 92, stage_id: '1', created_at: new Date(Date.now() - 86400000).toISOString() },
-          { id: 'l3', name: 'Pedro Alves', email: 'pedro@hotmail.com', source: 'Referência', score: 45, stage_id: '2', created_at: new Date(Date.now() - 172800000).toISOString() },
-          { id: 'l4', name: 'Ana Costa', phone: '11977777777', email: 'ana@empresa.com', source: 'WhatsApp', score: 99, stage_id: '3', created_at: new Date(Date.now() - 259200000).toISOString() },
-        ];
-
-        setStages(mockStages);
-        setLeads(mockLeads);
+        setStages(stagesRes.data || []);
+        setLeads(leadsRes.data || []);
       } catch (error) {
         toast({ title: "Erro", description: "Falha ao carregar funil de vendas", variant: "destructive" });
       } finally {
@@ -247,6 +237,15 @@ const CRM = () => {
       toast({
         title: "Lead Movido",
         description: `${activeLeadItem.name} foi movido com sucesso.`,
+      });
+      
+      // Make actual backend API call to persist
+      api.patch(`/crm/leads/${activeId}`, { stage_id: targetStageId }).catch(() => {
+        toast({
+          title: "Erro ao mover",
+          description: "Ocorreu um erro ao salvar o card no servidor.",
+          variant: "destructive"
+        });
       });
     }
   };
