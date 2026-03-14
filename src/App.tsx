@@ -48,6 +48,7 @@ import GestorMetas from '@/pages/gestor/Metas';
 import GestorPlanos from '@/pages/gestor/Planos';
 import GestorConfiguracoes from '@/pages/gestor/Configuracoes';
 import GestorLandingPageBuilder from '@/pages/gestor/LandingPageBuilder';
+import GestorCRM from '@/pages/gestor/CRM';
 
 // Instrutor pages
 import InstrutorDashboard from '@/pages/instrutor/Dashboard';
@@ -79,6 +80,9 @@ import AlunoConta from '@/pages/aluno/Conta';
 // Not Found page
 import NotFound from '@/pages/NotFound';
 
+// Public Checkout
+import Checkout from '@/pages/Checkout';
+
 // Super Admin pages
 import SuperDashboard from '@/pages/super/Dashboard';
 import SuperTenants from '@/pages/super/Tenants';
@@ -100,6 +104,8 @@ function App() {
                   <Homepage />
                 </PublicLayout>
               } />
+              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/checkout/:planId" element={<Checkout />} />
               <Route path="/planos" element={
                 <PublicLayout>
                   <Planos />
@@ -242,6 +248,11 @@ function App() {
               <Route path="/gestor/configuracoes" element={
                 <ProtectedRoute>
                   <Layout><GestorConfiguracoes /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/gestor/crm" element={
+                <ProtectedRoute>
+                  <Layout><GestorCRM /></Layout>
                 </ProtectedRoute>
               } />
 

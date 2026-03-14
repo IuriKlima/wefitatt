@@ -190,3 +190,56 @@ class WebhookCreate(BaseModel):
     url: str
     events: List[str]
     secret: Optional[str] = None
+
+# ==========================================
+# MÓDULO: CRM (Fase 1)
+# ==========================================
+class PipelineStageCreate(BaseModel):
+    name: str
+    order_index: int = 0
+    color: str = '#8B5CF6'
+    tenant_id: str
+
+class PipelineStageUpdate(BaseModel):
+    name: Optional[str] = None
+    order_index: Optional[int] = None
+    color: Optional[str] = None
+
+class LeadCreate(BaseModel):
+    name: str
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    source: Optional[str] = 'manual'
+    stage_id: Optional[str] = None
+    tenant_id: str
+
+class LeadUpdate(BaseModel):
+    name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    stage_id: Optional[str] = None
+    status: Optional[str] = None
+    score: Optional[float] = None
+
+class LeadActivityCreate(BaseModel):
+    lead_id: str
+    user_id: str
+    type: str # 'call', 'whatsapp', 'note'
+    description: str
+
+# ==========================================
+# MÓDULO: CHECKOUT (Fase 1)
+# ==========================================
+class PlanCreate(BaseModel):
+    name: str
+    price: float
+    billing_cycle: str = 'MONTHLY'
+    duration_days: int = 30
+    features: list = []
+    tenant_id: str
+
+class CheckoutRequest(BaseModel):
+    plan_id: str
+    student_id: str
+    payment_method: str = 'credit_card'
+    tenant_id: str

@@ -1,68 +1,60 @@
-from fastapi import APIRouter
-from database import db_select, db_insert, db_update
-from schemas import LeadCreate, LeadMove, PipelineStageCreate, LeadActivityCreate, SalesGoalCreate
+from fastapi import APIRouter, HTTPException, Header
+from typing import Optional, List
+from schemas import PipelineStageCreate, PipelineStageUpdate, LeadCreate, LeadUpdate, LeadActivityCreate
+from database import db_insert, db_select, db_update, db_delete
 
-router = APIRouter(prefix="/crm", tags=["Módulo 2 — CRM e Vendas"])
+router = APIRouter(prefix="/crm", tags=["CRM & Leads"])
 
 # --- PIPELINE STAGES ---
-@router.get("/pipeline-stages", summary="Listar etapas do funil")
-async def list_stages(tenant_id: str):
+
+@router.get("/stages", summary="Listar estágios do funil do tenant")
+async def get_stages(tenant_id: str = Header(..., alias="X-Tenant-Id")):
     return await db_select("pipeline_stages", {"tenant_id": f"eq.{tenant_id}", "order": "order_index.asc"})
 
-@router.post("/pipeline-stages", summary="Criar etapa do funil")
-async def create_stage(tenant_id: str, payload: PipelineStageCreate):
-    return await db_insert("pipeline_stages", {"tenant_id": tenant_id, **payload.model_dump()})
+@router.post("/stages", summary="Criar estágio no funil")
+async def create_stage(payload: PipelineStageCreate):
+    return await db_insert("pipeline_stages", payload.dict())
+
+@router.patch("/stages/{stage_id}", summary="Atualizar estágio (nome, cor, ordem)")
+async def update_stage(stage_id: str, payload: PipelineStageUpdate):
+    update_data = {k: v for k, v in payload.dict().items() if v is not None}
+    return await db_update("pipeline_stages", f"id=eq.{stage_id}", update_data)
+
+@router.delete("/stages/{stage_id}", summary="Remover estágio")
+async def delete_stage(stage_id: str):
+    return await db_delete("pipeline_stages", f"id=eq.{stage_id}")
 
 # --- LEADS ---
-@router.get("/leads", summary="Listar leads")
-async def list_leads(tenant_id: str, stage_id: str = None):
-    params = {"tenant_id": f"eq.{tenant_id}"}
-    if stage_id: params["pipeline_stage_id"] = f"eq.{stage_id}"
+
+@router.get("/leads", summary="Listar todos os leads do tenant")
+async def get_leads(tenant_id: str = Header(..., alias="X-Tenant-Id"), stage_id: Optional[str] = None):
+    params = {"tenant_id": f"eq.{tenant_id}", "order": "created_at.desc"}
+    if stage_id:
+        params["stage_id"] = f"eq.{stage_id}"
     return await db_select("leads", params)
 
-@router.post("/leads", summary="Criar lead")
-async def create_lead(tenant_id: str, payload: LeadCreate):
-    return await db_insert("leads", {"tenant_id": tenant_id, **payload.model_dump()})
+@router.post("/leads", summary="Cadastrar novo lead")
+async def create_lead(payload: LeadCreate):
+    return await db_insert("leads", payload.dict())
 
-@router.patch("/leads/{lead_id}/move", summary="Mover lead entre etapas (Kanban)")
-async def move_lead(lead_id: str, payload: LeadMove):
-    return await db_update("leads", f"id=eq.{lead_id}", {"pipeline_stage_id": payload.pipeline_stage_id})
+@router.patch("/leads/{lead_id}", summary="Atualizar lead (mover de estágio, mudar status)")
+async def update_lead(lead_id: str, payload: LeadUpdate):
+    update_data = {k: v for k, v in payload.dict().items() if v is not None}
+    return await db_update("leads", f"id=eq.{lead_id}", update_data)
 
-# --- ATIVIDADES ---
-@router.get("/lead-activities", summary="Listar atividades de um lead")
-async def list_activities(lead_id: str):
+@router.get("/leads/{lead_id}", summary="Detalhes de um lead específico")
+async def get_lead(lead_id: str):
+    result = await db_select("leads", {"id": f"eq.{lead_id}"})
+    if not result:
+        raise HTTPException(status_code=404, detail="Lead não encontrado")
+    return result[0]
+
+# --- ATIVIDADES (Histórico) ---
+
+@router.get("/leads/{lead_id}/activities", summary="Ver histórico do lead")
+async def get_activities(lead_id: str):
     return await db_select("lead_activities", {"lead_id": f"eq.{lead_id}", "order": "created_at.desc"})
 
-@router.post("/lead-activities", summary="Registrar interação com lead")
-async def create_activity(tenant_id: str, payload: LeadActivityCreate):
-    data = payload.model_dump()
-    if data.get("scheduled_at"): data["scheduled_at"] = data["scheduled_at"].isoformat()
-    return await db_insert("lead_activities", {"tenant_id": tenant_id, **data})
-
-# --- METAS ---
-@router.get("/sales-goals", summary="Listar metas de vendas")
-async def list_goals(tenant_id: str):
-    return await db_select("sales_goals", {"tenant_id": f"eq.{tenant_id}"})
-
-@router.post("/sales-goals", summary="Criar meta de vendas")
-async def create_goal(tenant_id: str, payload: SalesGoalCreate):
-    data = payload.model_dump()
-    data["period_start"] = str(data["period_start"])
-    data["period_end"] = str(data["period_end"])
-    return await db_insert("sales_goals", {"tenant_id": tenant_id, **data})
-
-# --- DASHBOARD ---
-@router.get("/dashboard", summary="Dashboard de conversão (CAC, taxa de fechamento)")
-async def conversion_dashboard(tenant_id: str):
-    leads = await db_select("leads", {"tenant_id": f"eq.{tenant_id}"})
-    goals = await db_select("sales_goals", {"tenant_id": f"eq.{tenant_id}"})
-    subscriptions = await db_select("subscriptions", {"tenant_id": f"eq.{tenant_id}"})
-    total_leads = len(leads)
-    total_enrolled = len(subscriptions)
-    conversion_rate = round((total_enrolled / total_leads * 100), 2) if total_leads > 0 else 0
-    return {
-        "total_leads": total_leads,
-        "total_enrolled": total_enrolled,
-        "conversion_rate_pct": conversion_rate,
-        "goals": goals
-    }
+@router.post("/activities", summary="Registrar nova atividade no lead")
+async def create_activity(payload: LeadActivityCreate):
+    return await db_insert("lead_activities", payload.dict())

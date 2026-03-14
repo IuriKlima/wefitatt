@@ -160,26 +160,27 @@ export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
           href: '/gestor/estoque',
           icon: Package,
         },
+      ],
+    },
+    {
+      title: 'Marketing & Vendas',
+      items: [
         {
-          title: 'Manutenção',
-          href: '/gestor/manutencao',
-          icon: Wrench,
+          title: 'Funil de Vendas (CRM)',
+          href: '/gestor/crm',
+          icon: Users,
+          badge: 'Novo'
         },
         {
-          title: 'Eventos',
-          href: '/gestor/eventos',
-          icon: PartyPopper,
+          title: 'Landing Page',
+          href: '/gestor/landing-page',
+          icon: Globe,
         },
       ],
     },
     {
       title: 'Engajamento',
       items: [
-        {
-          title: 'Landing Page',
-          href: '/gestor/landing-page',
-          icon: Globe,
-        },
         {
           title: 'Feedback e NPS',
           href: '/gestor/feedback',

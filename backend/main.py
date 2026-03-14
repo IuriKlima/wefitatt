@@ -7,7 +7,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-from routers import auth, financial, crm, operations, student, technical, webhooks
+from routers import auth, financial, crm, operations, student, technical, webhooks, checkout, automation
 
 # Configurando CORS para permitir que o Vite/React faça requisições
 app.add_middleware(
@@ -26,6 +26,8 @@ app.include_router(operations.router)
 app.include_router(student.router)
 app.include_router(technical.router)
 app.include_router(webhooks.router)
+app.include_router(checkout.router)
+app.include_router(automation.router)
 
 @app.get("/")
 def read_root():
