@@ -29,7 +29,8 @@ import {
   Star,
   PieChart,
   FileText,
-  Globe
+  Globe,
+  Shield
 } from 'lucide-react';
 import { UserProfile } from '@/contexts/UserContext';
 
@@ -46,6 +47,22 @@ export interface NavigationSection {
 }
 
 export const navigationConfig: Record<UserProfile, NavigationSection[]> = {
+  super_admin: [
+    {
+      title: 'SaaS Management',
+      items: [
+        { title: 'Painel SaaS', href: '/super/dashboard', icon: LayoutDashboard },
+        { title: 'Gerenciar Tenants', href: '/super/tenants', icon: Building2 },
+        { title: 'Planos do Sistema', href: '/super/planos', icon: CreditCard },
+      ],
+    },
+    {
+      title: 'Configurações',
+      items: [
+        { title: 'Configurações Gerais', href: '/admin/configuracoes', icon: Settings },
+      ],
+    },
+  ],
   administrador: [
     {
       title: 'Visão Global',

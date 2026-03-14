@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Textarea } from '@/components/ui/textarea';
-import { ArrowLeft, ArrowRight, CheckCircle, Upload, CreditCard, MapPin, Building, User, Phone, Mail } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle, Upload, CreditCard, MapPin, Building, User, Phone, Mail, Zap } from 'lucide-react';
 
 interface FormData {
   [key: string]: any;
@@ -93,9 +93,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <Building className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <Building className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Sobre sua Academia</h2>
-              <p className="text-gray-600">Vamos começar com as informações básicas</p>
+              <p className="text-gray-400">Vamos começar com as informações básicas</p>
             </div>
             
             <div className="space-y-4">
@@ -128,9 +128,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <MapPin className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <MapPin className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Onde sua Academia está Localizada?</h2>
-              <p className="text-gray-600">Localização é tudo!</p>
+              <p className="text-gray-400">Localização é tudo!</p>
             </div>
             
             <div className="space-y-4">
@@ -209,9 +209,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <Phone className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <Phone className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Contatos da Academia</h2>
-              <p className="text-gray-600">Como podemos entrar em contato?</p>
+              <p className="text-gray-400">Como podemos entrar em contato?</p>
             </div>
             
             <div className="space-y-4">
@@ -256,9 +256,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <Building className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <Building className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Detalhes da Operação</h2>
-              <p className="text-gray-600">Entendendo sua estrutura</p>
+              <p className="text-gray-400">Entendendo sua estrutura</p>
             </div>
             
             <div className="space-y-6">
@@ -303,9 +303,9 @@ const CadastroFluxo = () => {
               
               <div>
                 <Label>Quer adicionar o logo da sua academia? (Opcional)</Label>
-                <div className="mt-3 p-6 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-purple-400 transition-colors cursor-pointer">
-                  <Upload className="mx-auto h-8 w-8 text-gray-400 mb-2" />
-                  <p className="text-sm text-gray-600">Clique para selecionar ou arraste seu logo aqui</p>
+                <div className="mt-3 p-6 border-2 border-dashed border-white/20 rounded-lg text-center hover:border-purple-400 transition-colors cursor-pointer">
+                  <Upload className="mx-auto h-8 w-8 text-gray-500 mb-2" />
+                  <p className="text-sm text-gray-400">Clique para selecionar ou arraste seu logo aqui</p>
                   <p className="text-xs text-gray-400 mt-1">PNG, JPG até 5MB</p>
                 </div>
               </div>
@@ -317,9 +317,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <User className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <User className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Informações do Responsável</h2>
-              <p className="text-gray-600">Agora, seus dados de acesso</p>
+              <p className="text-gray-400">Agora, seus dados de acesso</p>
             </div>
             
             <div className="space-y-4">
@@ -400,19 +400,19 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <CheckCircle className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <CheckCircle className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Escolha seu Plano Wefit</h2>
-              <p className="text-gray-600">O motor do seu sucesso!</p>
+              <p className="text-gray-400">O motor do seu sucesso!</p>
             </div>
             
-            <Card className="p-6 border-2 border-purple-200 bg-purple-50">
+            <Card className="p-6 border border-purple-500/30 bg-purple-500/10">
               <div className="text-center">
-                <h3 className="text-xl font-bold text-purple-900 mb-2">Plano Academia</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Plano Academia</h3>
                 <div className="text-3xl font-bold text-purple-600 mb-1">
-                  <span className="line-through text-lg text-gray-500">R$ 199/mês</span>
+                  <span className="line-through text-lg text-gray-600">R$ 199/mês</span>
                   <span className="ml-2">R$ 99</span>
                 </div>
-                <p className="text-sm text-purple-700 mb-4">no primeiro mês!</p>
+                <p className="text-sm text-purple-300 mb-4">no primeiro mês!</p>
                 
                 <ul className="text-left space-y-2 mb-6">
                   <li className="flex items-center">
@@ -429,7 +429,7 @@ const CadastroFluxo = () => {
                   </li>
                 </ul>
                 
-                <p className="text-xs text-gray-600">Você poderá alterar seu plano a qualquer momento.</p>
+                <p className="text-xs text-gray-400">Você poderá alterar seu plano a qualquer momento.</p>
               </div>
             </Card>
           </div>
@@ -439,9 +439,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <CreditCard className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <CreditCard className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Pagamento</h2>
-              <p className="text-gray-600">Finalizando seu cadastro!</p>
+              <p className="text-gray-400">Finalizando seu cadastro!</p>
             </div>
             
             <div className="space-y-4">
@@ -508,9 +508,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <Building className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <Building className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Sobre sua Rede</h2>
-              <p className="text-gray-600">Bem-vindo ao futuro das redes de academias!</p>
+              <p className="text-gray-400">Bem-vindo ao futuro das redes de academias!</p>
             </div>
             
             <div className="space-y-4">
@@ -543,9 +543,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <MapPin className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <MapPin className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Alcance da Rede</h2>
-              <p className="text-gray-600">Sua marca, em todos os lugares</p>
+              <p className="text-gray-400">Sua marca, em todos os lugares</p>
             </div>
             
             <div className="space-y-4">
@@ -594,9 +594,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <User className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <User className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Administrador Principal</h2>
-              <p className="text-gray-600">Seus superpoderes de gestão</p>
+              <p className="text-gray-400">Seus superpoderes de gestão</p>
             </div>
             
             <div className="space-y-4">
@@ -666,19 +666,19 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <CheckCircle className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <CheckCircle className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Plano Rede</h2>
-              <p className="text-gray-600">Potência máxima para sua expansão!</p>
+              <p className="text-gray-400">Potência máxima para sua expansão!</p>
             </div>
             
-            <Card className="p-6 border-2 border-purple-200 bg-purple-50">
+            <Card className="p-6 border border-purple-500/30 bg-purple-500/10">
               <div className="text-center">
-                <h3 className="text-xl font-bold text-purple-900 mb-2">Plano Rede</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Plano Rede</h3>
                 <div className="text-3xl font-bold text-purple-600 mb-1">
-                  <span className="line-through text-lg text-gray-500">R$ 299/mês</span>
+                  <span className="line-through text-lg text-gray-600">R$ 299/mês</span>
                   <span className="ml-2">R$ 149</span>
                 </div>
-                <p className="text-sm text-purple-700 mb-4">no primeiro mês!</p>
+                <p className="text-sm text-purple-300 mb-4">no primeiro mês!</p>
                 
                 <ul className="text-left space-y-2 mb-6">
                   <li className="flex items-center">
@@ -703,9 +703,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <CreditCard className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <CreditCard className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Pagamento</h2>
-              <p className="text-gray-600">Finalizando seu cadastro!</p>
+              <p className="text-gray-400">Finalizando seu cadastro!</p>
             </div>
             
             <div className="space-y-4">
@@ -772,9 +772,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <User className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <User className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Sobre Você, Personal Trainer</h2>
-              <p className="text-gray-600">Wefit, seu parceiro de treinos e gestão!</p>
+              <p className="text-gray-400">Wefit, seu parceiro de treinos e gestão!</p>
             </div>
             
             <div className="space-y-4">
@@ -818,9 +818,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <Phone className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <Phone className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Seu Contato e Login</h2>
-              <p className="text-gray-600">Conectando você aos seus alunos</p>
+              <p className="text-gray-400">Conectando você aos seus alunos</p>
             </div>
             
             <div className="space-y-4">
@@ -879,9 +879,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <Building className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <Building className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Sua Atuação Profissional</h2>
-              <p className="text-gray-600">Mostre sua especialidade!</p>
+              <p className="text-gray-400">Mostre sua especialidade!</p>
             </div>
             
             <div className="space-y-6">
@@ -942,19 +942,19 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <CheckCircle className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <CheckCircle className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Plano Personal</h2>
-              <p className="text-gray-600">Ferramentas sob medida para você!</p>
+              <p className="text-gray-400">Ferramentas sob medida para você!</p>
             </div>
             
-            <Card className="p-6 border-2 border-purple-200 bg-purple-50">
+            <Card className="p-6 border border-purple-500/30 bg-purple-500/10">
               <div className="text-center">
-                <h3 className="text-xl font-bold text-purple-900 mb-2">Plano Personal</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Plano Personal</h3>
                 <div className="text-3xl font-bold text-purple-600 mb-1">
-                  <span className="line-through text-lg text-gray-500">R$ 99/mês</span>
+                  <span className="line-through text-lg text-gray-600">R$ 99/mês</span>
                   <span className="ml-2">R$ 49</span>
                 </div>
-                <p className="text-sm text-purple-700 mb-4">no primeiro mês!</p>
+                <p className="text-sm text-purple-300 mb-4">no primeiro mês!</p>
                 
                 <ul className="text-left space-y-2 mb-6">
                   <li className="flex items-center">
@@ -979,9 +979,9 @@ const CadastroFluxo = () => {
         return (
           <div className="space-y-6">
             <div className="text-center mb-8">
-              <CreditCard className="mx-auto h-12 w-12 text-purple-600 mb-4" />
+              <CreditCard className="mx-auto h-12 w-12 text-purple-400 mb-4" />
               <h2 className="text-2xl font-bold mb-2">Pagamento</h2>
-              <p className="text-gray-600">Finalizando seu cadastro!</p>
+              <p className="text-gray-400">Finalizando seu cadastro!</p>
             </div>
             
             <div className="space-y-4">
@@ -1057,60 +1057,97 @@ const CadastroFluxo = () => {
 
   if (!profile && !inviteCode) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Card className="p-8 text-center">
-          <h2 className="text-2xl font-bold mb-4">Erro</h2>
-          <p className="mb-4">Perfil não identificado. Por favor, volte e selecione um perfil.</p>
-          <Button onClick={() => navigate('/cadastro')}>Voltar ao Cadastro</Button>
-        </Card>
+      <div className="min-h-screen flex items-center justify-center bg-[#09090f]">
+        <div className="text-center animate-fade-in">
+          <h2 className="text-2xl font-bold text-white mb-4">Perfil não identificado</h2>
+          <p className="text-gray-400 mb-6">Volte e selecione um plano para continuar.</p>
+          <Button onClick={() => navigate('/cadastro')} className="bg-purple-600 hover:bg-purple-500 text-white rounded-xl">Voltar ao Cadastro</Button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex">
-      {/* Painel Roxo Wefit - Lado Esquerdo */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative z-10 flex flex-col justify-center items-center p-12 text-white">
-          <div className="max-w-md text-center">
-            <h1 className="text-5xl font-bold mb-6 tracking-tight">Wefit</h1>
-            <h2 className="text-2xl font-semibold mb-4">{getPanelMessage()}</h2>
-            <div className="mb-6">
-              <Progress value={(currentStep / totalSteps) * 100} className="w-full bg-white/20" />
-              <p className="text-sm mt-2 opacity-90">Passo {currentStep} de {totalSteps}</p>
+    <div className="min-h-screen flex bg-[#09090f]">
+      {/* Left Panel — Progress */}
+      <div className="hidden lg:flex lg:w-[40%] relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-[#09090f] to-indigo-900/30" />
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-purple-600/15 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[100px]" />
+        <div className="absolute inset-0 opacity-[0.03]" style={{
+          backgroundImage: 'linear-gradient(rgba(255,255,255,.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.1) 1px, transparent 1px)',
+          backgroundSize: '60px 60px'
+        }} />
+
+        <div className="relative z-10 flex flex-col justify-center p-16 w-full">
+          <div className="max-w-md">
+            <Link to="/" className="flex items-center gap-3 mb-12">
+              <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/25">
+                <Zap className="h-6 w-6 text-white" />
+              </div>
+              <span className="text-2xl font-bold text-white tracking-tight">WeFit</span>
+            </Link>
+
+            <h2 className="text-3xl font-bold text-white mb-3 tracking-tight">{getPanelMessage()}</h2>
+            <p className="text-gray-400 text-sm mb-8">Estamos quase prontos para transformar sua gestão fitness!</p>
+
+            <div className="mb-8">
+              <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+                <span>Passo {currentStep} de {totalSteps}</span>
+                <span>{Math.round((currentStep / totalSteps) * 100)}%</span>
+              </div>
+              <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                <div className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transition-all duration-500" style={{ width: `${(currentStep / totalSteps) * 100}%` }} />
+              </div>
             </div>
-            <p className="text-lg opacity-90 leading-relaxed">
-              Estamos quase prontos para transformar sua gestão fitness!
-            </p>
+
+            <div className="space-y-3">
+              {Array.from({ length: totalSteps }, (_, i) => (
+                <div key={i} className={`flex items-center gap-3 text-sm ${
+                  i + 1 < currentStep ? 'text-emerald-400' : i + 1 === currentStep ? 'text-white' : 'text-gray-600'
+                }`}>
+                  <div className={`h-6 w-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
+                    i + 1 < currentStep ? 'bg-emerald-500/20 text-emerald-400' : i + 1 === currentStep ? 'bg-purple-500/20 text-purple-400' : 'bg-white/5 text-gray-600'
+                  }`}>
+                    {i + 1 < currentStep ? '✓' : i + 1}
+                  </div>
+                  <span>Passo {i + 1}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          
-          {/* Elementos gráficos decorativos */}
-          <div className="absolute top-16 right-16 w-24 h-24 border-2 border-white/20 rounded-full"></div>
-          <div className="absolute bottom-24 left-16 w-20 h-20 border-2 border-white/20 rounded-full"></div>
-          <div className="absolute top-1/4 left-1/3 w-16 h-16 border border-white/10 rounded-full"></div>
         </div>
       </div>
 
-      {/* Área do Formulário - Lado Direito */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-gray-50">
-        <Card className="w-full max-w-2xl p-8 bg-white shadow-lg">
-          {/* Progresso Mobile */}
+      {/* Right Panel — Form */}
+      <div className="flex-1 flex items-center justify-center p-6 lg:p-10 bg-[#0c0c14] overflow-y-auto">
+        <div className="w-full max-w-2xl animate-fade-in">
+          {/* Mobile progress */}
           <div className="lg:hidden mb-6">
-            <Progress value={(currentStep / totalSteps) * 100} className="w-full" />
-            <p className="text-sm mt-2 text-center text-gray-600">Passo {currentStep} de {totalSteps}</p>
+            <div className="flex items-center gap-3 mb-4 justify-center">
+              <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+                <Zap className="h-5 w-5 text-white" />
+              </div>
+              <span className="text-lg font-bold text-white">WeFit</span>
+            </div>
+            <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full transition-all duration-500" style={{ width: `${(currentStep / totalSteps) * 100}%` }} />
+            </div>
+            <p className="text-xs mt-2 text-center text-gray-500">Passo {currentStep} de {totalSteps}</p>
           </div>
 
-          {/* Conteúdo do Passo */}
-          {renderStepContent()}
+          {/* Step Content */}
+          <div className="text-white">
+            {renderStepContent()}
+          </div>
 
-          {/* Botões de Navegação */}
+          {/* Navigation */}
           <div className="flex justify-between mt-8">
             <Button
-              variant="outline"
+              variant="ghost"
               onClick={prevStep}
               disabled={currentStep === 1}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-gray-400 hover:text-white hover:bg-white/5 disabled:opacity-30"
             >
               <ArrowLeft className="h-4 w-4" />
               Voltar
@@ -1118,13 +1155,13 @@ const CadastroFluxo = () => {
             
             <Button
               onClick={nextStep}
-              className="bg-purple-600 hover:bg-purple-700 text-white flex items-center gap-2"
+              className="bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white flex items-center gap-2 rounded-xl shadow-lg shadow-purple-500/20 px-6"
             >
               {getButtonText()}
               {currentStep < totalSteps && <ArrowRight className="h-4 w-4" />}
             </Button>
           </div>
-        </Card>
+        </div>
       </div>
     </div>
   );

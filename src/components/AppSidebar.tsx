@@ -24,6 +24,7 @@ const AppSidebar: React.FC = () => {
   const navigate = useNavigate();
 
   const profiles = [
+    { value: 'super_admin', label: 'Super Admin' },
     { value: 'administrador', label: 'Administrador' },
     { value: 'gestor', label: 'Gestor' },
     { value: 'instrutor', label: 'Instrutor' },

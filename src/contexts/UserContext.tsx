@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-export type UserProfile = 'administrador' | 'gestor' | 'instrutor' | 'recepcionista' | 'aluno';
+export type UserProfile = 'super_admin' | 'administrador' | 'gestor' | 'instrutor' | 'recepcionista' | 'aluno';
 
 interface User {
   id: string;
@@ -32,12 +32,7 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>({
-    id: '1',
-    name: 'Admin Demo',
-    email: 'admin@wefit.com',
-    profile: 'administrador'
-  });
+  const [user, setUser] = useState<User | null>(null);
 
   const switchProfile = (profile: UserProfile) => {
     if (user) {

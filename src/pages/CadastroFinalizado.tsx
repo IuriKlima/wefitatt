@@ -1,112 +1,114 @@
-
 import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { CheckCircle, ArrowRight } from 'lucide-react';
+import { CheckCircle, ArrowRight, Zap } from 'lucide-react';
 
 const CadastroFinalizado = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { profile, inviteCode, formData, userName, businessName } = location.state || {};
+  const { profile, formData, userName, businessName } = location.state || {};
 
-  const handleAccessDashboard = () => {
-    // Sempre redirecionar para o dashboard do admin
-    navigate('/admin/dashboard');
+  const getDashboardRoute = () => {
+    switch (profile) {
+      case 'personal': return '/instrutor/dashboard';
+      case 'academia': return '/gestor/dashboard';
+      case 'rede': return '/admin/dashboard';
+      default: return '/login';
+    }
+  };
+
+  const getRoleName = () => {
+    switch (profile) {
+      case 'personal': return 'Personal Trainer';
+      case 'academia': return 'Gestor de Academia';
+      case 'rede': return 'Administrador de Rede';
+      default: return 'Usuário';
+    }
   };
 
   return (
-    <div className="min-h-screen flex">
-      {/* Painel Roxo Wefit - Lado Esquerdo */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 relative overflow-hidden">
-        <div className="absolute inset-0 bg-black/10"></div>
-        <div className="relative z-10 flex flex-col justify-center items-center p-12 text-white">
+    <div className="min-h-screen flex bg-[#09090f]">
+      {/* Left Panel */}
+      <div className="hidden lg:flex lg:w-[45%] relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/40 via-[#09090f] to-indigo-900/30" />
+        <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-purple-600/10 rounded-full blur-[100px]" />
+
+        <div className="relative z-10 flex flex-col justify-center items-center p-16 w-full">
           <div className="max-w-md text-center">
-            <h1 className="text-5xl font-bold mb-6 tracking-tight">Wefit</h1>
-            <div className="w-24 h-24 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-              <CheckCircle className="h-12 w-12 text-white" />
+            <Link to="/" className="flex items-center gap-3 mb-12 justify-center">
+              <div className="h-11 w-11 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-500/25">
+                <Zap className="h-6 w-6 text-white" />
+              </div>
+              <span className="text-2xl font-bold text-white tracking-tight">WeFit</span>
+            </Link>
+
+            <div className="h-20 w-20 rounded-2xl bg-emerald-500/10 flex items-center justify-center mx-auto mb-6">
+              <CheckCircle className="h-10 w-10 text-emerald-400" />
             </div>
-            <h2 className="text-2xl font-semibold mb-4">Bem-vindo(a) à família Wefit!</h2>
-            <p className="text-lg opacity-90 leading-relaxed">
-              Sua jornada de transformação fitness começa agora!
-            </p>
+            <h2 className="text-3xl font-bold text-white mb-4 tracking-tight">Bem-vindo(a) à família WeFit!</h2>
+            <p className="text-gray-400 leading-relaxed">Sua jornada de transformação fitness começa agora!</p>
           </div>
-          
-          {/* Elementos gráficos decorativos */}
-          <div className="absolute top-16 right-16 w-24 h-24 border-2 border-white/20 rounded-full"></div>
-          <div className="absolute bottom-24 left-16 w-20 h-20 border-2 border-white/20 rounded-full"></div>
-          <div className="absolute top-1/4 left-1/3 w-16 h-16 border border-white/10 rounded-full animate-pulse"></div>
         </div>
       </div>
 
-      {/* Área do Conteúdo - Lado Direito */}
-      <div className="flex-1 flex items-center justify-center p-8 bg-gray-50">
-        <Card className="w-full max-w-2xl p-8 bg-white shadow-lg text-center">
-          <div className="mb-8">
-            <div className="mx-auto w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-              <CheckCircle className="h-10 w-10 text-green-600" />
+      {/* Right Panel */}
+      <div className="flex-1 flex items-center justify-center p-8 bg-[#0c0c14]">
+        <div className="w-full max-w-xl animate-fade-in">
+          {/* Mobile logo */}
+          <div className="lg:hidden flex items-center gap-3 mb-10 justify-center">
+            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center">
+              <Zap className="h-5 w-5 text-white" />
             </div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              Cadastro Concluído com Sucesso!
-            </h1>
+            <span className="text-xl font-bold text-white">WeFit</span>
           </div>
 
-          <div className="space-y-6 mb-8">
-            <div className="bg-purple-50 p-6 rounded-lg">
-              <h2 className="text-xl font-semibold text-purple-900 mb-2">
-                Parabéns, {userName || 'usuário'}!
-              </h2>
-              <p className="text-purple-700">
-                {businessName ? (
-                  <>Sua conta para <span className="font-semibold">{businessName}</span> no Wefit foi criada e está pronta para ser explorada.</>
-                ) : (
-                  'Sua conta no Wefit foi criada e está pronta para ser explorada.'
-                )}
-              </p>
+          <div className="text-center mb-8">
+            <div className="h-16 w-16 rounded-2xl bg-emerald-500/10 flex items-center justify-center mx-auto mb-6 lg:hidden">
+              <CheckCircle className="h-8 w-8 text-emerald-400" />
+            </div>
+            <h1 className="text-2xl font-bold text-white mb-2">Cadastro Concluído!</h1>
+            <p className="text-gray-500 text-sm">Tudo pronto para você começar</p>
+          </div>
+
+          {/* Info Cards */}
+          <div className="space-y-4 mb-8">
+            <div className="p-5 rounded-xl bg-purple-500/10 border border-purple-500/20">
+              <h3 className="text-sm font-semibold text-purple-400 mb-1">Conta Criada</h3>
+              <p className="text-white font-medium">{userName || 'Usuário'}</p>
+              {businessName && <p className="text-gray-400 text-sm">{businessName}</p>}
+              <span className="inline-block mt-2 text-[10px] px-2 py-1 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/20 font-medium uppercase tracking-wider">
+                {getRoleName()}
+              </span>
             </div>
 
-            <div className="bg-blue-50 p-6 rounded-lg">
-              <h3 className="text-lg font-semibold text-blue-900 mb-2">
-                Próximos Passos:
-              </h3>
-              <ul className="text-blue-700 text-left space-y-2">
-                <li className="flex items-center">
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
-                  <span>Acesse seu Painel de Administração</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
-                  <span>Configure suas preferências iniciais</span>
-                </li>
-                <li className="flex items-center">
-                  <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
-                  <span>Explore todas as funcionalidades disponíveis</span>
-                </li>
+            <div className="p-5 rounded-xl bg-white/[0.03] border border-white/[0.08]">
+              <h3 className="text-sm font-semibold text-white mb-3">Próximos Passos</h3>
+              <ul className="space-y-2">
+                {['Acesse seu Painel de Administração', 'Configure suas preferências iniciais', 'Explore todas as funcionalidades'].map((item, i) => (
+                  <li key={i} className="flex items-center gap-2 text-sm text-gray-400">
+                    <CheckCircle className="h-4 w-4 text-emerald-400 flex-shrink-0" />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
-
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <p className="text-gray-600">
-                <strong>Informação:</strong> Você também receberá um e-mail de boas-vindas com dicas e 
-                recursos para aproveitar ao máximo o Wefit (simulado).
-              </p>
-            </div>
           </div>
 
-          <div className="space-y-4">
-            <Button 
-              onClick={handleAccessDashboard}
-              className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 text-lg flex items-center justify-center gap-2"
-            >
-              Acessar meu Painel Wefit Agora!
-              <ArrowRight className="h-5 w-5" />
-            </Button>
-            
-            <p className="text-sm text-gray-500">
-              Você pode fazer login a qualquer momento usando o email e senha cadastrados.
-            </p>
-          </div>
-        </Card>
+          <Button
+            onClick={() => navigate(getDashboardRoute())}
+            className="w-full h-12 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-purple-500/20 group"
+          >
+            <span className="flex items-center gap-2">
+              Acessar meu Painel WeFit
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+            </span>
+          </Button>
+
+          <p className="text-center text-[11px] text-gray-600 mt-4">
+            Você pode fazer login a qualquer momento usando seu email e senha.
+          </p>
+        </div>
       </div>
     </div>
   );

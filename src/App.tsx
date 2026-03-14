@@ -79,6 +79,11 @@ import AlunoConta from '@/pages/aluno/Conta';
 // Not Found page
 import NotFound from '@/pages/NotFound';
 
+// Super Admin pages
+import SuperDashboard from '@/pages/super/Dashboard';
+import SuperTenants from '@/pages/super/Tenants';
+import SuperPlans from '@/pages/super/Plans';
+
 // Protected Route Component
 import ProtectedRoute from '@/components/ProtectedRoute';
 
@@ -348,6 +353,23 @@ function App() {
               <Route path="/aluno/conta" element={
                 <ProtectedRoute>
                   <Layout><AlunoConta /></Layout>
+                </ProtectedRoute>
+              } />
+
+              {/* Super Admin Routes */}
+              <Route path="/super/dashboard" element={
+                <ProtectedRoute>
+                  <Layout><SuperDashboard /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/super/tenants" element={
+                <ProtectedRoute>
+                  <Layout><SuperTenants /></Layout>
+                </ProtectedRoute>
+              } />
+              <Route path="/super/planos" element={
+                <ProtectedRoute>
+                  <Layout><SuperPlans /></Layout>
                 </ProtectedRoute>
               } />
 
