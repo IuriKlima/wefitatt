@@ -1,5 +1,6 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { useAuth } from '@/hooks/useAuth';
 
 export type UserProfile = 'super_admin' | 'administrador' | 'gestor' | 'instrutor' | 'recepcionista' | 'aluno';
 
@@ -32,11 +33,41 @@ interface UserProviderProps {
 }
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const { user: authUser } = useAuth();
+
+  const [user, setUser] = useState<User | null>(() => {
+    // Try to restore from localStorage
+    const saved = localStorage.getItem('wefit_profile_user');
+    if (saved) {
+      try { return JSON.parse(saved); } catch { /* ignore */ }
+    }
+    return null;
+  });
+
+  // Sync with auth: when auth user logs in/out, update user context
+  useEffect(() => {
+    if (authUser && !user) {
+      const role = (authUser as any).role || (authUser as any).user_metadata?.role || 'administrador';
+      const newUser: User = {
+        id: authUser.id,
+        name: (authUser as any).full_name || (authUser as any).user_metadata?.full_name || authUser.email || 'Usuário',
+        email: authUser.email || '',
+        profile: role as UserProfile,
+      };
+      setUser(newUser);
+      localStorage.setItem('wefit_profile_user', JSON.stringify(newUser));
+    } else if (!authUser && user) {
+      // Auth logged out
+      setUser(null);
+      localStorage.removeItem('wefit_profile_user');
+    }
+  }, [authUser]);
 
   const switchProfile = (profile: UserProfile) => {
     if (user) {
-      setUser({ ...user, profile });
+      const updated = { ...user, profile };
+      setUser(updated);
+      localStorage.setItem('wefit_profile_user', JSON.stringify(updated));
     }
   };
 
